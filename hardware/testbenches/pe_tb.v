@@ -5,7 +5,10 @@ module pe_tb();
     reg [15:0] sumin;
 
     wire [15:0] maccout;
-    wire [7:0] dataout;
+    wire [7:0] dataout, wout;
+    wire wwriteout, activeout;
+
+    integer i;
 
     pe DUT(
         .clk(clk),
@@ -15,7 +18,10 @@ module pe_tb();
         .sumin(sumin),
         .wwrite(wwrite),
         .maccout(maccout),
-        .dataout(dataout)
+        .dataout(dataout),
+        .wout(wout),
+        .wwriteout(wwriteout),
+        .activeout(activeout)
     );
 
     always begin
@@ -33,32 +39,20 @@ module pe_tb();
 
         #100;
 
-        active = 1'b1;
-
-        #100;
-
-        active = 1'b0;
-
-        #100;
-
-        win = 8'h11;
-        datain = 8'h01;
-
-        #50;
-
         wwrite = 1'b1;
 
-        #10;
+        for (i = 0; i < 64; i = i + 1) begin
+            #10;
+            win = win + 8'h04;
+        end
 
         wwrite = 1'b0;
 
-        #10;
+        for (i = 0; i < 64; i = i + 1) begin
+            #10;
+            win = win + 8'h02;
+        end
 
-        win = 8'hFF;
-
-        #10;
-
-        active = 1'b1;
     end // initial
 
 endmodule // pe_tb
