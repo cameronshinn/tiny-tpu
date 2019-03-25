@@ -4,7 +4,7 @@
 
 ## Building Hardware
 
-All Verilog files should be compiled on Alterra Quartus 15.0. Other versions are not
+All Verilog files should be compiled on Altera Quartus 15.0. Other versions are not
 guaranteed to work.
 
 ## Software
