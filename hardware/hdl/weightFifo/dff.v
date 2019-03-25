@@ -31,7 +31,7 @@ module dff (
         
         else if (en) begin
             q <= d;
-        end // else if
+        end // else if (en)
 
         else begin
             q <= q;
