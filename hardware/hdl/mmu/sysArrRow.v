@@ -59,7 +59,7 @@ module sysArrRow(
                 );
             end // if (i == 0)
             else if (i == row_width - 1) begin
-                // The last PE in the row has different outputsj
+                // The last PE in the row has different outputs
                 pe last_pe_inst(
                     .clk(clk),
                     .active(activeout_inter[i-1]),
