@@ -20,9 +20,9 @@ module sysArrRow(
     input clk;
     input active;
     input [7:0] datain; // For single row, we only need one data in.
-    input [weight_width-1:0] win; // Number of weight bytes equal to row_width
-    input [sum_width-1:0] sumin;
-    input [row_width-1:0] wwrite;
+    input [weight_width-1:0] win; // 8 bits for each PE. Left most PE has LSB
+    input [sum_width-1:0] sumin; // 16 bits for each PE. Left most PE has LSB
+    input [row_width-1:0] wwrite; // 1 bit for each PE. Left most PE has LSB
 
     // Outputs to the next row in array (bottom)
     output wire [sum_width-1:0] maccout;
