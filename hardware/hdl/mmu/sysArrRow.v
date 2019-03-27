@@ -1,3 +1,5 @@
+// sysArrRow creates a parametrized row of systolic array PEs
+
 module sysArrRow(
     clk,
     active,
@@ -10,7 +12,7 @@ module sysArrRow(
     wwriteout,
     activeout,
     dataout
-)
+);
     parameter row_width = 2;
     localparam weight_width = 8 * row_width; // Number of weight bits needed
     localparam sum_width = 16 * row_width; // Number of sum bits needed
