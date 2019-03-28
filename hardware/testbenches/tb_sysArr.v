@@ -1,5 +1,5 @@
 module tb_sysArr();
-    parameter width_height = 2;
+    parameter width_height = 4;
     localparam weight_width = 8 * width_height;
     localparam sum_width = 16 * width_height;
     localparam data_width = 8 * width_height;
@@ -44,43 +44,52 @@ module tb_sysArr();
     initial begin
         clk = 1'b0;
         active = 1'b0;
-        datain = 16'h0000;
-        win = 16'h0000;
-        sumin = 32'h0000_0000;
-        wwrite = 2'b00;
+        datain = 32'h0000_0000;
+        win = 32'h0000_0000;
+        sumin = 64'h0000_0000_0000_0000;
+        wwrite = 4'b0000;
 
         #10;
 
-        win = 16'h0101;
-        wwrite = 2'b11;
+        win = 32'h0101_0101;
+        wwrite = 4'b1111;
 
         #10;
 
-        wwrite = 2'b00;
-        datain = 16'h0001;
+        wwrite = 4'b0000;
+        datain = 32'h0000_0001;
         active = 1'b1;
 
         #10;
 
-        datain = 16'h0101;
+        datain = 32'h0000_0101;
 
         #10;
 
-        datain = 16'h0101;
+        datain = 32'h0001_0101;
+
+        #10;
+
+        datain = 32'h0101_0101;
+
+        #10;
+
+        datain = 32'h0101_0100;
+
+        #10;
+
+        datain = 32'h0101_0000;
+
+        #10;
+
+        datain = 32'h0100_0000;
         active = 1'b0;
 
         #10;
 
-        active = 1'b1;
+        datain = 32'h0000_0000;
 
-        #10;
-
-        datain = 16'h0302;
-
-        #10;
-
-        datain = 16'h0400;
-        active = 1'b0;
+        #30;
 
         $stop;
     end // initial
