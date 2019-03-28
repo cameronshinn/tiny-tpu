@@ -32,7 +32,7 @@ def processImage(imagePath, size):  # performs desired image processes
 def intListToHex(intList):  # convert list values to hex to reduce csv size
     tempList = []
     for num in intList:
-        tempList.append(hex(num)[2:])  # add grayscal hex value to list (without the "0x")
+        tempList.append(hex(num)[2:])  # add grayscale hex value to list (without the "0x")
 
     return tempList
 
