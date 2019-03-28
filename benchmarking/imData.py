@@ -73,7 +73,7 @@ for path in sys.argv[3:]:
         imageNum += 1  # increment image number for string output
         print('\rProcessing image {}'.format(imageNum), end='')  # print string output
         hexList = intListToHex(processImage(path, size))
-        hexList.insert(0,path)
+        hexList.insert(0, path)
         fileWriter.writerow(hexList)
 
 print('\rDone: .csv file \'{}\' output to \"{}\"'.format(OUTPUT_NAME, os.path.dirname(os.path.abspath(__file__))))
