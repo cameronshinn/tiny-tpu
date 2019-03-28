@@ -2,7 +2,7 @@
 # Cameron Shinn
 
 '''
-imData.py goes the following operations...
+imData.py does the following operations...
 1. Takes input images
 2. Resizes them
 3. Converts them to grayscale
