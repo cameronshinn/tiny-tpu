@@ -66,7 +66,7 @@ for path in sys.argv[3:]:
             imageNum += 1  # increment image number for string output
             print('\rProcessing image {}'.format(imageNum), end='')  # print string output
             hexList = intListToHex(processImage(file, size))
-            hexList.insert(0,file)
+            hexList.insert(0, file)
             fileWriter.writerow(hexList)
 
     elif path.endswith(FILE_TYPE):  # if the file is of type FILE_TYPE
