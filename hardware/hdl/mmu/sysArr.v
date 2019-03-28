@@ -82,7 +82,7 @@ module sysArr(
                     .dataout  (dataout[((i+1)*8)-1:(i*8)])
                 );
 
-                defparam sysArrRow_inst.row_width = width_height;
+                defparam last_sysArrRow_inst.row_width = width_height;
 
             end // else if (i == width_height-1)
 
@@ -102,7 +102,7 @@ module sysArr(
                     .dataout  (dataout[((i+1)*8)-1:(i*8)])
                 );
 
-                defparam last_sysArrRow_inst.row_width = width_height;
+                defparam sysArrRow_inst.row_width = width_height;
 
             end // else
         end // for (i = 0; i < width_height; i = i + 1)
