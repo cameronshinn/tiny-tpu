@@ -70,7 +70,7 @@ module sysArr(
                 // The last row has different outputs
                 sysArrRow last_sysArrRow_inst(
                     .clk      (clk),
-                    .active   (activeout_inter[(i*width_height)-1:((i-1)*width_height)]),
+                    .active   (activeout_inter[((i-1)*width_height)]),
                     .datain   (datain[((i+1)*8)-1:(i*8)]),
                     .win      (wout_inter[(i*width_height*8)-1:((i-1)*width_height*8)]),
                     .sumin    (maccout_inter[(i*width_height*16)-1:((i-1)*width_height*16)]),
@@ -90,7 +90,7 @@ module sysArr(
                 // intermediate rows have generic inputs/outputs
                 sysArrRow sysArrRow_inst(
                     .clk      (clk),
-                    .active   (activeout_inter[(i*width_height)-1:((i-1)*width_height)]),
+                    .active   (activeout_inter[((i-1)*width_height)]),
                     .datain   (datain[((i+1)*8)-1:(i*8)]),
                     .win      (wout_inter[(i*width_height*8)-1:((i-1)*width_height*8)]),
                     .sumin    (maccout_inter[(i*width_height*16)-1:((i-1)*width_height*16)]),
