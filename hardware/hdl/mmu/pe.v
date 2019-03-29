@@ -55,9 +55,9 @@ module pe(
     always @(win or wwrite) begin
 
         wwriteout_c = wwrite;
-        if (wwrite == 1'b1) begin
+        if ((wwrite == 1'b1) || (wwriteout == 1'b1)) begin
             weight_c    = win;
-            wout_c      = weight_c;
+            wout_c      = weight;
         end // if (wwrite == 1'b1)
 
         else begin
