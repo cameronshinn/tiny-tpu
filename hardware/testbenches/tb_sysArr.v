@@ -51,12 +51,24 @@ module tb_sysArr();
 
         #10;
 
-        win = 32'h0101_0101;
+        win = 32'h0404_0404;
         wwrite = 4'b1111;
 
         #10;
 
+        win = 32'h0303_0303;
+
+        #10;
+
+        win = 32'h0202_0202;
+
+        #10;
+
+        win = 32'h0101_0101;
         wwrite = 4'b0000;
+
+        #10
+
         datain = 32'h0000_0001;
         active = 1'b1;
 
@@ -89,7 +101,7 @@ module tb_sysArr();
 
         datain = 32'h0000_0000;
 
-        #30;
+        #100;
 
         $stop;
     end // initial
