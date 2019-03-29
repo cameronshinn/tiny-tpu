@@ -1,4 +1,4 @@
-// dff.v
+// dff8.v
 // Standard D flip-flop, transferring inputs of size DATA_WIDTH
 
 // Inputs:
