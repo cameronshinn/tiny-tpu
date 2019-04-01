@@ -8,7 +8,6 @@ module tb_dff8;
     reg clk, reset, en;
     reg [7:0] d;
     wire [7:0] q;
-    integer i;
 
     dff8 tb_dff8 (
         .clk(clk),
@@ -17,6 +16,8 @@ module tb_dff8;
         .d(d),
         .q(q)
     );
+
+    integer i;
 
     initial begin
         clk = 1'b0;
