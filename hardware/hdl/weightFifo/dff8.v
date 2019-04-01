@@ -38,4 +38,4 @@ module dff8(clk, reset, en, d, q);
 
     end  // always @(posedge clk)
 
-endmodule  // dff
+endmodule  // dff8

@@ -19,7 +19,6 @@ module tb_weightFifo;
 
 	integer i;
 	integer j;
-	reg [7:0] fifoIn [3:0];
 
 	initial begin
 		clk = 1'b0;
