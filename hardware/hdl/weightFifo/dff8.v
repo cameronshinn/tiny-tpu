@@ -12,16 +12,15 @@
 //
 // q -- data output
 
-module dff8 (
-    input clk,
-    input reset,
-    input en,  // may not need enable signal (will need to see how design pans out)
-    input [DATA_WIDTH-1:0] d,
-    
-    output reg [DATA_WIDTH-1:0] q
-);
+module dff8(clk, reset, en, d, q);
 
     parameter DATA_WIDTH = 8;
+
+    input clk;
+    input reset;
+    input en;
+    input [DATA_WIDTH-1:0] d;
+    output reg [DATA_WIDTH-1:0] q;
 
     always @(posedge clk) begin
         
@@ -39,4 +38,4 @@ module dff8 (
 
     end  // always @(posedge clk)
 
-endmodule  // dff
+endmodule  // dff8

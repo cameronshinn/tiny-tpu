@@ -5,52 +5,59 @@
 
 module tb_dff8;
 
-reg clk, reset, en;
-reg [7:0] d, q;
-integer i;
+    reg clk, reset, en;
+    reg [7:0] d;
+    wire [7:0] q;
 
-dff8 tb_dff8 (
-    .clk(clk),
-    .reset(reset),
-    .en(en),
-    .d(d),
-    .q(q)
-);
+    dff8 tb_dff8 (
+        .clk(clk),
+        .reset(reset),
+        .en(en),
+        .d(d),
+        .q(q)
+    );
 
-initial begin
-    clk = 1'b0;
-    i = 0;
-end  // initial
+    integer i;
 
-always begin
-    #10
-    clk = ~clk;
-end  // always
+    initial begin
+        clk = 1'b0;
+        i = 0;
+    end  // initial
 
-always @(posedge clk) begin
-    if (clk) begin
-        d = 8'b0000_1111;
-    end  // if (clk)
+    always begin
+        #10
+        clk = ~clk;
+    end  // always
 
-    else if (~clk) begin
-        d = 8'b1111_0000;
-    end  // else if (~clk)
+    always @(posedge clk) begin
+        if (i < 2) begin
+            d = 8'b0000_1111;
+        end  // if (clk)
 
-    if (i & 2'b10) begin
-        en = 1'b0;
-    end  // if (i & 2'b10)
+        else if (i < 4) begin
+            d = 8'b1111_0000;
+        end  // else if (~clk)
 
-    else begin
-        en = 1'b1;
-    end  // else
+        if (i & 2'b10) begin
+            en = 1'b0;
+        end  // if (i & 2'b10)
 
-    if (i == 5) begin
+        else begin
+            en = 1'b1;
+        end  // else
 
-    end  // if (i == 5)
+        if (i >= 5) begin
+            reset = 1'b1;
+        end  // if (i == 5)
 
-    if (i == 6) begin
-        $stop
-    end  // if (i == 6)
+        else begin
+            reset = 1'b0;
+        end  // else
 
-    i = i + 1;
-end  // always @(posedge clk)
+        if (i == 7) begin
+            $stop;
+        end  // if (i == 6)
+
+        i = i + 1;
+    end  // always @(posedge clk)
+endmodule  // tb_dff8

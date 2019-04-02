@@ -12,19 +12,18 @@
 //
 // weightOut -- output at end of FIFO
 
-module weightFifo (
-    input clk,
-    input reset,
-    input en,
-    input [FIFO_WIDTH-1:0] weightIn,
-
-    output wire [FIFO_WIDTH-1:0] weightOut
-);
+module weightFifo(clk, reset, en, weightIn, weightOut);
 
     parameter DATA_WIDTH = 8;  // must be same as DATA_WIDTH in dff8.v
     parameter FIFO_INPUTS = 4;
     parameter FIFO_WIDTH = DATA_WIDTH*FIFO_INPUTS;  // number of output weights
     parameter FIFO_STAGES = 4;  // number of stage weights
+
+    input clk;
+    input reset;
+    input en;
+    input [FIFO_WIDTH-1:0] weightIn;
+    output wire [FIFO_WIDTH-1:0] weightOut;
 
     wire [FIFO_WIDTH*FIFO_STAGES-1:0] dffIn;  // inputs to each element of dff array
     wire [FIFO_WIDTH*FIFO_STAGES-1:0] dffOut;   // ouputs of each element of dff array
