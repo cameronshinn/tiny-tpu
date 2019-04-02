@@ -52,7 +52,7 @@ module pe(
 
     end // always @(active or datain or sumin)
 
-    always @(win or wwrite) begin
+    always @(*) begin
 
         wwriteout_c = wwrite;
         if ((wwrite == 1'b1) || (wwriteout == 1'b1)) begin
