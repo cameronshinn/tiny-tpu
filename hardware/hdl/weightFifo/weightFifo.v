@@ -16,7 +16,7 @@ module weightFifo(clk, reset, en, weightIn, weightOut);
 
     parameter DATA_WIDTH = 8;  // must be same as DATA_WIDTH in dff8.v
     parameter FIFO_INPUTS = 4;
-    parameter FIFO_WIDTH = DATA_WIDTH*FIFO_INPUTS;  // number of output weights
+    localparam FIFO_WIDTH = DATA_WIDTH*FIFO_INPUTS;  // number of output weights
     parameter FIFO_STAGES = 4;  // number of stage weights
 
     input clk;
