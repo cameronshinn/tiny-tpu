@@ -1,7 +1,6 @@
 // This module describes a systolic array.
 // It depends on sysArrRow.v which describes a single row in the array.
 
-
 module sysArr(
     clk,
     active,
