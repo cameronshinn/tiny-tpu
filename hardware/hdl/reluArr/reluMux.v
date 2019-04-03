@@ -1,21 +1,21 @@
 // reluMux.v
 // Cameron Shinn
 
-// Inputs
+// Inputs:
 //
-//
+// in -- input signed value of size DATA_WIDTH
 
-// Outputs
+// Outputs:
 //
-//
+// out -- ouptut ReLU value of size DATA_WIDTH
 
 module reluMux(in, out);
 
-    paramter DATA_WIDTH = 8;
+    parameter DATA_WIDTH = 8;
 
-    input [DATA_WIDTH-1:0] in;
-    output wire [DATA_WIDTH-1:0] out;    
+    input signed [DATA_WIDTH-1:0] in;
+    output wire signed [DATA_WIDTH-1:0] out;    
 
-    assign out = (in > 0) ? in : '0;
+    assign out = (in > 0) ? in : 0;
 
 endmodule  // reluMux(in, out)
