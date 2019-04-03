@@ -19,7 +19,7 @@ module sysArrRow(
 
     input clk;
     input active;
-    input [7:0] datain; // For single row, we only need one data in.
+    input signed [7:0] datain; // For single row, we only need one data in.
     input [weight_width-1:0] win; // 8 bits for each PE. Left most PE has LSB
     input [sum_width-1:0] sumin; // 16 bits for each PE. Left most PE has LSB
     input [row_width-1:0] wwrite; // 1 bit for each PE. Left most PE has LSB
@@ -31,7 +31,7 @@ module sysArrRow(
     output wire [row_width-1:0] activeout;
 
     // Outputs to the right side of the array
-    output [7:0] dataout;
+    output signed [7:0] dataout;
 
     // Interconnects (PE - PE Connections)
     wire [row_width-1:0] activeout_inter;

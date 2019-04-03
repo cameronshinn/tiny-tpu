@@ -19,15 +19,15 @@ module dff8(clk, reset, en, d, q);
     input clk;
     input reset;
     input en;
-    input [DATA_WIDTH-1:0] d;
-    output reg [DATA_WIDTH-1:0] q;
+    input signed [DATA_WIDTH-1:0] d;
+    output reg signed [DATA_WIDTH-1:0] q;
 
     always @(posedge clk) begin
-        
+
         if (reset) begin
             q <= 0;
         end  // if (reset == 1'b1)
-        
+
         else if (en) begin
             q <= d;
         end  // else if (en)
