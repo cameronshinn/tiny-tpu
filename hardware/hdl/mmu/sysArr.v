@@ -52,7 +52,7 @@ module sysArr(
                     .active   (active),
                     .datain   (datain[((i+1)*8)-1:(i*8)]),
                     .win      (win),
-                    .sumin    (0), // Simulation may throw a warning due to unmatched port sizes here
+                    .sumin    ('0), // Simulation may throw a warning due to unmatched port sizes here
                     .wwrite   (wwrite),
                     .maccout  (maccout_inter[((i+1)*width_height*16)-1:(i*width_height*16)]),
                     .wout     (wout_inter[((i+1)*width_height*8)-1:(i*width_height*8)]),

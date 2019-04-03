@@ -1,3 +1,5 @@
+`timescale 1 ps / 1 ps
+
 module tb_sysArr();
     parameter width_height = 4;
     localparam weight_width = 8 * width_height;
