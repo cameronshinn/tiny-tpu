@@ -17,21 +17,21 @@
 module pe(
     input clk,
     input active,
-    input [7:0] datain,
-    input [7:0] win,
-    input [15:0] sumin,
+    input signed [7:0] datain,
+    input signed [7:0] win,
+    input signed [15:0] sumin,
     input wwrite,
 
-    output reg [15:0] maccout,
-    output reg [7:0] dataout,
-    output reg [7:0] wout,
+    output reg signed [15:0] maccout,
+    output reg signed [7:0] dataout,
+    output reg signed [7:0] wout,
     output reg wwriteout,
     output reg activeout
 );
 
-    reg [15:0] maccout_c;
-    reg [7:0] dataout_c, wout_c;
-    reg [7:0] weight, weight_c;
+    reg signed [15:0] maccout_c;
+    reg signed [7:0] dataout_c, wout_c;
+    reg signed [7:0] weight, weight_c;
     reg wwriteout_c, activeout_c;
 
     always @(active or datain or sumin) begin
