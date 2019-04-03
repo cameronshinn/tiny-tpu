@@ -34,12 +34,20 @@ module pe(
     reg signed [7:0] weight, weight_c;
     reg wwriteout_c, activeout_c;
 
+    wire [15:0] mult_result;
+    // DSP Multiplier Instantiation
+    dsp_multiplier mult (
+        .dataa (datain),
+        .datab (weight),
+        .result(mult_result)
+    );
+
     always @(active or datain or sumin) begin
 
         activeout_c = active;
         if (active == 1'b1) begin
             dataout_c = datain;
-            maccout_c = sumin + (datain * weight);
+            maccout_c = sumin + (mult_result);
         end // if (active == 1'b1)
 
         else begin
