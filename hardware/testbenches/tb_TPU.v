@@ -17,9 +17,18 @@ module tb_MMU_FIFO();
 
     // MMU side inputs
     reg active;
-    reg [data_width-1:0] datain;
     reg [sum_width-1:0] sumin;
     reg [width_height-1:0] wwrite;
+
+    // MEM side inputs
+    reg [width_height-1:0] rd_en;
+    reg [width_height-1:0] wr_en;
+    reg [(width_height * 8)-1:0] wr_data;
+    reg [(width_height * 8)-1:0] rd_data;
+    reg [(width_height * 8)-1:0] wr_addr;
+
+    // MEM side outputs
+    wire [(width_height * 8)-1:0] rd_data;
 
     // FIFO side outputs
     wire [FIFO_WIDTH-1:0] weightOut;
@@ -52,7 +61,7 @@ module tb_MMU_FIFO();
     sysArr MMU_DUT(
         .clk      (clk),
         .active   (active),
-        .datain   (datain),
+        .datain   (rd_data),
         .win      (win), // Wire to weightOut of FIFO
         .sumin    (sumin),
         .wwrite   (wwrite),
@@ -62,8 +71,18 @@ module tb_MMU_FIFO();
         .activeout(activeout),
         .dataout  (dataout)
     );
-
     defparam MMU_DUT.width_height = width_height;
+
+    memArr MEM_DUT(
+        .clk    (clk),
+        .rd_en  (rd_en),
+        .wr_en  (wr_en),
+        .wr_data(wr_data),
+        .rd_addr(rd_addr),
+        .wr_addr(wr_addr),
+        .rd_data(rd_data) // wire to datain of MMU
+    );
+    defparam MEM_DUT.width_height = width_height;
 
     always begin
         #5;
