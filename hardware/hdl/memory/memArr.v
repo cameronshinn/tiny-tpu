@@ -27,6 +27,8 @@ module memArr(
                 .data(wr_data[((i*8) + 8)-1:(i*8)])
                 .rdaddress(rd_addr[((i*8) + 8)-1:(i*8)]),
                 .wraddress(wr_addr[((i*8) + 8)-1:(i*8)]),
+                .wren(wr_en[i]),
+                .rden(rd_en[i]),
                 .q(rd_data[((i*8) + 8)-1:(i*8)])
             );
         end // for (i = 0; i < width_height; i++)
