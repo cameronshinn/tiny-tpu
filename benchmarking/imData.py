@@ -62,6 +62,7 @@ fileWriter.writerow(headerList)
 # process through images
 for path in sys.argv[3:]:
     if os.path.isdir(path):  # if input string is a directory
+        print('Looking inside {}'.format(path))
         for file in glob.glob(os.path.join(path, '*{}'.format(FILE_TYPE))):  # for every FILE_TYPE file in directory
             imageNum += 1  # increment image number for string output
             print('\rProcessing image {}'.format(imageNum), end='')  # print string output
