@@ -35,7 +35,6 @@ always @(posedge clk) begin
     Calc: begin
       active = 1;
     end
-
   endcase
 
 end
