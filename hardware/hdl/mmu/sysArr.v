@@ -24,14 +24,14 @@ module sysArr(
     input active;
     input [data_width-1:0] datain; // 8 bits for each row. Top row has LSB
     input [weight_width-1:0] win; // 8 bits for each column. Left column has LSB
-    input [sum_width-1:0] sumin; // 16 bits for each column. Left column has LSB
+    input [sum_width-1:0] sumin; // 16 bits for each column. Should always be 0
     input [width_height-1:0] wwrite; // 1 bit for each column. Left column has LSB
 
     // Outputs from bottom row of array
-    output wire [sum_width-1:0] maccout;
-    output wire [weight_width-1:0] wout;
-    output wire [width_height-1:0] wwriteout;
-    output wire [width_height-1:0] activeout;
+    output wire [sum_width-1:0] maccout; // 16 bit output of result matrix
+    output wire [weight_width-1:0] wout; // Not used
+    output wire [width_height-1:0] wwriteout; // Not used
+    output wire [width_height-1:0] activeout; // Not used
 
     // Outputs from right side of array
     output [data_width-1:0] dataout; // 8 bits for each row. Top row has LSB
