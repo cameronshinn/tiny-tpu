@@ -17,32 +17,42 @@ module weightFifo(clk, reset, en, weightIn, weightOut);
     parameter DATA_WIDTH = 8;  // must be same as DATA_WIDTH in dff8.v
     parameter FIFO_INPUTS = 4;
     localparam FIFO_WIDTH = DATA_WIDTH*FIFO_INPUTS;  // number of output weights
-    parameter FIFO_STAGES = 4;  // number of stage weights
+    parameter FIFO_DEPTH = 4;  // number of stage weights
 
     input clk;
     input reset;
-    input en;
-    input [FIFO_WIDTH-1:0] weightIn;
-    output wire [FIFO_WIDTH-1:0] weightOut;
+    input [FIFO_WIDTH-1:0] en;  // LSB is leftmost column in the array
+    input [FIFO_WIDTH-1:0] weightIn;  // LSB is leftmost column in the array
+    output wire [FIFO_WIDTH-1:0] weightOut;  // LSB is leftmost column in the array
 
-    wire [FIFO_WIDTH*FIFO_STAGES-1:0] dffIn;  // inputs to each element of dff array
-    wire [FIFO_WIDTH*FIFO_STAGES-1:0] dffOut;   // ouputs of each element of dff array
+    wire [FIFO_WIDTH*FIFO_DEPTH-1:0] colEn;  // enable signals to be sent to each element in a respective column
+    wire [FIFO_WIDTH*FIFO_DEPTH-1:0] dffIn;  // inputs to each element of dff array
+    wire [FIFO_WIDTH*FIFO_DEPTH-1:0] dffOut;   // ouputs of each element of dff array
     
-    dff8 dffArray[FIFO_INPUTS*FIFO_STAGES-1:0] (
+    dff8 dffArray[FIFO_INPUTS*FIFO_DEPTH-1:0] (  // array of elements in row-major order
         .clk(clk),
         .reset(reset),
-        .en(en),
+        .en(colEn),
         .d(dffIn),
         .q(dffOut)
     );
 
     assign dffIn[FIFO_WIDTH-1:0] = weightIn;  // assign beginning of array to input
-    assign weightOut = dffOut[FIFO_WIDTH*FIFO_STAGES-1:FIFO_WIDTH*(FIFO_STAGES-1)];  // assign end of array to output
+    assign weightOut = dffOut[FIFO_WIDTH*FIFO_DEPTH-1:FIFO_WIDTH*(FIFO_DEPTH-1)];  // assign end of array to output
 
     generate
         genvar i;
-        for (i=1; i<FIFO_STAGES; i=i+1) begin : assignConn // use for-loop to dynamically make connections (for scalability)
+        for (i=1; i<FIFO_DEPTH; i=i+1) begin : assignConn  // use for-loop to dynamically make connections between FFs
             assign dffIn[FIFO_WIDTH*(i+1)-1:FIFO_WIDTH*i] = dffOut[FIFO_WIDTH*i-1:FIFO_WIDTH*(i-1)];
-        end  // for (i=0; i<FIFO_STAGES; i=i+1)
+        end  // for (i=0; i<FIFO_DEPTH; i=i+1)
+    endgenerate
+
+    generate
+        genvar i, j;
+        for (i=0; i<FIFO_WIDTH; i=i+1) begin : widthIndex  // use for-loop to dynamically make enable connections to each column
+            for (j=0; j<FIFO_DEPTH; j=j+1) begin : depthIndex
+                assign dffArray[j*FIFO_DEPTH+i] = colEn[i];  // assign all dff8's in each column to the same enable signal
+            end  // for (j=0; j<FIFO_DEPTH; j=j+1)
+        end  // for (i=0; i<FIFO_WIDTH; i=i+1)
     endgenerate
 endmodule  // weightFifo
