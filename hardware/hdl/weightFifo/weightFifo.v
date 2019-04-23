@@ -21,11 +21,11 @@ module weightFifo(clk, reset, en, weightIn, weightOut);
 
     input clk;
     input reset;
-    input [FIFO_WIDTH-1:0] en;  // LSB is leftmost column in the array
+    input [FIFO_INPUTS-1:0] en;  // LSB is leftmost column in the array
     input [FIFO_WIDTH-1:0] weightIn;  // LSB is leftmost column in the array
     output wire [FIFO_WIDTH-1:0] weightOut;  // LSB is leftmost column in the array
 
-    wire [FIFO_WIDTH*FIFO_DEPTH-1:0] colEn;  // enable signals to be sent to each element in a respective column
+    wire [FIFO_INPUTS*FIFO_DEPTH-1:0] colEn;  // enable signals to be sent to each element in a respective column
     wire [FIFO_WIDTH*FIFO_DEPTH-1:0] dffIn;  // inputs to each element of dff array
     wire [FIFO_WIDTH*FIFO_DEPTH-1:0] dffOut;   // ouputs of each element of dff array
     
@@ -48,10 +48,10 @@ module weightFifo(clk, reset, en, weightIn, weightOut);
     endgenerate
 
     generate
-        genvar i, j;
-        for (i=0; i<FIFO_WIDTH; i=i+1) begin : widthIndex  // use for-loop to dynamically make enable connections to each column
+        genvar j;
+        for (i=0; i<FIFO_INPUTS; i=i+1) begin : widthIndex  // use for-loop to dynamically make enable connections to each column
             for (j=0; j<FIFO_DEPTH; j=j+1) begin : depthIndex
-                assign dffArray[j*FIFO_DEPTH+i] = colEn[i];  // assign all dff8's in each column to the same enable signal
+                assign colEn[j*FIFO_DEPTH+i] = en[i];  // assign all dff8's in each column to the same enable signal
             end  // for (j=0; j<FIFO_DEPTH; j=j+1)
         end  // for (i=0; i<FIFO_WIDTH; i=i+1)
     endgenerate

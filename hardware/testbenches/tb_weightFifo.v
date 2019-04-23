@@ -5,7 +5,8 @@
 
 module tb_weightFifo;
 
-	reg clk, reset, en;
+	reg clk, reset;
+	reg [3:0] en;
 	reg [31:0] weightIn;
 	wire [31:0] weightOut;
 	
@@ -23,7 +24,7 @@ module tb_weightFifo;
 	initial begin
 		clk = 1'b0;
 		i = 0;
-		en = 1'b1;
+		en = 0;
 		reset = 1'b0;
 	end  // initial
 
@@ -37,15 +38,27 @@ module tb_weightFifo;
 			weightIn[j*8 +: 8] = i*4+j; 
 		end  // for (j = 0; j < 4; j = j + 1)
 
-		if (i >= 8 && i & 1) begin
-			en = 1'b0;
-		end  // if (i >= 8 && i & 1)
+		/*if (i >= 8 && i & 1) begin
+			en = 0;
+		end  // if (i >= 8 && i & 1)*/
 
-		else begin
-			en = 1'b1;
-		end  // else
+		if (i == 9) begin
+			en = 4'b0001;
+		end  // else if (i == 9)
 
-		if (i == 19) begin
+		else if (i == 10) begin
+			en = 4'b0011;
+		end  // else if (i == 10)
+
+		else if (i == 11) begin
+			en = 4'b0111;
+		end  // else if (i == 11)
+
+		else if (i == 12) begin
+			en = 4'b1111;
+		end  // else if (i == 12)
+
+		if (i == 24) begin
 			reset = 1'b1;
 		end  // if (i = 19)
 
@@ -53,7 +66,7 @@ module tb_weightFifo;
 			reset = 1'b0;
 		end  // else
 
-		if (i == 21) begin
+		if (i == 26) begin
 			$stop;
 		end  // if (i == 20)
 

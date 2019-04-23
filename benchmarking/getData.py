@@ -41,7 +41,7 @@ def intListToHex(intList):  # convert list values to hex to reduce csv size
 
 # check if size arguments are correct
 if len(sys.argv) < 4 or not (sys.argv[3].isdigit() and sys.argv[4].isdigit()):
-    print('Argument Error: command line arguments 2 (pixel width) and 3 (pixel height) must be integers')
+    print('Argument Error: command line arguments 3 (pixel width) and 4 (pixel height) must be integers')
     sys.exit()
 
 
