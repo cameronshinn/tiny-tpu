@@ -4,12 +4,12 @@
 // Apri 22 2019
 module fifo_control(
   clk,
-  reset,
-  active,
+  reset, // reset the program, high active
+  active, // enable the modulel, high active 
   fifo_en
   );
 
-  parameter fifo_width = 4;
+  parameter fifo_width = 4; // the number of fifo width
 
   input clk, reset, active;
   output reg [fifo_width-1:0] fifo_en;
@@ -29,7 +29,7 @@ module fifo_control(
     end
 
     else begin
-      fifo_en_c = 4'b0000;
+      fifo_en_c = 4'b0000; // if not active, no fifo_en is active.
     end
 
     if(reset) begin
