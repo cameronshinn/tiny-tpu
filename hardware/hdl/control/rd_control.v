@@ -8,12 +8,12 @@ module rd_control(
   reset, // reset the inputs and reg signals
   active, // this module only works when the active is high
   rd_en, // enable accessing to the memeory
-  rd_addr // read address
+  rd_addr // read address the full address should be base addr + wr_addr
   );
 
   parameter width_height = 4;
   localparam data_width = 8 * width_height; // number of data bits needed
-  
+
   input clk, reset, active;
   output reg [3:0] rd_en;
   output reg [data_width-1:0] rd_addr;
@@ -29,7 +29,7 @@ module rd_control(
 
   always@(*) begin
     if(active) begin // start to get read address
-      if(rd_en == 4'b1111) begin 
+      if(rd_en == 4'b1111) begin
         rd_dec = 1;
       end
 
@@ -43,6 +43,10 @@ module rd_control(
 
       rd_inc = {7'b0, rd_en[3], 7'b0, rd_en[2], 7'b0, rd_en[1], 7'b0, rd_en[0]};
       rd_addr_c = rd_inc + rd_addr;
+    end
+
+    else begin
+      rd_en_c = 4'b0000;
     end
 
     if(reset == 1) begin
