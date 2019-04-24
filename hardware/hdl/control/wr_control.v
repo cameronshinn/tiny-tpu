@@ -45,6 +45,10 @@ module wr_control(
       wr_addr_c = wr_inc + wr_addr;
     end
 
+    else begin
+      wr_en_c = 4'b0000;
+    end
+
     if(reset == 1) begin
       wr_addr_c = 0;
       wr_en_c  = 4'b0000;
