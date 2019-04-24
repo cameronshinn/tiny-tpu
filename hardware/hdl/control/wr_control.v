@@ -3,7 +3,7 @@
 // Alan Qin
 // Apri. 22 2019
 
-module rd_control(
+module wr_control(
   clk, // clock signal
   reset, // reset the inputs and reg signals
   active, // this module only works when the active is high
