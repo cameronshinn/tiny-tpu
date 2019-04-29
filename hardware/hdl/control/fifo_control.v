@@ -6,13 +6,15 @@ module fifo_control(
   clk,
   reset,
   active,
-  fifo_en
+  fifo_en,
+  done
   );
 
   parameter fifo_width = 4;
 
   input clk, reset, active;
   output reg [fifo_width-1:0] fifo_en;
+  output reg done;
   reg [fifo_width-1:0] fifo_en_c;
   reg fifo_dec; // enable starts to decrease
   reg state, state_c;
@@ -40,6 +42,9 @@ module fifo_control(
 
         if(fifo_dec) begin
           fifo_en_c = fifo_en << 1;
+          if(fifo_en == 4'b0000) begin
+            done = 1;
+          end
         end
 
         else begin
@@ -51,6 +56,7 @@ module fifo_control(
     if(reset) begin
       fifo_en_c = 4'b0000;
       state_c = Hold;
+      done = 0;
     end
   end
 endmodule
