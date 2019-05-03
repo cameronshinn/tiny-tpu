@@ -3,15 +3,15 @@
 
 // Inputs:
 //
-// clk -- 
-// reset -- 
-// rd_addr -- 
-// wr_addr -- 
-// wr_data -- 
+// clk -- clock signal
+// reset -- sets all elements in a column to 0. One signal for each column.
+// rd_addr -- address to read from
+// wr_addr -- address to write and accumulate to
+// wr_data -- data to be accumulated and stored in wr_addr
 
 // Outputs:
 //
-// rd_data -- 
+// rd_data -- data read from rd_addr
 
 module accumTable(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
 

@@ -24,20 +24,19 @@ module accumCol(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
     integer i; // used for indexing
 
     always @(posedge clk) begin
+        if (wr_en) begin
+            mem[wr_addr] <= mem[wr_addr] + wr_data;
+        end // if (wr_en)
+
+        if (rd_en) begin
+            rd_data <= mem[rd_addr];
+        end // if (rd_en)
+
         if (reset) begin
             for (i = 0; i < NUM_ACCUM_ROWS; i = i + 1) begin // clear all entries to 0
                 mem[i] <= 0; // not sure if there is a good way to define literal width
             end // for (i = 0; i < NUM_ACCUM_ROWS; i = i + 1)
         end // if (reset)
 
-        else begin
-            if (wr_en) begin
-                mem[wr_addr] <= mem[wr_addr] + wr_data;
-            end // if (wr_en)
-
-            if (rd_en) begin
-                rd_data <= mem[rd_addr];
-            end // if (rd_en)
-        end // else
     end // always @(posedge clk)
 endmodule // accumCol
