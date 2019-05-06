@@ -28,6 +28,6 @@ module accumTable_control(sys_arr_count, submat_m, submat_n, wr_addr);
     input [$clog2(NUM_SUBMATS_N)-1:0] submat_n; // sub-matrix col number (sub-matrix position in the overall matrix)
     output wire [$clog2(NUM_ACCUM_ROWS)-1:0] wr_addr; // write addresses for all columns concatenated
 
-    assign wr_addr = (submat_n*MAX_OUT_ROWS) + (submat_m*SYS_ARR_ROWS) + sys_arr_count;
+    assign wr_addr = (submat_n*MAX_OUT_ROWS) + (submat_m*SYS_ARR_ROWS) + (SYS_ARR_ROWS-1-sys_arr_count);
 
 endmodule // accumTable_control
