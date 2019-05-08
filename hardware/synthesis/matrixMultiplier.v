@@ -1,9 +1,6 @@
 `define CONTROL_OFFSET 2'b00
-`define MATRIX_A_ADDRESS_OFFSET 2'b01
-`define MATRIX_B_ADDRESS_OFFSET 2'b10
-`define MATRIX_RESULT_ADDRESS_OFFSET 2'b11
-`define CLEAR_INDEX 2'b0
-`define MULTIPLY_INDEX 2'b01
+`define WEIGHT_OFFSET 2'b01
+`define INPUT_OFFSET 2'b10
 
 module matrixMultiplier (
 	// signals to connect to an Avalon clock source interface
@@ -26,7 +23,7 @@ module matrixMultiplier (
     input reset;
 
     // slave interface
-    input [9:0] slave_address;
+    input [9:0] slave_address;	//GET CORRECT WIDTH
     input slave_read;
     input slave_write;
     output reg [DATA_WIDTH-1:0] slave_readdata;
@@ -52,6 +49,63 @@ module matrixMultiplier (
     wire matrixB_wren = slave_write & (slave_address[9:8] == `MATRIX_B_ADDRESS_OFFSET);
     wire matrixResult_wren = slave_write & (slave_address[9:8] == `MATRIX_RESULT_ADDRESS_OFFSET);
 
+    // ========================================================================
+    // TPU
+    // ========================================================================
+    wire wr_en_weights = slave_write & (slave_address[9:8] == `WEIGHT_OFFSET;
+    wire wr_en_input = slave_write & slave_address[9:8] == `INPUT_OFFSET;
+    wire rd_en_weights = slave_read & (slave_address[9:8] == `WEIGHT_OFFSET;
+    wire rd_en_input = slave_read & (slave_address[9:8] == `INPUT_OFFSET;
+
+    reg ld_fifo;
+    reg ld_weights;
+    reg mult_en;
+    
+    wire rd_data_weights;
+    wire rd_data_input;
+
+    top_tpu top(
+        .wr_en_weights(wr_en_weights),
+        .wr_en_input(wr_en_input),
+        .rd_en_weights(rd_en_weights),
+        .rd_en_input(rd_en_input),
+        .wr_addr_weights(slave_address[7:0]),
+        .wr_addr_input(slave_address[7:0]),
+        .rd_addr_weights(slave_address[7:0]),
+        .rd_addr_input(slave_address[7:0]),
+        .base_addr_weights(slave_address[7:0]),
+        .base_addr_input(slave_address[7:0]),
+        .ld_fifo(ld_fifo),
+        .ld_weights(ld_weights),
+        .mult_en(mult_en),
+        .rd_data_weights(rd_data_weights),
+        .rd_data_input(rd_data_input)
+        //to-do: add outputs
+    );
+
+    always @ (*) begin
+        case(slave_address[9:8]) begin
+            `CONTROL_OFFSET:
+                //slave_read_data = GET FROM ALAN
+            `WEIGHT_OFFSET:
+                slave_read_data = rd_data_weights;
+            `INPUT_OFFSET:
+                slave_read_data = rd_data_input;
+        endcase
+    end
+
+    always @ (posedge clk) begin
+        if (slave_write == 1 & slave_address[9:8] == `CONTROL_OFFSET) begin
+            ld_fifo <= slave_address[2];
+            ld_weights <= slave_address[1];
+            mult_en <= slave_address[0];
+        end
+    end
+
+    // ========================================================================
+    // END TPU
+    // ========================================================================
+
     //Instantiate two memories to hold the matrices and one for results. Each is 32bits wide and 256 deep. Each is dual ported.
     MatrixRAM	matrixA(
         .clock ( clk),
@@ -69,7 +123,8 @@ module matrixMultiplier (
         .wraddress (slave_address[7:0]),
         .wren (matrixB_wren),
         .q (matrixB_dout)
-    );
+    );wire [DATA_WIDTH-1:0] vectorSum;
+
 
     MatrixRAM	matrixResult(
         .clock ( clk),
@@ -120,17 +175,6 @@ module matrixMultiplier (
         wr_en2_3 <= wr_en1_2;
         wr_en3_4 <= wr_en2_3;
 	    wr_en4_5 <= wr_en3_4;
-
-        /*	   if (slave_read ==1) begin
-              case (slave_address[9:8])
-        	`MATRIX_A_ADDRESS_OFFSET: slave_readdata<=matrixA_dout;
-        	`MATRIX_B_ADDRESS_OFFSET: slave_readdata<=matrixB_dout;
-        	`MATRIX_RESULT_ADDRESS_OFFSET:slave_readdata<=matrixResult_dout;
-        	`CONTROL_OFFSET: slave_readdata<= {22'b101001011010010100, slave_address};
-              endcase
-           end
-           else slave_readdata <= 32'hAAAA5555;
-        */
 
         if ((slave_write == 1) && (slave_address[9:8] == `CONTROL_OFFSET)) begin
             case (slave_writedata[1])
