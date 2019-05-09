@@ -6,7 +6,7 @@ libs := `pkg-config opencv --libs` -lpthread -lboost_system
 
 make: train
 
-train: 
+train:
 	$(CXX) train.cpp $(libs) -I $(tiny-dnn-path) -o $@
 
 clean:
