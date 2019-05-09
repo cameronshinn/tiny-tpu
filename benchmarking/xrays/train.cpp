@@ -73,6 +73,27 @@ void convert_image(const std::string& imagefilename,
     data.push_back(d);
 }
 
+// convert all images found in directory to vec_t
+void convert_images(const std::string& directory,
+                    double scale,
+                    int w,
+                    int h,
+                    std::vector<tiny_dnn::vec_t>& data)
+{
+    path dpath(directory);
+    int img_count = 0;
+
+    BOOST_FOREACH(const path& p, 
+                  std::make_pair(directory_iterator(dpath),
+                                 directory_iterator())) {
+        if (is_directory(p)) continue;
+        convert_image(p.string(), scale, w, h, data);
+        std::cout << "Converted image " << ++img_count << "\r";
+    }
+
+    std::cout << std::endl;
+}
+
 void parse_csv_data(std::string csv_path,
                     tiny_dnn::vec_t *training_images,
                     tiny_dnn::vec_t *training_labels)
