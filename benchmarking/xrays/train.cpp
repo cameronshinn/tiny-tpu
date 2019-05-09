@@ -51,7 +51,7 @@ tiny_dnn::vec_t str_to_labels(std::string label_str)
     } 
     
     std::sort(image_labels.begin(), image_labels.end());
-    label_set.push_back(image_labels);
+    //label_set.push_back(image_labels);
     return label_set;
 }
 
@@ -109,27 +109,27 @@ static const bool tbl[] = {
   using fc = tiny_dnn::layers::fc;
   using conv = tiny_dnn::layers::conv;
   using ave_pool = tiny_dnn::layers::ave_pool;
-  using tanh = tiny_dnn::activation::tanh;
+  using relu = tiny_dnn::activation::relu;
 
   using tiny_dnn::core::connection_table;
   using padding = tiny_dnn::padding;
 
   nn << conv(128, 128, 5, 1, 6,   // C1, 1@128x128-in, 6@124x124-out
              padding::valid, true, 1, 1, 1, 1, backend_type)
-     << tanh()
+     << relu()
      << ave_pool(28, 28, 6, 2)   // S2, 6@28x28-in, 6@14x14-out
-     << tanh()
+     << relu()
      << conv(14, 14, 5, 6, 16,   // C3, 6@14x14-in, 16@10x10-out
              connection_table(tbl, 6, 16),
              padding::valid, true, 1, 1, 1, 1, backend_type)
-     << tanh()
+     << relu()
      << ave_pool(10, 10, 16, 2)  // S4, 16@10x10-in, 16@5x5-out
-     << tanh()
+     << relu()
      << conv(5, 5, 5, 16, 120,   // C5, 16@5x5-in, 120@1x1-out
              padding::valid, true, 1, 1, 1, 1, backend_type)
-     << tanh()
-     << fc(120, 10, true, backend_type)  // F6, 120-in, 10-out
-     << tanh();
+     << relu()
+     << fc(120, 15, true, backend_type)  // F6, 120-in, 15-out
+     << relu();
 }
 
 static void train_lenet(const std::string &data_dir_path,
@@ -174,6 +174,7 @@ static void train_lenet(const std::string &data_dir_path,
 
   int epoch = 1;
   // create callback
+  /*
   auto on_enumerate_epoch = [&]() {
     std::cout << "Epoch " << epoch << "/" << n_train_epochs << " finished. "
               << t.elapsed() << "s elapsed." << std::endl;
@@ -187,17 +188,17 @@ static void train_lenet(const std::string &data_dir_path,
 
   auto on_enumerate_minibatch = [&]() { disp += n_minibatch; };
 
-  // training
-  nn.train<tiny_dnn::mse>(optimizer, train_images, train_labels, n_minibatch,
+  // training (using fit for vec_t classification instead of train with label_t)
+  nn.fit<tiny_dnn::mse>(optimizer, train_images, train_labels, n_minibatch,
                           n_train_epochs, on_enumerate_minibatch,
                           on_enumerate_epoch);
 
   std::cout << "end training." << std::endl;
-
+  */
   // test and show results
-  nn.test(test_images, test_labels).print_detail(std::cout);
+  //nn.test(test_images, test_labels).print_detail(std::cout);
   // save network model & trained weights
-  nn.save("LeNet-model");
+  nn.save("xray-model");
 }
 
 static tiny_dnn::core::backend_t parse_backend_name(const std::string &name) {
