@@ -2,7 +2,7 @@ CXX := g++
 CXXFLAGS := -Wall -Werror
 
 tiny-dnn-path := /home/cameron/Documents/tiny-dnn
-libs := `pkg-config opencv --libs` -lpthread -lboost_system
+libs := `pkg-config opencv --libs` -lpthread -lboost_system -lboost_filesystem
 
 make: train
 
