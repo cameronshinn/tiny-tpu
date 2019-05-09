@@ -11,14 +11,14 @@ module rd_control(
   rd_addr // read address the full address should be base addr + wr_addr
   );
 
-  parameter width_height = 4;
+  parameter width_height = 16;
   localparam data_width = 8 * width_height; // number of data bits needed
 
   input clk, reset, active;
-  output reg [3:0] rd_en;
+  output reg [width_height-1:0] rd_en;
   output reg [data_width-1:0] rd_addr;
 
-  reg [3:0] rd_en_c;
+  reg [width_height-1:0] rd_en_c;
   reg [data_width-1:0] rd_addr_c, rd_inc;
   reg rd_dec;
 
@@ -29,7 +29,7 @@ module rd_control(
 
   always@(*) begin
     if(active) begin // start to get read address
-      if(rd_en == 4'b1111) begin
+      if(rd_en == 16'hffff) begin
         rd_dec = 1;
       end
 
@@ -41,17 +41,17 @@ module rd_control(
         rd_en_c = (rd_en << 1) + 1;
       end
 
-      rd_inc = {7'b0, rd_en[3], 7'b0, rd_en[2], 7'b0, rd_en[1], 7'b0, rd_en[0]};
+      rd_inc = {15'b0, rd_en[3], 15'b0, rd_en[2], 15'b0, rd_en[1], 15'b0, rd_en[0]};
       rd_addr_c = rd_inc + rd_addr;
     end
 
     else begin
-      rd_en_c = 4'b0000;
+      rd_en_c = 16'h0000;
     end
 
     if(reset == 1) begin
       rd_addr_c = 0;
-      rd_en_c  = 4'b0000;
+      rd_en_c  = 16'h0000;
       rd_dec = 0;
     end
   end
