@@ -1,8 +1,85 @@
-//train tinydnn to classify chest xray images
+// train Tiny DNN to classify chest xray images
 
 #include <iostream>
+#include <vector>
+
+// includes for image parsing
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <boost/foreach.hpp>
+#include <boost/filesystem.hpp>
 
 #include "tiny_dnn/tiny_dnn.h"
+
+using namespace boost::filesystem;
+
+std::map<std::string, double> classif_nums {
+    {"No Finding",          0},
+    {"Atelectasis",         1},
+    {"Cardiomegaly",        2},
+    {"Consolidation",       3},
+    {"Edema",               4},
+    {"Effusion",            5},
+    {"Emphysema",           6},
+    {"Fibrosis",            7},
+    {"Hernia",              8},
+    {"Infiltration",        9},
+    {"Mass",               10},
+    {"Nodule",             11},
+    {"Pleural_Thickening", 12},
+    {"Pneumonia",          13},
+    {"Pneumothorax",       14}
+};
+
+tiny_dnn::vec_t str_to_labels(std::string label_str)
+{     
+    tiny_dnn::vec_t label_set;
+    std::vector<double> image_labels;
+    std::stringstream str_stream(label_str);
+    std::string tmp_str;
+
+    while(getline(str_stream, tmp_str, '|')) 
+    { 
+      if (classif_nums.find(tmp_str) == classif_nums.end()) {
+        std::cerr << "Find Error: Label "
+                  << tmp_str
+                  << " has no classification"
+                  << std::endl;
+      } else {
+        image_labels.push_back(classif_nums[tmp_str]);
+      }
+    } 
+    
+    std::sort(image_labels.begin(), image_labels.end());
+    label_set.push_back(image_labels);
+    return label_set;
+}
+
+// convert image from filename into a vector for processing
+void convert_image(const std::string& imagefilename,
+                   double scale,
+                   int w,
+                   int h,
+                   std::vector<tiny_dnn::vec_t>& data)
+{
+    auto img = cv::imread(imagefilename, cv::IMREAD_GRAYSCALE);
+    if (img.data == nullptr) return; // cannot open, or it's not an image
+
+    cv::Mat_<uint8_t> resized;
+    cv::resize(img, resized, cv::Size(w, h));
+    tiny_dnn::vec_t d;
+
+    std::transform(resized.begin(), resized.end(), std::back_inserter(d),
+                   [=](uint8_t c) { return c * scale; });
+    data.push_back(d);
+}
+
+void parse_csv_data(std::string csv_path,
+                    tiny_dnn::vec_t *training_images,
+                    tiny_dnn::vec_t *training_labels)
+{
+  
+}
 
 static void construct_net(tiny_dnn::network<tiny_dnn::sequential> &nn,
                           tiny_dnn::core::backend_t backend_type) {
@@ -10,7 +87,7 @@ static void construct_net(tiny_dnn::network<tiny_dnn::sequential> &nn,
 #define O true
 #define X false
   // clang-format off
-  //6 rows x 16 cols? why?
+  // 6 rows x 16 cols?
 static const bool tbl[] = {
     O, X, X, X, O, O, O, X, X, O, O, O, O, X, O, O,
     O, O, X, X, X, O, O, O, X, X, O, O, O, O, X, O,
@@ -40,15 +117,15 @@ static const bool tbl[] = {
   nn << conv(128, 128, 5, 1, 6,   // C1, 1@128x128-in, 6@124x124-out
              padding::valid, true, 1, 1, 1, 1, backend_type)
      << tanh()
-    //<< ave_pool(124, 124, 6, 2)   // S2, 6@124x124-in, 6@62x62-out
+     << ave_pool(28, 28, 6, 2)   // S2, 6@28x28-in, 6@14x14-out
      << tanh()
-     << conv(124, 124, 5, 6, 16,   // C3, 6@124x124-in, 16@122x122-out
+     << conv(14, 14, 5, 6, 16,   // C3, 6@14x14-in, 16@10x10-out
              connection_table(tbl, 6, 16),
              padding::valid, true, 1, 1, 1, 1, backend_type)
      << tanh()
-    //<< ave_pool(58, 58, 16, 2)  // S4, 16@58x58-in, 16@29x29-out
+     << ave_pool(10, 10, 16, 2)  // S4, 16@10x10-in, 16@5x5-out
      << tanh()
-     << conv(122, 122, 5, 16, 120,   // C5, 16@122x122-in, 120@120x120-out
+     << conv(5, 5, 5, 16, 120,   // C5, 16@5x5-in, 120@1x1-out
              padding::valid, true, 1, 1, 1, 1, backend_type)
      << tanh()
      << fc(120, 10, true, backend_type)  // F6, 120-in, 10-out
@@ -69,10 +146,11 @@ static void train_lenet(const std::string &data_dir_path,
   std::cout << "load models..." << std::endl;
 
   // load MNIST dataset
-  std::vector<tiny_dnn::label_t> train_labels, test_labels;
+  std::vector<tiny_dnn::vec_t> train_labels, test_labels;
   std::vector<tiny_dnn::vec_t> train_images, test_images;
 
-  /* tiny_dnn::parse_mnist_labels(data_dir_path + "/train-labels.idx1-ubyte",
+  /*
+  tiny_dnn::parse_mnist_labels(data_dir_path + "/train-labels.idx1-ubyte",
                                &train_labels);
   tiny_dnn::parse_mnist_images(data_dir_path + "/train-images.idx3-ubyte",
                                &train_images, -1.0, 1.0, 2, 2);
@@ -82,7 +160,9 @@ static void train_lenet(const std::string &data_dir_path,
                                &test_images, -1.0, 1.0, 2, 2);
   */
 
-  
+  // load training images and labels
+  // load testing images and labels
+
   std::cout << "start training" << std::endl;
 
   tiny_dnn::progress_display disp(train_images.size());
