@@ -13,30 +13,29 @@
 
 using namespace boost::filesystem;
 
-std::map<std::string, double> classif_nums {
-    {"No Finding",          0},
-    {"Atelectasis",         1},
-    {"Cardiomegaly",        2},
-    {"Consolidation",       3},
-    {"Edema",               4},
-    {"Effusion",            5},
-    {"Emphysema",           6},
-    {"Fibrosis",            7},
-    {"Hernia",              8},
-    {"Infiltration",        9},
-    {"Mass",               10},
-    {"Nodule",             11},
-    {"Pleural_Thickening", 12},
-    {"Pneumonia",          13},
-    {"Pneumothorax",       14}
-};
-
 tiny_dnn::vec_t str_to_labels(std::string label_str)
 {     
     tiny_dnn::vec_t label_set;
     std::vector<double> image_labels;
     std::stringstream str_stream(label_str);
     std::string tmp_str;
+    std::map<std::string, double> classif_nums {
+        {"No Finding",          0},
+        {"Atelectasis",         1},
+        {"Cardiomegaly",        2},
+        {"Consolidation",       3},
+        {"Edema",               4},
+        {"Effusion",            5},
+        {"Emphysema",           6},
+        {"Fibrosis",            7},
+        {"Hernia",              8},
+        {"Infiltration",        9},
+        {"Mass",               10},
+        {"Nodule",             11},
+        {"Pleural_Thickening", 12},
+        {"Pneumonia",          13},
+        {"Pneumothorax",       14}
+    };
 
     while (getline(str_stream, tmp_str, '|')) { 
         if (classif_nums.find(tmp_str) == classif_nums.end()) {
