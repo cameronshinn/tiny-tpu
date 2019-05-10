@@ -90,16 +90,33 @@ void convert_images(const std::string& directory,
         convert_image(p.string(), scale, w, h, data);
         std::cout << "Converted image " << ++img_count << "\r";
     }
-
-    std::cout << std::endl;
 }
 
-void parse_csv_data(std::string csv_path,
+void parse_csv_data(const std::string& directory,
+                    const std::string csv_path,
                     tiny_dnn::vec_t *training_images,
                     tiny_dnn::vec_t *training_labels)
 {
-  
-}
+    io::CSVReader<3> label_csv(csv_path);
+    label_csv.read_header(io::ignore_extra_column,
+                          "Image Index",
+                          "Finding Labels");
+    std::string filename;
+    std::string classif_str;
+
+    i = 0; // counter for saving every 10th image for testing
+
+    while (label_csv.read_row(filename, classif)) {
+        if (i == 0) { // save for testing
+
+        } else { // use for training
+
+        }
+        str_to_labels(classif);
+
+        i = (i + 1) % 10;
+    }
+ }
 
 static void construct_net(tiny_dnn::network<tiny_dnn::sequential> &nn,
                           tiny_dnn::core::backend_t backend_type)
