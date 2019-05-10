@@ -141,18 +141,18 @@ static void construct_net(tiny_dnn::network<tiny_dnn::sequential> &nn,
     nn << conv(128, 128, 5, 1, 6,   // C1, 1@128x128-in, 6@124x124-out
                padding::valid, true, 1, 1, 1, 1, backend_type)
        << relu()
-       << ave_pool(28, 28, 6, 2)   // S2, 6@28x28-in, 6@14x14-out
+       << ave_pool(124, 124, 6, 2)   // S2, 6@124x124-in, 6@62x62-out
        << relu()
-       << conv(14, 14, 5, 6, 16,   // C3, 6@14x14-in, 16@10x10-out
+       << conv(62, 62, 5, 6, 16,   // C3, 6@62x62-in, 16@58x58-out
                connection_table(tbl, 6, 16),
                padding::valid, true, 1, 1, 1, 1, backend_type)
        << relu()
-       << ave_pool(10, 10, 16, 2)  // S4, 16@10x10-in, 16@5x5-out
+       << ave_pool(58, 58, 16, 2)  // S4, 16@58x58-in, 16@29x29-out
        << relu()
-       << conv(5, 5, 5, 16, 120,   // C5, 16@5x5-in, 120@1x1-out
+       << conv(29, 29, 5, 16, 2,   // C5, 16@29x29-in, 1250@1x1-out
                padding::valid, true, 1, 1, 1, 1, backend_type)
        << relu()
-       << fc(120, 15, true, backend_type)  // F6, 120-in, 15-out
+       << fc(1250, 15, true, backend_type)  // F6, 1250-in, 15-out
        << relu();
 }
 
