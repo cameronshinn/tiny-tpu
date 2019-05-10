@@ -10,7 +10,7 @@
 #include <boost/filesystem.hpp>
 
 #include "tiny_dnn/tiny_dnn.h"
-#include "csv.h"
+#include "csv.h" // csv parsing
 
 using namespace boost::filesystem;
 
@@ -85,18 +85,20 @@ void parse_csv_data(const std::string directory,
                           "Finding Labels");
     std::string filename;
     std::string classif_str;
+    std::string img_path;
     int i = 0; // counter for saving every 10th image for testing
 
     while (label_csv.read_row(filename, classif_str)) {
-        if (i == 0) { // save for testing
-            convert_image(directory + "\\" + filename, 1, 128, 128,
+        img_path = directory + "\\" + filename;
+        /*if (i == 0) { // save for testing
+            convert_image(&img_path, 1, 128, 128,
                           testing_images);
             testing_labels->push_back(str_to_labels(classif_str));
         } else { // use for training
-            convert_image(directory + "\\" + filename, 1, 128, 128,
+            convert_image(&img_path, 1, 128, 128,
                           training_images);
             training_labels->push_back(str_to_labels(classif_str));
-        }
+        }*/
 
         i = (i + 1) % 10;
     }
@@ -172,12 +174,12 @@ static void train_lenet(const std::string &data_dir_path,
     std::vector<tiny_dnn::vec_t> train_labels, test_labels;
     std::vector<tiny_dnn::vec_t> train_images, test_images;
 
-    parse_csv_data(data_dir_path,
+    /*parse_csv_data(data_dir_path,
                    data_dir_path + "\\..\\" + "sample_labels.csv",
                    train_images,
                    train_labels,
                    test_images,
-                   test_labels);
+                   test_labels);*/
 
     std::cout << "start training" << std::endl;
 
