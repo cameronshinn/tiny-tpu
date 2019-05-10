@@ -10,13 +10,13 @@
 #include <boost/filesystem.hpp>
 
 #include "tiny_dnn/tiny_dnn.h"
+#include "csv.h"
 
 using namespace boost::filesystem;
 
 tiny_dnn::vec_t str_to_labels(std::string label_str)
 {     
     tiny_dnn::vec_t label_set;
-    std::vector<double> image_labels;
     std::stringstream str_stream(label_str);
     std::string tmp_str;
     std::map<std::string, double> classif_nums {
@@ -44,12 +44,11 @@ tiny_dnn::vec_t str_to_labels(std::string label_str)
                       << " has no classification"
                       << std::endl;
         } else {
-            image_labels.push_back(classif_nums[tmp_str]);
+            label_set.push_back(classif_nums[tmp_str]);
         }
     } 
     
-    std::sort(image_labels.begin(), image_labels.end());
-    //label_set.push_back(image_labels);
+    std::sort(label_set.begin(), label_set.end());
     return label_set;
 }
 
@@ -73,46 +72,31 @@ void convert_image(const std::string& imagefilename,
     data.push_back(d);
 }
 
-// convert all images found in directory to vec_t
-void convert_images(const std::string& directory,
-                    double scale,
-                    int w,
-                    int h,
-                    std::vector<tiny_dnn::vec_t>& data)
-{
-    path dpath(directory);
-    int img_count = 0;
-
-    BOOST_FOREACH(const path& p, 
-                  std::make_pair(directory_iterator(dpath),
-                                 directory_iterator())) {
-        if (is_directory(p)) continue;
-        convert_image(p.string(), scale, w, h, data);
-        std::cout << "Converted image " << ++img_count << "\r";
-    }
-}
-
-void parse_csv_data(const std::string& directory,
+void parse_csv_data(const std::string directory,
                     const std::string csv_path,
-                    tiny_dnn::vec_t *training_images,
-                    tiny_dnn::vec_t *training_labels)
+                    std::vector<tiny_dnn::vec_t> *training_images,
+                    std::vector<tiny_dnn::vec_t> *training_labels,
+                    std::vector<tiny_dnn::vec_t> *testing_images,
+                    std::vector<tiny_dnn::vec_t> *testing_labels)
 {
-    io::CSVReader<3> label_csv(csv_path);
+    io::CSVReader<2> label_csv(csv_path);
     label_csv.read_header(io::ignore_extra_column,
                           "Image Index",
                           "Finding Labels");
     std::string filename;
     std::string classif_str;
+    int i = 0; // counter for saving every 10th image for testing
 
-    i = 0; // counter for saving every 10th image for testing
-
-    while (label_csv.read_row(filename, classif)) {
+    while (label_csv.read_row(filename, classif_str)) {
         if (i == 0) { // save for testing
-
+            convert_image(directory + "\\" + filename, 1, 128, 128,
+                          testing_images);
+            testing_labels->push_back(str_to_labels(classif_str));
         } else { // use for training
-
+            convert_image(directory + "\\" + filename, 1, 128, 128,
+                          training_images);
+            training_labels->push_back(str_to_labels(classif_str));
         }
-        str_to_labels(classif);
 
         i = (i + 1) % 10;
     }
@@ -188,19 +172,12 @@ static void train_lenet(const std::string &data_dir_path,
     std::vector<tiny_dnn::vec_t> train_labels, test_labels;
     std::vector<tiny_dnn::vec_t> train_images, test_images;
 
-    /*
-    tiny_dnn::parse_mnist_labels(data_dir_path + "/train-labels.idx1-ubyte",
-                               &train_labels);
-    tiny_dnn::parse_mnist_images(data_dir_path + "/train-images.idx3-ubyte",
-                               &train_images, -1.0, 1.0, 2, 2);
-    tiny_dnn::parse_mnist_labels(data_dir_path + "/t10k-labels.idx1-ubyte",
-                               &test_labels);
-    tiny_dnn::parse_mnist_images(data_dir_path + "/t10k-images.idx3-ubyte",
-                               &test_images, -1.0, 1.0, 2, 2);
-    */
-
-    // load training images and labels
-    // load testing images and labels
+    parse_csv_data(data_dir_path,
+                   data_dir_path + "\\..\\" + "sample_labels.csv",
+                   train_images,
+                   train_labels,
+                   test_images,
+                   test_labels);
 
     std::cout << "start training" << std::endl;
 
