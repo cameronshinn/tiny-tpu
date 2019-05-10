@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -Wall -Werror
+CXXFLAGS := -Wall
 
 TINYDNN_PATH := ~/Documents/tiny-dnn
 libs := `pkg-config opencv --libs` -lpthread -lboost_system -lboost_filesystem
@@ -7,7 +7,7 @@ libs := `pkg-config opencv --libs` -lpthread -lboost_system -lboost_filesystem
 make: train
 
 train: train.cpp
-	$(CXX) $(libs) -I $(TINYDNN_PATH) -o $@ $^
+	$(CXX) $(CXXFLAGS) -I $(TINYDNN_PATH) -o $@ $^ $(libs)
 
 clean:
 	rm -f train

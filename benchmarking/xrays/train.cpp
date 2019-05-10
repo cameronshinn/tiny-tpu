@@ -46,8 +46,7 @@ tiny_dnn::vec_t str_to_labels(std::string label_str)
         } else {
             label_set.push_back(classif_nums[tmp_str]);
         }
-    } 
-    
+    }
     std::sort(label_set.begin(), label_set.end());
     return label_set;
 }
@@ -89,18 +88,18 @@ void parse_csv_data(const std::string directory,
     int i = 0; // counter for saving every 10th image for testing
 
     while (label_csv.read_row(filename, classif_str)) {
-        img_path = directory + "\\" + filename;
-        /*if (i == 0) { // save for testing
-            convert_image(&img_path, 1, 128, 128,
-                          testing_images);
+        img_path = directory + "/" + filename;
+        std::cout << img_path << std::endl;
+        if (i == 0) { // save for testing
+            convert_image(img_path, 1, 128, 128,
+                          *testing_images);
             testing_labels->push_back(str_to_labels(classif_str));
         } else { // use for training
-            convert_image(&img_path, 1, 128, 128,
-                          training_images);
+            convert_image(img_path, 1, 128, 128,
+                          *training_images);
             training_labels->push_back(str_to_labels(classif_str));
-        }*/
-
-        i = (i + 1) % 10;
+        }
+        std::cout << std::endl;
     }
  }
 
@@ -174,12 +173,12 @@ static void train_lenet(const std::string &data_dir_path,
     std::vector<tiny_dnn::vec_t> train_labels, test_labels;
     std::vector<tiny_dnn::vec_t> train_images, test_images;
 
-    /*parse_csv_data(data_dir_path,
-                   data_dir_path + "\\..\\" + "sample_labels.csv",
-                   train_images,
-                   train_labels,
-                   test_images,
-                   test_labels);*/
+    parse_csv_data(data_dir_path,
+                   data_dir_path + "/../" + "sample_labels.csv",
+                   &train_images,
+                   &train_labels,
+                   &test_images,
+                   &test_labels);
 
     std::cout << "start training" << std::endl;
 
@@ -199,9 +198,11 @@ static void train_lenet(const std::string &data_dir_path,
         ++epoch;
 
         // show loss (can't figure out how to show accuracy)
-        std::cout << "Loss: "
+        //std::cout << test_images.size() << " " << test_labels.size() << std::endl;
+
+        /*std::cout << "Loss: "
                   << nn.get_loss<tiny_dnn::mse>(test_images, test_labels)
-                  << std::endl;
+                  << std::endl;*/
 
         disp.restart(train_images.size());
         t.restart();
@@ -217,9 +218,9 @@ static void train_lenet(const std::string &data_dir_path,
     std::cout << "end training." << std::endl;
 
     // test and show resulting loss (can't figure out how to show accuracy)
-    std::cout << "Loss: "
+    /*std::cout << "Loss: "
               << nn.get_loss<tiny_dnn::mse>(test_images, test_labels)
-              << std::endl;
+              << std::endl;*/
     // save network model & trained weights
     nn.save("xray-diagnosis-model");
 }
@@ -243,7 +244,7 @@ static void usage(const char *argv0)
 {
     std::cout << "Usage: " << argv0 << " --data_path path_to_dataset_folder"
               << " --learning_rate 1"
-              << " --epochs 30"
+              << " --epochs 1"
               << " --minibatch_size 16"
               << " --backend_type internal" << std::endl;
 }
@@ -251,7 +252,7 @@ static void usage(const char *argv0)
 int main(int argc, char **argv)
 {
     double learning_rate                   = 1;
-    int epochs                             = 30;
+    int epochs                             = 1;
     std::string data_path                  = "";
     int minibatch_size                     = 16;
     tiny_dnn::core::backend_t backend_type = tiny_dnn::core::default_engine();
