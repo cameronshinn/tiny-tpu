@@ -99,6 +99,7 @@ void parse_csv_data(const std::string directory,
             training_labels->push_back(str_to_labels(classif_str));
         }
         std::cout << "converting image " << filename << "\r";
+        i = (i + 1) % 10;
     }
     std::cout << std::endl;
 }
@@ -198,11 +199,9 @@ static void train_lenet(const std::string &data_dir_path,
         ++epoch;
 
         // show loss (can't figure out how to show accuracy)
-        /*
         std::cout << "Loss: "
                   << nn.get_loss<tiny_dnn::mse>(test_images, test_labels) // causing runtime error
                   << std::endl;
-        */
 
         disp.restart(train_images.size());
         t.restart();
@@ -218,11 +217,10 @@ static void train_lenet(const std::string &data_dir_path,
     std::cout << "end training." << std::endl;
 
     // test and show resulting loss (can't figure out how to show accuracy)
-    /*
     std::cout << "Loss: "
               << nn.get_loss<tiny_dnn::mse>(test_images, test_labels)
               << std::endl;
-    */
+    
     // save network model & trained weights
     nn.save("xray-diagnosis-model");
 }
