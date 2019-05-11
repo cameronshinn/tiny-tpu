@@ -199,9 +199,11 @@ static void train_lenet(const std::string &data_dir_path,
         ++epoch;
 
         // show loss (can't figure out how to show accuracy)
+        /*
         std::cout << "Loss: "
                   << nn.get_loss<tiny_dnn::mse>(test_images, test_labels) // causing runtime error
                   << std::endl;
+        */
 
         disp.restart(train_images.size());
         t.restart();
@@ -217,9 +219,11 @@ static void train_lenet(const std::string &data_dir_path,
     std::cout << "end training." << std::endl;
 
     // test and show resulting loss (can't figure out how to show accuracy)
+    /*
     std::cout << "Loss: "
               << nn.get_loss<tiny_dnn::mse>(test_images, test_labels)
               << std::endl;
+    */
     
     // save network model & trained weights
     nn.save("xray-diagnosis-model");
