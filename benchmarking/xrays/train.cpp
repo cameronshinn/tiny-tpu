@@ -14,12 +14,17 @@
 
 using namespace boost::filesystem;
 
+void randomize_csv(std::string csv_path)
+{
+
+}
+
 tiny_dnn::vec_t str_to_labels(std::string label_str)
 {     
-    tiny_dnn::vec_t label_set;
+    tiny_dnn::vec_t label_set(15, 0.0);
     std::stringstream str_stream(label_str);
     std::string tmp_str;
-    std::map<std::string, double> classif_nums {
+    std::map<std::string, double> classif_table {
         {"No Finding",          0},
         {"Atelectasis",         1},
         {"Cardiomegaly",        2},
@@ -38,16 +43,16 @@ tiny_dnn::vec_t str_to_labels(std::string label_str)
     };
 
     while (getline(str_stream, tmp_str, '|')) { 
-        if (classif_nums.find(tmp_str) == classif_nums.end()) {
+        if (classif_table.find(tmp_str) == classif_table.end()) {
             std::cerr << "Find Error: Label "
                       << tmp_str
                       << " has no classification"
                       << std::endl;
         } else {
-            label_set.push_back(classif_nums[tmp_str]);
+            label_set[classif_table[tmp_str]] = 1;
         }
     }
-    std::sort(label_set.begin(), label_set.end());
+    //std::sort(label_set.begin(), label_set.end());
     return label_set;
 }
 
@@ -194,16 +199,14 @@ static void train_lenet(const std::string &data_dir_path,
     // create callback
 
     auto on_enumerate_epoch = [&]() {
-        std::cout << "Epoch " << epoch << "/" << n_train_epochs << " finished. "
+        std::cout << std::endl << "Epoch " << epoch << "/" << n_train_epochs << " finished. "
                   << t.elapsed() << "s elapsed." << std::endl;
         ++epoch;
 
         // show loss (can't figure out how to show accuracy)
-        /*
         std::cout << "Loss: "
                   << nn.get_loss<tiny_dnn::mse>(test_images, test_labels) // causing runtime error
                   << std::endl;
-        */
 
         disp.restart(train_images.size());
         t.restart();
@@ -219,11 +222,9 @@ static void train_lenet(const std::string &data_dir_path,
     std::cout << "end training." << std::endl;
 
     // test and show resulting loss (can't figure out how to show accuracy)
-    /*
     std::cout << "Loss: "
               << nn.get_loss<tiny_dnn::mse>(test_images, test_labels)
               << std::endl;
-    */
     
     // save network model & trained weights
     nn.save("xray-diagnosis-model");
