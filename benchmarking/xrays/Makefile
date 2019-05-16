@@ -1,13 +1,20 @@
 CXX := g++
 CXXFLAGS := -Wall
 
-TINYDNN_PATH := ~/Documents/tiny-dnn
-libs := `pkg-config opencv --libs` -lpthread -lboost_system -lboost_filesystem
+ALL := train test
 
-make: train
+TINYDNN_PATH := ~/Documents/tiny-dnn
+OPENCV := `pkg-config opencv --libs`
+PTHREAD := -lpthread
+BOOST := -lboost_system -lboost_filesystem
+
+make: $(ALL)
 
 train: train.cpp
-	$(CXX) $(CXXFLAGS) -I $(TINYDNN_PATH) -o $@ $^ $(libs)
+	$(CXX) $(CXXFLAGS) -I $(TINYDNN_PATH) -o $@ $^ $(PTHREAD) $(OPENCV) $(BOOST)
+
+test: test.cpp
+	$(CXX) $(CXXFLAGS) -DDNN_USE_IMAGE_API -I $(TINYDNN_PATH) -o $@ $^ $(PTHREAD) $(OPENCV) $(BOOST)
 
 clean:
-	rm -f train
+	rm -f $(ALL) *.png
