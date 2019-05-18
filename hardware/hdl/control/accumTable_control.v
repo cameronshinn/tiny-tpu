@@ -1,6 +1,16 @@
 // accumTable_control.v
 // Cameron Shinn
 
+/*
+This module is a latch-based control system for addressing within the
+accumulator table. Since The addressing for each column of the accumulator table
+is the same in successive clock cycles (column M writes to address A in clock
+cycle N, and column M+1 writes to address A in clock cycle N+1), it is only
+necessary to control the addressing of the first column. The addressing of the
+first column is passed along the pipeline, where a column receives the address
+from the adjacent column in the following clock cycle.
+*/
+
 module accumTable_control(clk, reset, wr_en_in, sys_arr_count, submat_m, submat_n, wr_en_out, wr_addr_out);
 
     parameter DATA_WIDTH = 8; // number of bits for one piece of data
