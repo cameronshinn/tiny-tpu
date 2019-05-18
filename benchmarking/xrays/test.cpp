@@ -31,8 +31,8 @@ void convert_image(const std::string& imagefilename,
                    [=](uint8_t c) { return c * scale; });
 
     for (unsigned int i = 0; i < 16384; i++) {
-        data[i] = (data[i] / 128) - 1;
-        //data[i] /= 255;
+        //data[i] = (data[i] / 128) - 1;
+        data[i] /= 255;
     }
 }
 
