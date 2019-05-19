@@ -68,6 +68,9 @@ module top (
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_data;
     wire [WIDTH_HEIGHT - 1:0] fifo_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
+    wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] sysArr_to_outputMem;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr;
 
 // ========================================
 // ------- Module Instantiations ----------
@@ -151,20 +154,22 @@ module top (
     // =========================================
     memArr outputMem (
         .clk    (clk),
-        .rd_en  (),                             // from interconnect
-        .wr_en  (),                             // from outputMemControl
-        .wr_data(),                             // from sysArr
-        .rd_addr(),                             // from interconnect
-        .wr_addr(),                             // outputMemControl + base from interconnect
-        .rd_data()                              // to interconect
+        .rd_en  (outputMem_rd_en),              // from interconnect
+        .wr_en  (outputMem_wr_en),              // from outputMemControl
+        .wr_data(sysArr_to_outputMem),          // from sysArr
+        .rd_addr(outputMem_rd_addr),            // from interconnect
+        .wr_addr(outptuMem_wr_addr_base + outputMem_wr_addr_offset), // outputMemControl + base from interconnect
+        .rd_data(outputMem_rd_data)             // to interconect
     );
+    defparam outputMem.width_height = WIDTH_HEIGHT;
 
     wr_control outputMemControl (
         .clk    (clk),
         .reset  (reset),
         .active (),                             // ???? don't know source yet (sysArr?)
-        .wr_en  (),                             // to outputMem
-        .wr_addr()                              // to outputMem
+        .wr_en  (outputMem_wr_en),              // to outputMem
+        .wr_addr(outputMem_wr_addr_offset)      // to outputMem
     );
+    defparam outputMemControl.width_height = WIDTH_HEIGHT;
 
 endmodule // top
