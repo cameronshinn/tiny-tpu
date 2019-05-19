@@ -81,7 +81,7 @@ module top (
 // ========================================
     wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr_offset;
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_data;
     wire [WIDTH_HEIGHT - 1:0] fifo_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
