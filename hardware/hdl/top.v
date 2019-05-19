@@ -108,7 +108,7 @@ module top (
         .activeout(),                           // Not used
         .dataout  ()                            // Not used
     );
-    defparam sysArr.width_heght = WIDTH_HEIGHT;
+    defparam sysArr.width_height = WIDTH_HEIGHT;
 
 
     // =========================================
