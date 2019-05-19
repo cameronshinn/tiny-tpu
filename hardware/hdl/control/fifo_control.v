@@ -33,7 +33,9 @@ module fifo_control(
       done = 0;
     end
 
+    // start generate fifo_en signal 
     if(fifo_start) begin
+      // start stagger loading, working for successive fifo loading. 
       if(stagger_load) begin
         if(fifo_en == 16'hffff) begin
           fifo_dec = 1;
@@ -53,6 +55,8 @@ module fifo_control(
         end
       end
 
+      // row loading. use for the first time loading of fifo.
+      // need fifo_width clock cycle to finish
       else begin
         fifo_en = 16'hffff;
         if(count >= fifo_width) begin
