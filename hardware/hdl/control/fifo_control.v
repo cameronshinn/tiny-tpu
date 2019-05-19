@@ -10,7 +10,7 @@ module fifo_control(
   done
   );
 
-  parameter fifo_width = 4;
+  parameter fifo_width = 16;
 
   input clk, reset, active;
   output reg [fifo_width-1:0] fifo_en;
@@ -36,13 +36,13 @@ module fifo_control(
       end
 
       Start: begin
-        if(fifo_en == 4'b1111) begin
+        if(fifo_en == 16'hffff) begin
           fifo_dec = 1;
         end
 
         if(fifo_dec) begin
           fifo_en_c = fifo_en << 1;
-          if(fifo_en == 4'b0000) begin
+          if(fifo_en == 16'h0000) begin
             done = 1;
           end
         end
@@ -54,7 +54,7 @@ module fifo_control(
       endcase
 
     if(reset) begin
-      fifo_en_c = 4'b0000;
+      fifo_en_c = 16'h0000;
       state_c = Hold;
       done = 0;
     end
