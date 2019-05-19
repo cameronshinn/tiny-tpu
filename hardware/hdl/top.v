@@ -1,7 +1,25 @@
 module top (
     clk,
     reset,
+    active,
+    inputMem_wr_en,
+    inputMem_wr_addr,
+    inputMem_wr_data,
+    inputMem_rd_addr_base,
+    outputMem_rd_en,
+    outputMem_rd_addr,
+    outputMem_wr_addr_base,
+    outputMem_rd_data,
+    weightMem_wr_en,
+    weightMem_wr_addr,
+    weightMem_wr_data,
+    weightMem_rd_en,
+    weightMem_rd_addr,
+    load_weights_to_aray,
+    fifo_done,
+    weight_write
  );
+
 
 // ========================================
 // ---------- Parameters ------------------
@@ -9,10 +27,10 @@ module top (
 
     parameter WIDTH_HEIGHT = 16;
 
+
 // ========================================
 // ------------ Inputs --------------------
 // ========================================
-
     input clk;
     input reset;
 
@@ -27,14 +45,12 @@ module top (
     // base read address (input) for matrix multiply
     input [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr_base;
 
-
     // output memory signals
     input [WIDTH_HEIGHT - 1:0] outputMem_rd_en;
     input [WIDTH_HEIGHT * 8 - 1:0] outputMem_rd_addr;
 
     // base write address (output) for matrix multiply
     input [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_base;
-
 
     // weight memory signals
     input [WIDTH_HEIGHT - 1:0] weightMem_wr_en;
@@ -46,22 +62,23 @@ module top (
     // FIFO stuff
     input load_weights_to_array;
 
+    // commit FIFO outputs to systolic array
+    input [WIDTH_HEIGHT - 1:0] weight_write;
 
 
 // ========================================
 // ------------ Outputs -------------------
 // ========================================
-
     // tell user when loading weights is done
     output fifo_done;
 
     // output memory read port
     output [(WIDTH_HEIGHT * 8) - 1:0] outputMem_rd_data;
 
+
 // ========================================
 // ------- Local Wires and Regs -----------
 // ========================================
-
     wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr;
@@ -71,11 +88,12 @@ module top (
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] sysArr_to_outputMem;
     wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_data;
+
 
 // ========================================
 // ------- Module Instantiations ----------
 // ========================================
-
 
     sysArr sysArr(
         .clk      (clk),
@@ -83,14 +101,15 @@ module top (
         .datain   (inputMem_to_sysArr),         // from input memory
         .win      (weightFIFO_to_sysArr)        // from weight FIFO's
         .sumin    (),                           // Can be used for biases
-        .wwrite   (),                           // from control
-        .maccout  (),                           // to output memory
+        .wwrite   (weight_write),               // from control
+        .maccout  (outputMem_wr_data),          // to output memory
         .wout     (),                           // Not used
         .wwriteout(),                           // Not used
         .activeout(),                           // Not used
         .dataout  ()                            // Not used
     );
     defparam sysArr.width_heght = WIDTH_HEIGHT;
+
 
     // =========================================
     // --------- Input Side of Array -----------
@@ -114,6 +133,7 @@ module top (
         .rd_addr(inputMem_rd_addr_offset)       // to input memory
     );
     defparam inputMemControl.width_height = WIDTH_HEIGHT;
+
 
     // ========================================
     // --------- Weight side of Array ---------
@@ -149,6 +169,7 @@ module top (
     defparam weightFIFO.FIFO_INPUTS = WIDTH_HEIGHT;
     defparam weightFIFO.FIFO_DEPTH = WIDTH_HEIGHT;
 
+
     // =========================================
     // --------- Output side of array ----------
     // =========================================
@@ -171,5 +192,4 @@ module top (
         .wr_addr(outputMem_wr_addr_offset)      // to outputMem
     );
     defparam outputMemControl.width_height = WIDTH_HEIGHT;
-
 endmodule // top
