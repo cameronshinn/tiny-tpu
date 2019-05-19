@@ -15,7 +15,7 @@ module top (
     weightMem_wr_data,
     weightMem_rd_en,
     weightMem_rd_addr,
-    load_weights_to_aray,
+    load_weights_to_array,
     fifo_done,
     weight_write
  );
@@ -47,7 +47,7 @@ module top (
 
     // output memory signals
     input [WIDTH_HEIGHT - 1:0] outputMem_rd_en;
-    input [WIDTH_HEIGHT * 8 - 1:0] outputMem_rd_addr;
+    input [(WIDTH_HEIGHT * 8) - 1:0] outputMem_rd_addr;
 
     // base write address (output) for matrix multiply
     input [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_base;
@@ -57,7 +57,7 @@ module top (
     input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_addr;
     input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_data;
     input [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
-    input [(WIDHT_HEIGTH * 8) - 1:0] weightMem_rd_addr;
+    input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr;
 
     // FIFO stuff
     input load_weights_to_array;
@@ -99,7 +99,7 @@ module top (
         .clk      (clk),
         .active   (active),                     // from control or software
         .datain   (inputMem_to_sysArr),         // from input memory
-        .win      (weightFIFO_to_sysArr)        // from weight FIFO's
+        .win      (weightFIFO_to_sysArr),        // from weight FIFO's
         .sumin    (),                           // Can be used for biases
         .wwrite   (weight_write),               // from control
         .maccout  (outputMem_wr_data),          // to output memory
