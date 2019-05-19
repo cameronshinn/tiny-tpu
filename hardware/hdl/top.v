@@ -87,7 +87,7 @@ module top (
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] sysArr_to_outputMem;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_offset;
     wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_data;
 
 
@@ -179,7 +179,7 @@ module top (
         .wr_en  (outputMem_wr_en),              // from outputMemControl
         .wr_data(sysArr_to_outputMem),          // from sysArr
         .rd_addr(outputMem_rd_addr),            // from interconnect
-        .wr_addr(outptuMem_wr_addr_base + outputMem_wr_addr_offset), // outputMemControl + base from interconnect
+        .wr_addr(outputMem_wr_addr_base + outputMem_wr_addr_offset), // outputMemControl + base from interconnect
         .rd_data(outputMem_rd_data)             // to interconect
     );
     defparam outputMem.width_height = WIDTH_HEIGHT;
