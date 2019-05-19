@@ -65,6 +65,9 @@ module top (
     wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_data;
+    wire [WIDTH_HEIGHT - 1:0] fifo_en;
+    wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
 
 // ========================================
 // ------- Module Instantiations ----------
@@ -73,9 +76,9 @@ module top (
 
     sysArr sysArr(
         .clk      (clk),
-        .active   (active),                      // from control or software
+        .active   (active),                     // from control or software
         .datain   (inputMem_to_sysArr),         // from input memory
-        .win      ()                            // from weight FIFO's
+        .win      (weightFIFO_to_sysArr)        // from weight FIFO's
         .sumin    (),                           // Can be used for biases
         .wwrite   (),                           // from control
         .maccout  (),                           // to output memory
@@ -114,30 +117,34 @@ module top (
     // ========================================
     memArr weightMem(
         .clk    (clk),
-        .rd_en  (),                             // from interconnect
-        .wr_en  (),                             // from interconnect
-        .wr_data(),                             // from interconnect
-        .rd_addr(),                             // from interconnect
-        .wr_addr(),                             // from interconnect
-        .rd_data()                              // to weightFIFO
+        .rd_en  (weightMem_rd_en),              // from interconnect
+        .wr_en  (weightMem_wr_en),              // from interconnect
+        .wr_data(weightMem_wr_data),            // from interconnect
+        .rd_addr(weightMem_rd_addr),            // from interconnect
+        .wr_addr(weightMem_wr_addr),            // from interconnect
+        .rd_data(weightMem_rd_data)             // to weightFIFO
     );
     defparam weightMem.width_height = WIDTH_HEIGHT;
 
     fifo_control fifoControl(
         .clk    (clk),
         .reset  (reset),
-        .active (),                             // from interconnect (start loading weights to array)
-        .fifo_en(),                             // to weightFIFO's
+        .active (load_weights_to_array),        // from interconnect (start loading weights to array)
+        .fifo_en(fifo_en),                      // to weightFIFO's
         .done   (fifo_done)                     // output to interconnect
     );
+    defparam fifoControl.fifo_width = WIDTH_HEIGHT;
 
     weightFifo weightFIFO (
         .clk      (clk),
         .reset    (reset),
-        .en       (),                           // from fifoControl
-        .weightIn (),                           // from weightMem
-        .weightOut()                            // to sysArr
+        .en       (fifo_en),                    // from fifoControl
+        .weightIn (weightMem_rd_data),          // from weightMem
+        .weightOut(weightFIFO_to_sysArr)        // to sysArr
     );
+    defparam weightFIFO.DATA_WIDTH = 8;
+    defparam weightFIFO.FIFO_INPUTS = WIDTH_HEIGHT;
+    defparam weightFIFO.FIFO_DEPTH = WIDTH_HEIGHT;
 
     // =========================================
     // --------- Output side of array ----------
