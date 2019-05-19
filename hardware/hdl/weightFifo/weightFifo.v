@@ -21,8 +21,8 @@ module weightFifo(clk, reset, en, weightIn, weightOut);
 
     input clk;
     input reset;
-    input [FIFO_INPUTS-1:0] en;  // LSB is leftmost column in the array
-    input [FIFO_WIDTH-1:0] weightIn;  // LSB is leftmost column in the array
+    input [FIFO_INPUTS-1:0] en;  // MSB is leftmost column in the array
+    input [FIFO_WIDTH-1:0] weightIn;  // MSB is leftmost column in the array
     output wire [FIFO_WIDTH-1:0] weightOut;  // LSB is leftmost column in the array
 
     wire [FIFO_INPUTS*FIFO_DEPTH-1:0] colEn;  // enable signals to be sent to each element in a respective column
