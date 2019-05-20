@@ -45,7 +45,10 @@ module wr_control(
         wr_en_c = (wr_en << 1) + 1;
       end
 
-      wr_inc = {15'b0, wr_en[3], 15'b0, wr_en[2], 15'b0, wr_en[1], 15'b0, wr_en[0]};
+      wr_inc = {7'b0, wr_en[15], 7'b0, wr_en[14], 7'b0, wr_en[13], 7'b0, wr_en[12],
+          7'b0, wr_en[11], 7'b0, wr_en[10], 7'b0, wr_en[9], 7'b0, wr_en[8],
+          7'b0, wr_en[7], 7'b0, wr_en[6], 7'b0, wr_en[5], 7'b0, wr_en[4],
+          7'b0, wr_en[3], 7'b0, wr_en[2], 7'b0, wr_en[1], 7'b0, wr_en[0]};
       wr_addr_c = wr_inc + wr_addr;
     end
 

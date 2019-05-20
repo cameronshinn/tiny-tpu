@@ -50,7 +50,10 @@ module rd_control(
         rd_en_c = (rd_en << 1) + 1;
       end
 
-      rd_inc = {15'b0, rd_en[3], 15'b0, rd_en[2], 15'b0, rd_en[1], 15'b0, rd_en[0]};
+      rd_inc = {7'b0, rd_en[15], 7'b0, rd_en[14], 7'b0, rd_en[13], 7'b0, rd_en[12],
+          7'b0, rd_en[11], 7'b0, rd_en[10], 7'b0, rd_en[9], 7'b0, rd_en[8],
+          7'b0, rd_en[7], 7'b0, rd_en[6], 7'b0, rd_en[5], 7'b0, rd_en[4],
+          7'b0, rd_en[3], 7'b0, rd_en[2], 7'b0, rd_en[1], 7'b0, rd_en[0]};
       rd_addr_c = rd_inc + rd_addr;
 
       count_c = count + 1;
