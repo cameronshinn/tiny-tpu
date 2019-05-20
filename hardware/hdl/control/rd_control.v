@@ -58,6 +58,14 @@ module rd_control(
 
       count_c = count + 1;
 
+      if(rd_en == 16'h0000) begin
+        rd_start = 0;
+        rd_addr_c = 16'h0000;
+        count_c = 0;
+        rd_dec = 0;
+        wr_active = 0;
+      end
+
       if(count >= 18) begin
         wr_active = 1;
       end
