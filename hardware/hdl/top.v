@@ -153,6 +153,7 @@ module top (
         .clk    (clk),
         .reset  (reset),
         .active (load_weights_to_array),        // from interconnect (start loading weights to array)
+        .stagger_load(1'b0),            // new signal (always zero for now)
         .fifo_en(fifo_en),                      // to weightFIFO's
         .done   (fifo_done)                     // output to interconnect
     );
