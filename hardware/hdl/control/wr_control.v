@@ -54,7 +54,6 @@ module wr_control(
       if(wr_en == 16'h0000) begin
         wr_start = 0;
         wr_addr_c = 16'h0000;
-        count_c = 0;
         wr_dec = 0;
       end
     end
