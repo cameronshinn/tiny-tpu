@@ -20,7 +20,7 @@ module wr_control(
 
   reg [width_height-1:0] wr_en_c;
   reg [data_width-1:0] wr_addr_c, wr_inc;
-  reg wr_dec;
+  reg wr_dec, wr_start;
 
   always@(posedge clk) begin
     wr_en <= wr_en_c;
@@ -28,7 +28,11 @@ module wr_control(
   end
 
   always@(*) begin
-    if(active) begin // start to get read address
+    if(active) begin
+      wr_start = 1;
+    end
+
+    if(wr_start) begin // start to get read address
       if(wr_en == 16'hffff) begin
         wr_dec = 1;
       end
@@ -53,6 +57,7 @@ module wr_control(
       wr_addr_c = 0;
       wr_en_c  = 16'h0000;
       wr_dec = 0;
+      wr_start = 0;
     end
   end
 endmodule
