@@ -1,4 +1,4 @@
-// accumTable_control.v
+// accumTableAddr_control.v
 // Cameron Shinn
 
 /*
@@ -12,7 +12,7 @@
  * addresses at once).
  */
 
-module accumTable_control(sys_arr_count, submat_m, submat_n, wr_addr);
+module accumTableAddr_control(sub_row, submat_m, submat_n, addr);
 
     parameter MAX_OUT_ROWS = 128; // output number of rows in 
     parameter MAX_OUT_COLS = 128;
@@ -23,11 +23,11 @@ module accumTable_control(sys_arr_count, submat_m, submat_n, wr_addr);
     localparam NUM_SUBMATS_M = MAX_OUT_ROWS/SYS_ARR_ROWS; // not sure if this will do ceiling like I want
     localparam NUM_SUBMATS_N = MAX_OUT_COLS/SYS_ARR_COLS; // not sure if this will do ceiling like I want
 
-    input [$clog2(SYS_ARR_ROWS)-1:0] sys_arr_count;
+    input [$clog2(SYS_ARR_ROWS)-1:0] sub_row;
     input [$clog2(NUM_SUBMATS_M)-1:0] submat_m; // sub-matrix row number (sub-matrix position in the overall matrix)
     input [$clog2(NUM_SUBMATS_N)-1:0] submat_n; // sub-matrix col number (sub-matrix position in the overall matrix)
-    output wire [$clog2(NUM_ACCUM_ROWS)-1:0] wr_addr; // write addresses for all columns concatenated
+    output wire [$clog2(NUM_ACCUM_ROWS)-1:0] addr; // write addresses for all columns concatenated
 
-    assign wr_addr = (submat_n*MAX_OUT_ROWS) + (submat_m*SYS_ARR_ROWS) + (SYS_ARR_ROWS-1-sys_arr_count);
+    assign addr = (submat_n*MAX_OUT_ROWS) + (submat_m*SYS_ARR_ROWS) + (SYS_ARR_ROWS-1-sub_row);
 
 endmodule // accumTable_control
