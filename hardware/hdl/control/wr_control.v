@@ -50,6 +50,13 @@ module wr_control(
           7'b0, wr_en[7], 7'b0, wr_en[6], 7'b0, wr_en[5], 7'b0, wr_en[4],
           7'b0, wr_en[3], 7'b0, wr_en[2], 7'b0, wr_en[1], 7'b0, wr_en[0]};
       wr_addr_c = wr_inc + wr_addr;
+
+      if(wr_en == 16'h0000) begin
+        wr_start = 0;
+        wr_addr_c = 16'h0000;
+        count_c = 0;
+        wr_dec = 0;
+      end
     end
 
     else begin
