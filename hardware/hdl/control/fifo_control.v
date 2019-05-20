@@ -33,9 +33,9 @@ module fifo_control(
       done = 0;
     end
 
-    // start generate fifo_en signal 
+    // start generate fifo_en signal
     if(fifo_start) begin
-      // start stagger loading, working for successive fifo loading. 
+      // start stagger loading, working for successive fifo loading.
       if(stagger_load) begin
         if(fifo_en == 16'hffff) begin
           fifo_dec = 1;
@@ -69,6 +69,13 @@ module fifo_control(
 
       count_c = count + 1;
 
+    end
+
+    if (count == 2'd15 && fifo_en == 16'hFFFF) begin
+      fifo_en_c = 16'h0000;
+      fifo_start = 0;
+      count_c = 0;
+      done = 1;
     end
 
     if(reset) begin
