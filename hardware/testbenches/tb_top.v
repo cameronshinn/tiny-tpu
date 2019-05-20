@@ -24,7 +24,7 @@ module tb_top();
 
     // outputs from DUT
     wire fifo_done;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_rd_data;
+    wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_rd_data;
 
     // instantiation of DUT
     top DUT (

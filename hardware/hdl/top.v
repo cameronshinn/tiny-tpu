@@ -73,7 +73,7 @@ module top (
     output fifo_done;
 
     // output memory read port
-    output [(WIDTH_HEIGHT * 8) - 1:0] outputMem_rd_data;
+    output [(WIDTH_HEIGHT * 16) - 1:0] outputMem_rd_data;
 
 
 // ========================================
@@ -86,9 +86,10 @@ module top (
     wire [WIDTH_HEIGHT - 1:0] fifo_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] sysArr_to_outputMem;
+    //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
     wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_offset;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_data;
+    wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_wr_data;
+    wire rd_to_wr_start;
 
 
 // ========================================
@@ -130,7 +131,8 @@ module top (
         .reset  (reset),
         .active (active),                       // tied to sysArr Active
         .rd_en  (inputMem_rd_en),               // to input memory
-        .rd_addr(inputMem_rd_addr_offset)       // to input memory
+        .rd_addr(inputMem_rd_addr_offset),       // to input memory
+        .wr_active(rd_to_wr_start)              // to wr_control
     );
     defparam inputMemControl.width_height = WIDTH_HEIGHT;
 
@@ -153,7 +155,7 @@ module top (
         .clk    (clk),
         .reset  (reset),
         .active (load_weights_to_array),        // from interconnect (start loading weights to array)
-        .stagger_load(1'b0),            // new signal (always zero for now)
+        .stagger_load(1'b0),                    // new signal (always zero for now)
         .fifo_en(fifo_en),                      // to weightFIFO's
         .done   (fifo_done)                     // output to interconnect
     );
@@ -174,11 +176,11 @@ module top (
     // =========================================
     // --------- Output side of array ----------
     // =========================================
-    memArr outputMem (
+    outputArr outputMem (
         .clk    (clk),
         .rd_en  (outputMem_rd_en),              // from interconnect
         .wr_en  (outputMem_wr_en),              // from outputMemControl
-        .wr_data(sysArr_to_outputMem),          // from sysArr
+        .wr_data(outputMem_wr_data),          // from sysArr
         .rd_addr(outputMem_rd_addr),            // from interconnect
         .wr_addr(outputMem_wr_addr_base + outputMem_wr_addr_offset), // outputMemControl + base from interconnect
         .rd_data(outputMem_rd_data)             // to interconect
@@ -188,7 +190,7 @@ module top (
     wr_control outputMemControl (
         .clk    (clk),
         .reset  (reset),
-        .active (),                             // ???? don't know source yet (sysArr?)
+        .active (rd_to_wr_start),               // ???? don't know source yet (sysArr?)
         .wr_en  (outputMem_wr_en),              // to outputMem
         .wr_addr(outputMem_wr_addr_offset)      // to outputMem
     );
