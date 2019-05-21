@@ -12,7 +12,7 @@
 module reluArr(in, out);
 
 	parameter DATA_WIDTH = 8;
-	parameter ARR_INPUTS = 4;
+	parameter ARR_INPUTS = 16;
 	localparam ARR_WIDTH = DATA_WIDTH*ARR_INPUTS;
 
 	input [ARR_WIDTH-1:0] in;
