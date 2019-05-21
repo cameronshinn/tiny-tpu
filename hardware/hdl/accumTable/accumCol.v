@@ -16,8 +16,8 @@ module accumCol(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
     input wr_en; // writes (and accumulates) data to wr_addr when high
     input [$clog2(NUM_ACCUM_ROWS)-1:0] rd_addr;
     input [$clog2(NUM_ACCUM_ROWS)-1:0] wr_addr;
-    output reg [DATA_WIDTH-1:0] rd_data;
-    input [DATA_WIDTH-1:0] wr_data;
+    output reg signed [DATA_WIDTH-1:0] rd_data;
+    input signed [DATA_WIDTH-1:0] wr_data;
 
     reg [DATA_WIDTH-1:0] mem [NUM_ACCUM_ROWS-1:0];
 
