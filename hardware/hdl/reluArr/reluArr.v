@@ -9,7 +9,7 @@
 //
 // out -- output array of ReLU output values
 
-module reluArr(in, out);
+module reluArr(en, in, out);
 
 	parameter DATA_WIDTH = 8;
 	parameter ARR_INPUTS = 16;
@@ -19,6 +19,7 @@ module reluArr(in, out);
 	output wire [ARR_WIDTH-1:0] out;
 
 	reluMux muxArr[ARR_INPUTS-1:0] (
+        .en(en),
 		.in (in),
 		.out(out)
 	);
