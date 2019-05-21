@@ -8,7 +8,8 @@ module wr_control(
   reset, // reset the inputs and reg signals
   active, // this module only works when the active is high
   wr_en, // enable accessing to the memeory
-  wr_addr // write address (offset), the full address should be base addr + wr_addr
+  wr_addr, // write address (offset), the full address should be base addr + wr_addr
+  done
   );
 
   parameter width_height = 16;
@@ -17,6 +18,7 @@ module wr_control(
   input clk, reset, active;
   output reg [width_height-1:0] wr_en;
   output reg [data_width-1:0] wr_addr;
+  output reg done;
 
   reg [width_height-1:0] wr_en_c;
   reg [data_width-1:0] wr_addr_c, wr_inc;
@@ -30,6 +32,7 @@ module wr_control(
   always@(*) begin
     if(active) begin
       wr_start = 1;
+      done = 0;
     end
 
     if(wr_start) begin // start to get read address
@@ -55,6 +58,7 @@ module wr_control(
         wr_start = 0;
         wr_addr_c = 16'h0000;
         wr_dec = 0;
+        done = 1;
       end
     end
 
@@ -67,6 +71,7 @@ module wr_control(
       wr_en_c  = 16'h0000;
       wr_dec = 0;
       wr_start = 0;
+      done = 0;
     end
   end
 endmodule
