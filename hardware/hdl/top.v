@@ -15,8 +15,10 @@ module top (
     weightMem_wr_data,
     weightMem_rd_en,
     weightMem_rd_addr,
-    load_weights_to_array,
-    fifo_done,
+    mem_to_fifo,
+    fifo_to_arr,
+    mem_to_fifo_done,
+    fifo_to_arr_done,
     output_done,
     weight_write
  );
@@ -61,7 +63,8 @@ module top (
     input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr;
 
     // FIFO stuff
-    input load_weights_to_array;
+    input mem_to_fifo;
+    input fifo_to_arr;
 
     // commit FIFO outputs to systolic array
     input [WIDTH_HEIGHT - 1:0] weight_write;
@@ -71,8 +74,9 @@ module top (
 // ------------ Outputs -------------------
 // ========================================
     // tell host cpu when loading weights is done
-    output fifo_done;
+    output mem_to_fifo_done;
     // tell host CPU when multiply is done
+    output fifo_to_arr_done;
     output output_done;
 
     // output memory read port
@@ -86,14 +90,27 @@ module top (
     wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr_offset;
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_data;
-    wire [WIDTH_HEIGHT - 1:0] fifo_en;
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
     //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
     wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_offset;
     wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_wr_data;
+    wire [WIDTH_HEIGHT - 1:0] mem_to_fifo_en;
+    wire [WIDTH_HEIGHT - 1:0] fifo_to_arr_en;
     wire rd_to_wr_start;
 
+    // set sys_arr_active 2 cycles after we start reading memory
+    wire sys_arr_active;
+    reg sys_arr_active1;
+    reg sys_arr_active2;
+    reg sys_arr_active3;
+
+// ========================================
+// -------------- Logic -------------------
+// ========================================
+
+    // sys_arr_active 2 cycles after we start reading memory
+    assign sys_arr_active = inputMem_rd_en[0];
 
 // ========================================
 // ------- Module Instantiations ----------
@@ -101,10 +118,10 @@ module top (
 
     sysArr sysArr(
         .clk      (clk),
-        .active   (active),                     // from control or software
+        .active   (sys_arr_active2),                     // from control or software
         .datain   (inputMem_to_sysArr),         // from input memory
         .win      (weightFIFO_to_sysArr),        // from weight FIFO's
-        .sumin    (),                           // Can be used for biases
+        .sumin    (256'd0),                           // Can be used for biases
         .wwrite   (weight_write),               // from control
         .maccout  (outputMem_wr_data),          // to output memory
         .wout     (),                           // Not used
@@ -134,7 +151,7 @@ module top (
         .reset  (reset),
         .active (active),                       // tied to sysArr Active
         .rd_en  (inputMem_rd_en),               // to input memory
-        .rd_addr(inputMem_rd_addr_offset),       // to input memory
+        .rd_addr(inputMem_rd_addr_offset),      // to input memory
         .wr_active(rd_to_wr_start)              // to wr_control
     );
     defparam inputMemControl.width_height = WIDTH_HEIGHT;
@@ -154,20 +171,31 @@ module top (
     );
     defparam weightMem.width_height = WIDTH_HEIGHT;
 
-    fifo_control fifoControl(
-        .clk    (clk),
-        .reset  (reset),
-        .active (load_weights_to_array),        // from interconnect (start loading weights to array)
-        .stagger_load(1'b0),                    // new signal (always zero for now)
-        .fifo_en(fifo_en),                      // to weightFIFO's
-        .done   (fifo_done)                     // output to interconnect
+    fifo_control mem_fifo (
+        .clk         (clk),
+        .reset       (reset),
+        .active      (mem_to_fifo),             // from interconnect
+        .stagger_load(1'b0),
+        .fifo_en     (mem_to_fifo_en),          // to weightFIFO's
+        .done        (mem_to_fifo_done)         // to interconect
     );
-    defparam fifoControl.fifo_width = WIDTH_HEIGHT;
+    defparam mem_fifo.fifo_width = WIDTH_HEIGHT;
+
+    fifo_control fifo_arr (
+        .clk         (clk),
+        .reset       (reset),
+        .active      (fifo_to_arr),             // from interconnect
+        .stagger_load(1'b0),
+        .fifo_en     (fifo_to_arr_en),          // to weightFIFO's
+        .done        (fifo_to_arr_done)         // to interconnect
+    );
+    defparam fifo_arr.fifo_width = WIDTH_HEIGHT;
+
 
     weightFifo weightFIFO (
         .clk      (clk),
         .reset    (reset),
-        .en       (fifo_en),                    // from fifoControl
+        .en       (mem_to_fifo_en | fifo_to_arr_en), // from fifoControl
         .weightIn (weightMem_rd_data),          // from weightMem
         .weightOut(weightFIFO_to_sysArr)        // to sysArr
     );
@@ -199,4 +227,17 @@ module top (
         .done   (output_done)
     );
     defparam outputMemControl.width_height = WIDTH_HEIGHT;
+
+
+// ======================================
+// ----------- Flip flops ---------------
+// ======================================
+    always @(posedge clk) begin
+
+        // set sys_arr_active 2 cycles after we read memory
+        sys_arr_active1 <= sys_arr_active;
+        sys_arr_active2 <= sys_arr_active1;
+        sys_arr_active3 <= sys_arr_active2;
+    end // always
+
 endmodule // top
