@@ -17,6 +17,7 @@ module top (
     weightMem_rd_addr,
     load_weights_to_array,
     fifo_done,
+    output_done,
     weight_write
  );
 
@@ -69,8 +70,10 @@ module top (
 // ========================================
 // ------------ Outputs -------------------
 // ========================================
-    // tell user when loading weights is done
+    // tell host cpu when loading weights is done
     output fifo_done;
+    // tell host CPU when multiply is done
+    output output_done;
 
     // output memory read port
     output [(WIDTH_HEIGHT * 16) - 1:0] outputMem_rd_data;
@@ -192,7 +195,8 @@ module top (
         .reset  (reset),
         .active (rd_to_wr_start),               // ???? don't know source yet (sysArr?)
         .wr_en  (outputMem_wr_en),              // to outputMem
-        .wr_addr(outputMem_wr_addr_offset)      // to outputMem
+        .wr_addr(outputMem_wr_addr_offset),      // to outputMem
+        .done   (output_done)
     );
     defparam outputMemControl.width_height = WIDTH_HEIGHT;
 endmodule // top
