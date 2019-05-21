@@ -35,6 +35,7 @@ module fifo_control(
 
     if(fifo_start) begin
       if(stagger_load) begin
+        count_c = count + 1;
         if(fifo_en == 16'hffff) begin
           fifo_dec = 1;
         end
@@ -55,15 +56,14 @@ module fifo_control(
 
       else begin
         fifo_en_c = 16'hffff;
-        if(count >= fifo_width - 1) begin
+        count_c = count + 1;
+        if(count >= fifo_width) begin
           done = 1;
           fifo_start = 0;
           count_c = 0;
           fifo_en_c = 16'h0000;
         end
       end
-
-      count_c = count + 1;
 
     end
 
