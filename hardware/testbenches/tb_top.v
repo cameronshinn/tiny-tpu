@@ -141,6 +141,56 @@ module tb_top();
 
         #400;
 
+        // Do an entire input and weight loading + multiply again
+        weightMem_wr_en = 16'hFFFF;
+        inputMem_wr_en = 16'hFFFF;
+        weightMem_wr_data = 128'h1010_1010_1010_1010_1010_1010_1010_1010;
+        inputMem_wr_data = 128'h1010_1010_1010_1010_1010_1010_1010_1010;
+        weightMem_wr_addr = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
+        inputMem_wr_addr = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
+        for (i = 0; i < 16; i = i + 1) begin
+            #10;
+            weightMem_wr_data = weightMem_wr_data + 128'h0101_0101_0101_0101_0101_0101_0101_0101;
+            inputMem_wr_data = inputMem_wr_data + 128'h0101_0101_0101_0101_0101_0101_0101_0101;
+            weightMem_wr_addr = weightMem_wr_addr + 128'h0101_0101_0101_0101_0101_0101_0101_0101;
+            inputMem_wr_addr = inputMem_wr_addr + 128'h0101_0101_0101_0101_0101_0101_0101_0101;
+        end // for
+        weightMem_wr_en = 16'h0000;
+        inputMem_wr_en = 16'h0000;
+
+        #10;
+
+        // Load weights into FIFOs
+        weightMem_rd_en = 16'hFFFF;
+        weightMem_rd_addr = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
+        for (i = 0; i < 16; i = i + 1) begin
+            #10;
+            mem_to_fifo = 1'b1;
+            weightMem_rd_addr = weightMem_rd_addr + 128'h0101_0101_0101_0101_0101_0101_0101_0101;
+        end // for
+        weightMem_rd_en = 16'h0000;
+        mem_to_fifo = 1'b0;
+
+        #160;
+
+        fifo_to_arr = 1'b1;
+        weight_write = 16'hFFFF;
+
+        #160;
+
+        weight_write = 16'h0000;
+        fifo_to_arr = 1'b0;
+        inputMem_rd_addr_base = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
+        outputMem_wr_addr_base = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
+
+        active = 1'b1;
+
+        #190;
+
+        active = 1'b0;
+
+        #400;
+
         $stop;
     end // initial
 endmodule // tb_top
