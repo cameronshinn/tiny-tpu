@@ -21,9 +21,13 @@ module tb_top();
     reg [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr;
     reg load_weights_to_array;
     reg [WIDTH_HEIGHT - 1:0] weight_write;
+    reg fifo_to_arr;
+    reg mem_to_fifo;
 
     // outputs from DUT
-    wire fifo_done;
+    wire mem_to_fifo_done;
+    wire fifo_to_arr_done;
+    wire output_done;
     wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_rd_data;
 
     // instantiation of DUT
@@ -43,9 +47,12 @@ module tb_top();
         .weightMem_wr_data     (weightMem_wr_data),
         .weightMem_rd_en       (weightMem_rd_en),
         .weightMem_rd_addr     (weightMem_rd_addr),
-        .load_weights_to_array (load_weights_to_array),
         .weight_write          (weight_write),
-        .fifo_done             (fifo_done),
+        .mem_to_fifo           (mem_to_fifo),
+        .fifo_to_arr           (fifo_to_arr),
+        .mem_to_fifo_done      (mem_to_fifo_done),
+        .fifo_to_arr_done      (fifo_to_arr_done),
+        .output_done           (output_done),
         .outputMem_rd_data     (outputMem_rd_data)
     );
 
@@ -86,7 +93,7 @@ module tb_top();
         // Write to the weight and input Memory
         weightMem_wr_en = 16'hFFFF;
         inputMem_wr_en = 16'hFFFF;
-        weightMem_wr_data = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
+        weightMem_wr_data = 128'h0101_0101_0101_0101_0101_0101_0101_0101;
         inputMem_wr_data = 128'h0101_0101_0101_0101_0101_0101_0101_0101;
         weightMem_wr_addr = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
         inputMem_wr_addr = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
@@ -108,21 +115,21 @@ module tb_top();
         weightMem_rd_addr = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
         for (i = 0; i < 16; i = i + 1) begin
             #10;
-            load_weights_to_array = 1'b1; // enables fifos
+            mem_to_fifo = 1'b1; // enables fifos
             weightMem_rd_addr = weightMem_rd_addr + 128'h0101_0101_0101_0101_0101_0101_0101_0101;
         end // for
         weightMem_rd_en = 16'h0000;
-        load_weights_to_array = 1'b0;
+        mem_to_fifo = 1'b0;
 
         #160;
 
-        load_weights_to_array = 1'b1;
+        fifo_to_arr = 1'b1;
         weight_write = 16'hFFFF;
 
         #160;
 
         weight_write = 16'h0000;
-        load_weights_to_array = 1'b0;
+        fifo_to_arr = 1'b0;
 
         // At this point, weights are loaded. Begin multiplication.
 
@@ -132,7 +139,7 @@ module tb_top();
 
         active = 1'b0;
 
-        #30;
+        #400;
 
         $stop;
     end // initial
