@@ -75,6 +75,8 @@ module master_control(opcode,
     parameter MAX_OUT_COLS = 128;
     parameter ADDR_WIDTH = 8;
 
+    input start; // starts instruction execution on a positive edge trigger
+    
     input [2:0] opcode;
     input [$clog2(SYS_ARR_HEIGHT)-1:0] intermed_dim; // dim_1
     input [$clog2(SYS_ARR_WIDTH)-1:0] weight_num_rows; // dim_2
