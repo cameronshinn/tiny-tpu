@@ -43,9 +43,9 @@ store_outputs()
     @opcode: 100 (4)
     @dim_1: number of rows to read from accumulator table index
     @dim_2: number of columns to read from accumulator table index
-    @dim_3: 1 to perform ReLU activation on the outputs or 0 to store them as-is
+    @dim_3: LSB set to 1 to perform ReLU activation on the outputs or 0 to store them as-is
     @addr_1: base address to write to output memory
-    @addr_2: 1 to clear the entire accumulator table after the read or 0 otherwise
+    @addr_2: LSB set to 1 to clear the entire accumulator table after the read or 0 otherwise
     @accum_table_submat_row: row index of the accumulator table where the output matrix will be read from
     @accum_table_submat_col: column index of the accumulator table where the output matrix will be read from
 
@@ -60,7 +60,8 @@ write_outputs()
     @accum_table_submat_col: NONE
 */
 
-module master_control(opcode,
+module master_control(start,
+                      opcode,
                       intermed_dim,
                       weight_num_rows,
                       input_num_cols,
