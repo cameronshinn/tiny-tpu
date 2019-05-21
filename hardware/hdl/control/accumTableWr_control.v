@@ -21,6 +21,8 @@ module accumTableWr_control(clk, reset, wr_en_in, sub_row, submat_m, submat_n, w
     
     localparam NUM_ACCUM_ROWS = MAX_OUT_ROWS * (MAX_OUT_COLS/SYS_ARR_COLS);
     localparam ADDR_WIDTH = $clog2(NUM_ACCUM_ROWS);
+    localparam NUM_SUBMATS_M = MAX_OUT_ROWS/SYS_ARR_ROWS; // not sure if this will do ceiling like I want
+    localparam NUM_SUBMATS_N = MAX_OUT_COLS/SYS_ARR_COLS; // not sure if this will do ceiling like I want
 
     input clk;
     input reset;
@@ -31,6 +33,7 @@ module accumTableWr_control(clk, reset, wr_en_in, sub_row, submat_m, submat_n, w
     output reg [SYS_ARR_COLS-1:0] wr_en_out; // LSB is first column
     output reg [ADDR_WIDTH*SYS_ARR_COLS-1:0] wr_addr_out; // LSBs are first column
 
+    wire [ADDR_WIDTH-1:0] addr_1;
     reg [SYS_ARR_COLS-1:0] wr_en_out_c;
     reg [ADDR_WIDTH*SYS_ARR_COLS-1:0] wr_addr_out_c;
 
@@ -38,7 +41,7 @@ module accumTableWr_control(clk, reset, wr_en_in, sub_row, submat_m, submat_n, w
         .sub_row(sub_row),
         .submat_m(submat_m),
         .submat_n(submat_n),
-        .addr(wr_addr_out[ADDR_WIDTH-1:0])
+        .addr(addr_1)
     );
 
     always @(clk, reset, wr_en_in, sub_row, submat_m, submat_n) begin
@@ -52,6 +55,7 @@ module accumTableWr_control(clk, reset, wr_en_in, sub_row, submat_m, submat_n, w
         end // else
 
         wr_addr_out_c[ADDR_WIDTH*SYS_ARR_COLS-1:ADDR_WIDTH] = wr_addr_out[ADDR_WIDTH*(SYS_ARR_COLS-1)-1:0];
+        wr_addr_out_c[ADDR_WIDTH-1:0] = addr_1;
     end // always @(clk, reset, wr_en_in, sub_row, submat_m, submat_n) 
 
     always @(posedge clk) begin

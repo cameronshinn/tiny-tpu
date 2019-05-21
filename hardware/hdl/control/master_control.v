@@ -7,7 +7,7 @@ the corresponding control signals to the individual controllers of each
 submodule
 
 Instruction set:
-*signals marked with none are ignored*
+*signals marked with NONE are ignored*
 
 read_inputs()
     @opcode: 001 (1)
@@ -43,9 +43,9 @@ store_outputs()
     @opcode: 100 (4)
     @dim_1: number of rows to read from accumulator table index
     @dim_2: number of columns to read from accumulator table index
-    @dim_3: NONE
+    @dim_3: LSB set to 1 to perform ReLU activation on the outputs or 0 to store them as-is
     @addr_1: base address to write to output memory
-    @addr_2: NONE
+    @addr_2: LSB set to 1 to clear the entire accumulator table after the read or 0 otherwise
     @accum_table_submat_row: row index of the accumulator table where the output matrix will be read from
     @accum_table_submat_col: column index of the accumulator table where the output matrix will be read from
 
@@ -60,7 +60,8 @@ write_outputs()
     @accum_table_submat_col: NONE
 */
 
-module master_control(opcode,
+module master_control(start,
+                      opcode,
                       intermed_dim,
                       weight_num_rows,
                       input_num_cols,
@@ -75,6 +76,8 @@ module master_control(opcode,
     parameter MAX_OUT_COLS = 128;
     parameter ADDR_WIDTH = 8;
 
+    input start; // starts instruction execution on a positive edge trigger
+    
     input [2:0] opcode;
     input [$clog2(SYS_ARR_HEIGHT)-1:0] intermed_dim; // dim_1
     input [$clog2(SYS_ARR_WIDTH)-1:0] weight_num_rows; // dim_2
@@ -83,6 +86,5 @@ module master_control(opcode,
     input [ADDR_WIDTH-1:0] addr_2;
     input [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row;
     input [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col;
-    input relu_flag;
 
 endmodule
