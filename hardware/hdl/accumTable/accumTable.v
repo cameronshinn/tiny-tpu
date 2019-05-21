@@ -29,7 +29,7 @@ module accumTable(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
     input [SYS_ARR_COLS-1:0] wr_en;
     input [$clog2(NUM_ACCUM_ROWS)*SYS_ARR_COLS-1:0] rd_addr;
     input [$clog2(NUM_ACCUM_ROWS)*SYS_ARR_COLS-1:0] wr_addr;
-    output reg [DATA_WIDTH*SYS_ARR_COLS-1:0] rd_data;
+    output wire [DATA_WIDTH*SYS_ARR_COLS-1:0] rd_data;
     input [DATA_WIDTH*SYS_ARR_COLS-1:0] wr_data;
 
     accumCol colArray [0:SYS_ARR_COLS-1] (
