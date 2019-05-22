@@ -29,7 +29,7 @@ module tb_master_output_control;
     wire activate; 
     wire relu_en; 
     wire clear_after; 
-    wire accum_reset; 
+    wire accum_clear; 
     wire [ADDR_WIDTH-1:0] wr_base_addr;
     wire [SYS_ARR_COLS-1:0] wr_en; 
     wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] wr_addr;
@@ -46,7 +46,7 @@ module tb_master_output_control;
         .num_cols_read(num_cols_read),
         .num_rows_read(num_rows_read),
         .row_num(row_num),
-        .accum_reset(accum_reset),
+        .accum_clear(accum_clear),
         .activate(activate),
         .relu_en(relu_en),
         .clear_after(clear_after),
