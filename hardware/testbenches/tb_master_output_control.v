@@ -1,6 +1,8 @@
 // tb_master_output_control.v
 // Cameron Shinn
 
+`timescale 1ns/10ps
+
 module tb_master_output_control;
 
     parameter MAX_OUT_ROWS = 128; // output number of rows in 
