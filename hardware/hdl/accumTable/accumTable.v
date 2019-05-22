@@ -24,7 +24,7 @@ module accumTable(clk, clear, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
     localparam NUM_ACCUM_ROWS = MAX_OUT_ROWS * (MAX_OUT_COLS/SYS_ARR_COLS);
 
     input clk;
-    input [SYS_ARR_COLS-1:0] clear;
+    input [SYS_ARR_COLS-1:0] clear; // needs to be connected to reset signal
     input [SYS_ARR_COLS-1:0] rd_en;
     input [SYS_ARR_COLS-1:0] wr_en;
     input [$clog2(NUM_ACCUM_ROWS)*SYS_ARR_COLS-1:0] rd_addr;
