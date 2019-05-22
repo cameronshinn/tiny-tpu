@@ -60,7 +60,9 @@ write_outputs()
     @accum_table_submat_col: NONE
 */
 
-module master_control(start,
+module master_control(clk,
+                      reset,
+                      start,
                       opcode,
                       intermed_dim,
                       weight_num_rows,
@@ -76,6 +78,9 @@ module master_control(start,
     parameter MAX_OUT_COLS = 128;
     parameter ADDR_WIDTH = 8;
 
+    input clk;
+    input reset;
+
     input start; // starts instruction execution on a positive edge trigger
     
     input [2:0] opcode;
@@ -86,5 +91,26 @@ module master_control(start,
     input [ADDR_WIDTH-1:0] addr_2;
     input [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row;
     input [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col;
+
+    store_output_control store_output_control (
+        .clk(),
+        .reset(),
+        .start(),
+        .done(),
+        .submat_row_in(),
+        .submat_col_in(),
+        .submat_row_out(),
+        .submat_col_out(),
+        .num_cols_read(),
+        .num_rows_read(),
+        .row_num(),
+        .accum_reset(),
+        .activate(),
+        .relu_en(),
+        .clear_after(),
+        .wr_base_addr(),
+        .wr_en(),
+        .wr_addr()      
+    );
 
 endmodule
