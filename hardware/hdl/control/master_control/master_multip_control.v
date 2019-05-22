@@ -16,6 +16,7 @@ module master_multip_control(
   weight_fifo_arr_done,
   data_mem_calc_en,
   data_mem_calc_done,
+  fifo_ready,
   done
 )；
 
@@ -39,12 +40,18 @@ input [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row_in;
 output wire [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col_out;
 output wire [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row_out;
 output reg weight_fifo_arr_en, data_mem_calc_en;
+output wire fifo_ready; //indicates when the fill_fifo instruction can be called
+// ^^ need to latch some of the inputs when this goes high so that new data can
+//    be written on the bus for the fill_fifo instruction, but we should do that
+//    later
+
 output wire done;
 
 reg [1:0] state, state_c;
 
 assign accum_table_submat_col_out = accum_table_submat_col_in;
 assign accum_table_submat_row_out = accum_table_submat_row_in;
+assign fifo_ready = (state != W_fifo_arr) ? 1'b1 : 1'b0;
 assign done = (state == hold) ? 1'b1 : 1'b0;
 
 always@(posedge clk) begin
