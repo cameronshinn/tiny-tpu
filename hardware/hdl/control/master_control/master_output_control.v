@@ -82,6 +82,7 @@ module master_output_control(clk,
 
             if (count == num_rows_read) begin // read up to num_rows_read since we read a row each cc
                 started_c = 1'b0;
+                count_c = {$clog2(SYS_ARR_COLS){1'b0}};
 
                 if (clear_after) begin
                     accum_reset = 1'b1;
