@@ -2,9 +2,9 @@ module master_mem_control(
   clk,
   reset,
   active,
-  base_addr,/
-  num_row,/
-  num_col,/
+  base_addr,
+  num_row,
+  num_col,
   out_addr,
   out_en,
   done
