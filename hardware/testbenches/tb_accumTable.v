@@ -39,7 +39,7 @@ module tb_accumTable;
 
     accumTable accumTable (
         .clk(clk),
-        .reset({16{reset}}),
+        .clear({16{reset}}),
         .rd_en(rd_en_in),
         .wr_en(wr_en),
         .rd_addr(rd_addr),
