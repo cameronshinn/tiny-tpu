@@ -6,14 +6,17 @@ module master_multip_control(
   num_row_weight_mat,
   num_col_in_mat,
   base_data, // base addr of the data
-  accum_table_submat_row,
-  accum_table_submat_col,
+  accum_table_submat_row_in,
+  accum_table_submat_col_in,
+  accum_table_submat_row_out,
+  accum_table_submat_col_out,
   weight_mem_fifo_en,
   weight_mem_fifo_done,
   weight_fifo_arr_en,
   weight_fifo_arr_done,
   data_mem_calc_en,
-  data_mem_calc_done
+  data_mem_calc_done,
+  done
 )；
 
 parameter width_height = 16;
@@ -27,15 +30,22 @@ parameter W_fifo_arr = 2'b10;
 parameter D_mem_calc = 2'b11;
 
 input clk, reset, active;
-input weight_mem_fifo_done, weight_fifo_arr_done, data_mem_calc_done;
+input weight_fifo_arr_done, data_mem_calc_done;
 input [$clog2(width_height)-1:0] num_row_weight_mat, num_col_in_mat, intermed_dim;
 input [data_width-1:0] base_data;
-input [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col; 
-input [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row;
+input [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col_in; 
+input [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row_in;
 
-output reg weight_mem_fifo_en, weight_fifo_arr_en, data_mem_calc_en;
+output wire [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col_out;
+output wire [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row_out;
+output reg weight_fifo_arr_en, data_mem_calc_en;
+output wire done;
 
 reg [1:0] state, state_c;
+
+assign accum_table_submat_col_out = accum_table_submat_col_in;
+assign accum_table_submat_row_out = accum_table_submat_row_in;
+assign done = (state == hold) ? 1'b1 : 1'b0;
 
 always@(posedge clk) begin
   state <= state_c;
@@ -45,15 +55,7 @@ always@(*) begin
   case(state)
     Hold: begin
       if(active) begin
-        state_c = W_mem_fifo;
-      end
-    end
-
-    W_mem_fifo: begin
-      weight_mem_fifo_en = 1;
-      if(weight_mem_fifo_done) begin
         state_c = W_fifo_arr;
-        weight_mem_fifo_en = 0;
       end
     end
 
