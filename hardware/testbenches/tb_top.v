@@ -135,11 +135,11 @@ module tb_top();
 
         active = 1'b1;
 
-        #190;
+        #10;
 
         active = 1'b0;
 
-        #400;
+        #600;
 
         // Do an entire input and weight loading + multiply again
         weightMem_wr_en = 16'hFFFF;
@@ -185,11 +185,11 @@ module tb_top();
 
         active = 1'b1;
 
-        #190;
+        #10;
 
         active = 1'b0;
 
-        #400;
+        #600;
 
         $stop;
     end // initial
