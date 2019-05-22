@@ -4,7 +4,6 @@ module master_multip_control(
   active,
   num_row,
   num_col,
-  base_weight, // base addr of the weights
   base_data, // base addr of the data
   accum_table_submat_row,
   accum_table_submat_col,
@@ -29,7 +28,7 @@ parameter D_mem_calc = 2'b11;
 input clk, reset, active;
 input weight_mem_fifo_done, weight_fifo_arr_done, data_mem_calc_done;
 input [$clog2(width_height)-1:0] num_row, num_col;
-input [data_width-1:0] base_weight, base_data;
+input [data_width-1:0] base_data;
 input [$clog2(MAX_OUT_COLS/SYS_ARR_WIDTH)-1:0] accum_table_submat_col; 
 input [$clog2(MAX_OUT_ROWS/SYS_ARR_HEIGHT)-1:0] accum_table_submat_row;
 
