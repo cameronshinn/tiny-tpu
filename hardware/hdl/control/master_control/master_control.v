@@ -87,10 +87,13 @@ module master_control(clk,
                       bus_to_mem_addr,
                       in_mem_out_addr,
                       in_mem_out_en,
+                      int_mem_wr_en,
                       weight_mem_out_rd_addr,
                       weight_mem_out_rd_en,
+                      weight_mem_wr_en,
                       out_mem_out_wr_addr,
                       out_mem_out_wr_en,
+                      out_mem_rd_en,
                       in_fifo_active,
                       out_fifo_active,
                       data_mem_calc_en,
@@ -101,7 +104,7 @@ module master_control(clk,
                       rd_submat_col_out,
                       rd_row_num,
                       relu_en);
-    
+
     parameter SYS_ARR_COLS = 16;
     parameter SYS_ARR_ROWS = 16;
     parameter MAX_OUT_ROWS = 128;
@@ -140,7 +143,7 @@ module master_control(clk,
     // output back to bus
     output wire fifo_ready; // used to tell the cpu when the fifo can be refilled
                             // not currently set up. will have to suffer fifo latency
-    
+
     // output to be connected to...
     // output memory rd addr
     // input memory wr addr
@@ -150,14 +153,16 @@ module master_control(clk,
     // outputs to input memory ctrl
     output wire [ADDR_WIDTH-1:0] in_mem_out_addr; // not sure if this is needed @Alan
     output wire in_mem_out_en; // not sure if this is needed @Alan
+    output reg [SYS_ARR_COLS-1:0] in_mem_wr_en;
 
     // outputs to weight memory ctrl
     output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] weight_mem_out_rd_addr;
     output wire [SYS_ARR_COLS-1:0] weight_mem_out_rd_en;
-
+    output reg [SYS_ARR_COLS-1:0] weight_mem_wr_en;
     // outputs to output memory ctrl
     output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] out_mem_out_wr_addr;
     output wire [SYS_ARR_COLS-1:0] out_mem_out_wr_en;
+    output reg [SYS_ARR_COLS-1:0] out_mem_rd_en;
 
     // outputs to FIFO input ctrl
     output wire in_fifo_active;
@@ -196,9 +201,6 @@ module master_control(clk,
     reg done_reset_control; // not sure if this is needed
 
     wire [SYS_ARR_COLS-1:0] mem_control_en;
-    reg [SYS_ARR_COLS-1:0] in_mem_wr_en;
-    reg [SYS_ARR_COLS-1:0] weight_mem_wr_en;
-    reg [SYS_ARR_COLS-1:0] out_mem_rd_en;
 
     master_mem_control master_mem_control (
         .clk(clk),
@@ -263,7 +265,7 @@ module master_control(clk,
         .relu_en(relu_en),
         .wr_base_addr(addr_1),
         .wr_en(out_mem_out_wr_en),
-        .wr_addr(out_mem_out_wr_addr)      
+        .wr_addr(out_mem_out_wr_addr)
     );
 
     always @(*) begin
