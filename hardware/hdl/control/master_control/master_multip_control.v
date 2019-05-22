@@ -10,15 +10,13 @@ module master_multip_control(
   accum_table_submat_col_in,
   accum_table_submat_row_out,
   accum_table_submat_col_out,
-  weight_mem_fifo_en,
-  weight_mem_fifo_done,
   weight_fifo_arr_en,
   weight_fifo_arr_done,
   data_mem_calc_en,
   data_mem_calc_done,
   fifo_ready,
   done
-)；
+);
 
 parameter width_height = 16;
 parameter data_width = width_height * 8;
@@ -52,7 +50,7 @@ reg [1:0] state, state_c;
 assign accum_table_submat_col_out = accum_table_submat_col_in;
 assign accum_table_submat_row_out = accum_table_submat_row_in;
 assign fifo_ready = (state != W_fifo_arr) ? 1'b1 : 1'b0;
-assign done = (state == hold) ? 1'b1 : 1'b0;
+assign done = (state == Hold) ? 1'b1 : 1'b0;
 
 always@(posedge clk) begin
   state <= state_c;
@@ -79,7 +77,6 @@ always@(*) begin
       if(data_mem_calc_done) begin
         data_mem_calc_en = 0;
         weight_fifo_arr_en = 0;
-        weight_mem_fifo_en = 0;
         state_c = Hold;
       end
     end
@@ -89,7 +86,6 @@ always@(*) begin
     state_c = Hold;
     data_mem_calc_en = 0;
     weight_fifo_arr_en = 0;
-    weight_mem_fifo_en = 0;
   end
 end
 endmodule
