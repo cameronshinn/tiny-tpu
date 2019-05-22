@@ -58,7 +58,7 @@ module rd_control(
 
       count_c = count + 1;
 
-      if(count >= 18) begin
+      if(count >= 17) begin
         wr_active = 1;
       end
 
