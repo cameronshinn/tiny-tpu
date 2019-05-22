@@ -9,13 +9,13 @@ module master_output_control(clk,
                              submat_col_in,
                              submat_row_out,
                              submat_col_out,
-                             num_cols_read,
                              num_rows_read,
+                             num_cols_read,
                              row_num,
-                             accum_reset,
-                             activate,
-                             relu_en,
                              clear_after,
+                             activate,
+                             accum_reset,
+                             relu_en,
                              wr_base_addr,
                              wr_en,
                              wr_addr);
@@ -38,12 +38,12 @@ module master_output_control(clk,
     input [$clog2(NUM_SUBMATS_N)-1:0] submat_col_in;
     output wire [$clog2(NUM_SUBMATS_M)-1:0] submat_row_out; 
     output wire [$clog2(NUM_SUBMATS_N)-1:0] submat_col_out;
-    input [$clog2(SYS_ARR_COLS)-1:0] num_cols_read; // 0-15 -> 1-16
     input [$clog2(SYS_ARR_ROWS)-1:0] num_rows_read; // 0-15 -> 1-16
+    input [$clog2(SYS_ARR_COLS)-1:0] num_cols_read; // 0-15 -> 1-16
     output wire [$clog2(SYS_ARR_ROWS)-1:0] row_num;
+    input clear_after; 
     input activate;
     output reg relu_en;
-    input clear_after; 
     output reg accum_reset; 
     input [ADDR_WIDTH-1:0] wr_base_addr;
     output reg [SYS_ARR_COLS-1:0] wr_en; 
