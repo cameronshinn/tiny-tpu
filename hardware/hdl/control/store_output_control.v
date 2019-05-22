@@ -35,14 +35,14 @@ module store_output_control(clk,
     input start; 
     output wire done; 
     input [$clog2(NUM_SUBMATS_M)-1:0] submat_row_in; 
-    input [$clog2(NUM_SUBMATS_N)-1:0] submat_col_in; 
+    input [$clog2(NUM_SUBMATS_N)-1:0] submat_col_in;
     output wire [$clog2(NUM_SUBMATS_M)-1:0] submat_row_out; 
-    output wire [$clog2(NUM_SUBMATS_N)-1:0] submat_col_out; 
-    input [$clog2(SYS_ARR_COLS)-1:0] num_cols_read; 
-    input [$clog2(SYS_ARR_ROWS)-1:0] num_rows_read; 
-    output wire [$clog2(SYS_ARR_ROWS)-1:0] row_num; 
-    input activate; 
-    output reg relu_en; 
+    output wire [$clog2(NUM_SUBMATS_N)-1:0] submat_col_out;
+    input [$clog2(SYS_ARR_COLS)-1:0] num_cols_read; // 0-15 -> 1-16
+    input [$clog2(SYS_ARR_ROWS)-1:0] num_rows_read; // 0-15 -> 1-16
+    output wire [$clog2(SYS_ARR_ROWS)-1:0] row_num;
+    input activate;
+    output reg relu_en;
     input clear_after; 
     output reg accum_reset; 
     input [ADDR_WIDTH-1:0] wr_base_addr;
@@ -77,10 +77,10 @@ module store_output_control(clk,
 
         if (started) begin
             count_c = count + {{$clog2(SYS_ARR_COLS)-1{1'b0}}, 1'b1}; // maybe replace with just "1"
-            wr_en = {SYS_ARR_COLS{1'b1}} >> (SYS_ARR_COLS - num_cols_read);
+            wr_en = {SYS_ARR_COLS{1'b1}} >> (SYS_ARR_COLS - num_cols_read - 1);
             relu_en = activate;
 
-            if (count == num_rows_read-1) begin // read up to num_rows_read since we read a row each cc
+            if (count == num_rows_read) begin // read up to num_rows_read since we read a row each cc
                 started_c = 1'b0;
 
                 if (clear_after) begin
