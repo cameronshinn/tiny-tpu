@@ -35,6 +35,13 @@ read_weights() - Read weights from the bus into weight memory
 
 fill_fifo() - Fill the FIFO with weights from the give memory location
     @opcode: 011 (3)
+    @dim_1: number of rows in weight matrix
+    @dim_2: number of columns in weight matrix
+    @dim_3: NONE
+    @addr_1: base address to read from weight memory
+    @addr_2: NONE
+    @accum_table_submat_row: NONE
+    @accum_table_submat_col: NONE
 
 matrix_multiply() - Empty the FIFO into the systolic array, perform a matrix multiply, and store outputs in the accumulator table
     @opcode: 100 (4)
