@@ -91,6 +91,8 @@ module tb_top();
         #20;
 
         // Write to the weight and input Memory
+        // This will be handled in software with a for loop.
+        // Bus module will decode wr_addresses to set enables
         weightMem_wr_en = 16'hFFFF;
         inputMem_wr_en = 16'hFFFF;
         weightMem_wr_data = 128'h0101_0101_0101_0101_0101_0101_0101_0101;
