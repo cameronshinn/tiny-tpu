@@ -224,7 +224,8 @@ module top (
         .active (rd_to_wr_start),               // ???? don't know source yet (sysArr?)
         .wr_en  (outputMem_wr_en),              // to outputMem
         .wr_addr(outputMem_wr_addr_offset),      // to outputMem
-        .done   (output_done)
+        .done   (output_done),
+        .sys_arr_active(sys_arr_active)
     );
     defparam outputMemControl.width_height = WIDTH_HEIGHT;
 
