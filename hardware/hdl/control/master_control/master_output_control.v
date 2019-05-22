@@ -14,7 +14,7 @@ module master_output_control(clk,
                              row_num,
                              clear_after,
                              activate,
-                             accum_reset,
+                             accum_clear,
                              relu_en,
                              wr_base_addr,
                              wr_en,
@@ -44,7 +44,7 @@ module master_output_control(clk,
     input clear_after; 
     input activate;
     output reg relu_en;
-    output reg accum_reset; 
+    output reg accum_clear; 
     input [ADDR_WIDTH-1:0] wr_base_addr;
     output reg [SYS_ARR_COLS-1:0] wr_en; 
     output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] wr_addr;
@@ -67,7 +67,7 @@ module master_output_control(clk,
     always @(*) begin
         count_c = {$clog2(SYS_ARR_ROWS){1'b0}};
         started_c = started;
-        accum_reset = 1'b0;
+        accum_clear = 1'b0;
         wr_en = {SYS_ARR_COLS{1'b0}};
         relu_en = 1'b0;
 
@@ -85,7 +85,7 @@ module master_output_control(clk,
                 count_c = {$clog2(SYS_ARR_COLS){1'b0}};
 
                 if (clear_after) begin
-                    accum_reset = 1'b1;
+                    accum_clear = 1'b1;
                 end // if (clear_after)
             end // if (count == SYS_ARR_COLS)
         end // if (started)
