@@ -36,7 +36,7 @@ always@(*) begin
   end
 
   if(start) begin
-    out_en = {width_height{1'b1}} >> (width_height - num_col + 1);
+    out_en = {width_height{1'b1}} >> (width_height - num_col - 1);
     out_addr = {width_height{base_addr+count}};
     count_c = count + 1;
 
