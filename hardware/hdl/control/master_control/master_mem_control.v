@@ -30,6 +30,8 @@ always@(posedge clk) begin
 end
 
 always@(*) begin
+  out_en = {width_height{1'b0}};
+
   if(active) begin
     start = 1;
     done = 0;
