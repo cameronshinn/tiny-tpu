@@ -1,7 +1,7 @@
 // accumCol.v
 // Cameron Shinn
 
-module accumCol(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
+module accumCol(clk, clear, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
 
     parameter DATA_WIDTH = 8; // number of bits for one piece of data
     parameter MAX_OUT_ROWS = 128; // output height of largest matrix
@@ -11,7 +11,7 @@ module accumCol(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
     localparam NUM_ACCUM_ROWS = MAX_OUT_ROWS * (MAX_OUT_COLS/SYS_ARR_COLS);
 
     input clk;
-    input reset; // clears array and sets it to 0
+    input clear; // clears array and sets it to 0
     input rd_en; // reads the data at rd_addr when high
     input wr_en; // writes (and accumulates) data to wr_addr when high
     input [$clog2(NUM_ACCUM_ROWS)-1:0] rd_addr;
@@ -32,11 +32,11 @@ module accumCol(clk, reset, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
             rd_data <= mem[rd_addr];
         end // if (rd_en)
 
-        if (reset) begin
+        if (clear) begin
             for (i = 0; i < NUM_ACCUM_ROWS; i = i + 1) begin // clear all entries to 0
                 mem[i] <= 0; // not sure if there is a good way to define literal width
             end // for (i = 0; i < NUM_ACCUM_ROWS; i = i + 1)
-        end // if (reset)
+        end // if (clear)
 
     end // always @(posedge clk)
 endmodule // accumCol
