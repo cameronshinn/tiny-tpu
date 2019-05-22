@@ -58,14 +58,16 @@ module fifo_control(
         fifo_en_c = 16'hffff;
         count_c = count + 1;
         if(count >= fifo_width) begin
-          done = 1;
           fifo_start = 0;
           count_c = 0;
           fifo_en_c = 16'h0000;
         end
       end
-
     end
+
+    if (fifo_en == 16'h0000) begin
+      done = 1;
+    end // if (fifo_en == 16'h0000)
 
     if(reset) begin
       fifo_en_c = 16'h0000;
