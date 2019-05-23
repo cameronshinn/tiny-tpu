@@ -8,7 +8,7 @@
 // Macros for control signals. Write these to get the mapped function
 `define RESET 4'b1111;
 `define FILL_FIFO 4'b0001;
-`define FILL_ARR 4'b0010;
+`define DRAIN_FIFO 4'b0010;
 `define MULTIPLY 4'b0011;
 
 module matrixMultiplier (
@@ -48,13 +48,13 @@ module matrixMultiplier (
      *      - inputMem_wr_data & weightMem_wr_data              />
      *      - outputMem_rd_data                                 />
      *      - Control Signals (Write)
-     *          + reset
-     *          + active
+     *          + reset                                         />
+     *          + active                                        />
      *              - inputMem_rd_addr_base
      *              - outputMem_wr_addr_base
-     *          + fill_fifo
+     *          + fill_fifo                                     />
      *              - weightMem_rd_addr_base
-     *          + fifo_to_arr
+     *          + drain_fifo                                   />
      *      - Control Signals (Read)
      *          + mem_to_fifo_done
      *          + fifo_to_arr_done
@@ -72,9 +72,9 @@ module matrixMultiplier (
     wire [WIDTH_HEIGHT - 1:0] weightMem_wr_en;
     wire [WIDTH_HEIGHT - 1:0] outputMem_rd_en;
 
-    assign inputMem_wr_en = {16{slave_write & (slave_address[9:8] == INPUT_OFFSET)}};
-    assign weightMem_wr_en = {16{slave_write & (slave_address[9:8] == WEIGHT_OFFSET)}};
-    assign outputMem_rd_en = {16{slave_read & (slave_address[9:8] == OUTPUT_OFFSET)}};
+    assign inputMem_wr_en = {16{slave_write & (slave_address[9:8] == `INPUT_OFFSET)}};
+    assign weightMem_wr_en = {16{slave_write & (slave_address[9:8] == `WEIGHT_OFFSET)}};
+    assign outputMem_rd_en = {16{slave_read & (slave_address[9:8] == `OUTPUT_OFFSET)}};
 
 
     // ========================================
@@ -105,14 +105,62 @@ module matrixMultiplier (
 
 
     // ========================================
+    // ----------- Control (inputs) -----------
+    // ========================================
+
+
+    reg reset_tpu;
+    reg fill_fifo;
+    reg drain_fifo;
+    reg multiply;
+
+    always (posedge clk) begin
+
+        if ((slave_write == 1) && (slave_address[9:8] == `CONTROL_OFFSET)) begin
+            case (slave_writedata[3:0]);
+
+                `RESET: begin
+                    reset_tpu <= 1'b1;
+                    fill_fifo <= 1'b0;
+                    drain_fifo <= 1'b0;
+                    multiply <= 1'b0;
+                end
+
+                `FILL_FIFO: begin
+                    reset_tpu <= 1'b0;
+                    fill_fifo <= 1'b1;
+                    drain_fifo <= 1'b0;
+                    multiply <= 1'b0;
+                end
+
+                `DRAIN_FIFO: begin
+                    reset_tpu <= 1'b0;
+                    fill_fifo <= 1'b0;
+                    drain_fifo <= 1'b1;
+                    multiply <= 1'b0;
+                end
+
+                `MULTIPLY: begin
+                    reset_tpu <= 1'b0;
+                    fill_fifo <= 1'b0;
+                    drain_fifo <= 1'b0;
+                    multiply <= 1'b1;
+                end
+
+            endcase // slave_writedata[3:0]
+        end // if ((slave_write == 1) && (slave_address[9:8] == `CONTROL_OFFSET))
+    end // always @(posedge clk)
+
+
+    // ========================================
     // ------------ TPU Instantiation ---------
     // ========================================
 
 
     top TPU (
         .clk                   (clk),
-        .reset                 (),
-        .active                (),
+        .reset                 (reset_tpu),
+        .active                (multiply),
         .inputMem_wr_en        (inputMem_wr_en),
         .inputMem_wr_addr      (inputMem_wr_addr),
         .inputMem_wr_data      (inputMem_wr_data),
@@ -125,8 +173,8 @@ module matrixMultiplier (
         .weightMem_wr_addr     (weightMem_wr_addr),
         .weightMem_wr_data     (weightMem_wr_data),
         .weightMem_rd_addr_base(),
-        .fill_fifo             (),
-        .drain_fifo            (),
+        .fill_fifo             (fill_fifo),
+        .drain_fifo            (drain_fifo),
         .mem_to_fifo_done      (),
         .fifo_to_arr_done      (),
         .output_done           ()
