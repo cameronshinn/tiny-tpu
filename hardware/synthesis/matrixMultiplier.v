@@ -1,7 +1,15 @@
+// Macros for talking with different address spaces
 `define CONTROL_OFFSET 2'b00
 `define INPUT_OFFSET 2'b01
 `define WEIGHT_OFFSET 2'b01
 `define OUTPUT_OFFSET 2'b11
+
+
+// Macros for control signals. Write these to get the mapped function
+`define RESET 4'b1111;
+`define FILL_FIFO 4'b0001;
+`define FILL_ARR 4'b0010;
+`define MULTIPLY 4'b0011;
 
 module matrixMultiplier (
 	clk,
