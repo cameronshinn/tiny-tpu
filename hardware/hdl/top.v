@@ -13,9 +13,8 @@ module top (
     weightMem_wr_en,
     weightMem_wr_addr,
     weightMem_wr_data,
-    weightMem_rd_en,
-    weightMem_rd_addr,
-    mem_to_fifo,
+    weightMem_rd_addr_base,
+    fill_fifo,
     fifo_to_arr,
     mem_to_fifo_done,
     fifo_to_arr_done,
@@ -59,11 +58,10 @@ module top (
     input [WIDTH_HEIGHT - 1:0] weightMem_wr_en;
     input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_addr;
     input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_data;
-    input [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
-    input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr;
+    input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_base;
 
     // FIFO stuff
-    input mem_to_fifo;
+    input fill_fifo;
     input fifo_to_arr;
 
     // commit FIFO outputs to systolic array
@@ -98,6 +96,10 @@ module top (
     wire [WIDTH_HEIGHT - 1:0] mem_to_fifo_en;
     wire [WIDTH_HEIGHT - 1:0] fifo_to_arr_en;
     wire rd_to_wr_start;
+    wire mem_to_fifo;
+
+    wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_offset;
+    wire [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
 
     // set sys_arr_active 2 cycles after we start reading memory
     wire sys_arr_active;
@@ -165,7 +167,7 @@ module top (
         .rd_en  (weightMem_rd_en),              // from interconnect
         .wr_en  (weightMem_wr_en),              // from interconnect
         .wr_data(weightMem_wr_data),            // from interconnect
-        .rd_addr(weightMem_rd_addr),            // from interconnect
+        .rd_addr(weightMem_rd_addr_base + weightMem_rd_addr_offset), // from interconnect
         .wr_addr(weightMem_wr_addr),            // from interconnect
         .rd_data(weightMem_rd_data)             // to weightFIFO
     );
@@ -180,6 +182,16 @@ module top (
         .done        (mem_to_fifo_done)         // to interconect
     );
     defparam mem_fifo.fifo_width = WIDTH_HEIGHT;
+
+    fifo_fill_control fifo_fill_control (
+        .clk              (clk),
+        .reset            (reset),
+        .active           (fill_fifo),
+        .mem_to_fifo      (mem_to_fifo),
+        .weightMem_rd_addr(weightMem_rd_addr_offset),
+        .weightMem_rd_en  (weightMem_rd_en)
+    );
+    defparam fifo_fill_control.WIDTH_HEIGHT = WIDTH_HEIGHT;
 
     fifo_control fifo_arr (
         .clk         (clk),
