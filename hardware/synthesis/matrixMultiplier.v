@@ -109,6 +109,10 @@ module matrixMultiplier (
     // ========================================
 
 
+    reg [TPU_DATA_WIDTH - 1:0] inputMem_rd_addr_base;
+    reg [TPU_DATA_WIDTH - 1:0] weightMem_rd_addr_base;
+    reg [TPU_DATA_WIDTH - 1:0] outputMem_wr_addr_base;
+
     reg reset_tpu;
     reg fill_fifo;
     reg drain_fifo;
@@ -124,6 +128,9 @@ module matrixMultiplier (
                     fill_fifo <= 1'b0;
                     drain_fifo <= 1'b0;
                     multiply <= 1'b0;
+                    weightMem_rd_addr_base <= 128'h0000_0000_0000_0000_0000_0000_0000_0000;
+                    inputMem_rd_addr_base <= 128'h0000_0000_0000_0000_0000_0000_0000_0000;
+                    outputMem_wr_addr_base <= 128'h0000_0000_0000_0000_0000_0000_0000_0000;
                 end
 
                 `FILL_FIFO: begin
@@ -131,6 +138,7 @@ module matrixMultiplier (
                     fill_fifo <= 1'b1;
                     drain_fifo <= 1'b0;
                     multiply <= 1'b0;
+                    weightMem_rd_addr_base <= {16{slave_writedata[11:4]}};
                 end
 
                 `DRAIN_FIFO: begin
@@ -145,6 +153,8 @@ module matrixMultiplier (
                     fill_fifo <= 1'b0;
                     drain_fifo <= 1'b0;
                     multiply <= 1'b1;
+                    inputMem_rd_addr_base <= {16{slave_writedata[11:4]}};
+                    outputMem_wr_addr_base <= {16{slave_writedata[19:12]}};
                 end
 
             endcase // slave_writedata[3:0]
@@ -164,15 +174,15 @@ module matrixMultiplier (
         .inputMem_wr_en        (inputMem_wr_en),
         .inputMem_wr_addr      (inputMem_wr_addr),
         .inputMem_wr_data      (inputMem_wr_data),
-        .inputMem_rd_addr_base (),
+        .inputMem_rd_addr_base (inputMem_rd_addr_base),
         .outputMem_rd_en       (outputMem_rd_en),
         .outputMem_rd_addr     (outputMem_rd_addr),
         .outputMem_rd_data     (outputMem_rd_data),
-        .outputMem_wr_addr_base(),
+        .outputMem_wr_addr_base(outputMem_wr_addr_base),
         .weightMem_wr_en       (weightMem_wr_en),
         .weightMem_wr_addr     (weightMem_wr_addr),
         .weightMem_wr_data     (weightMem_wr_data),
-        .weightMem_rd_addr_base(),
+        .weightMem_rd_addr_base(weightMem_rd_addr_base),
         .fill_fifo             (fill_fifo),
         .drain_fifo            (drain_fifo),
         .mem_to_fifo_done      (),
