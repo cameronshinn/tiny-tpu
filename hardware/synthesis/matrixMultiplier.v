@@ -1,13 +1,11 @@
 `define CONTROL_OFFSET 2'b00
+`define INPUT_OFFSET 2'b01
 `define WEIGHT_OFFSET 2'b01
-`define INPUT_OFFSET 2'b10
+`define OUTPUT_OFFSET 2'b11
 
 module matrixMultiplier (
-	// signals to connect to an Avalon clock source interface
 	clk,
 	reset,
-
-	// signals to connect to an Avalon-MM slave interface
 	slave_address,
 	slave_read,
 	slave_write,
@@ -16,106 +14,115 @@ module matrixMultiplier (
 	slave_byteenable
 );
 
-    parameter DATA_WIDTH = 32;
-    parameter width_height = 16;
-    parameter data_width = width_height * 8;
 
-    // clock interface
+    // BE SURE TO USE FULL AVALON (not lightweight) BUS IN QSYS
+    parameter DATA_WIDTH = 64;
+    parameter WIDTH_HEIGHT = 16;
+    parameter TPU_DATA_WIDTH = WIDTH_HEIGHT * 8;
+
     input clk;
     input reset;
-
-    // slave interface
-    input [9:0] slave_address;	//GET CORRECT WIDTH
+    input [9:0] slave_address;
     input slave_read;
     input slave_write;
-    output reg [DATA_WIDTH-1:0] slave_readdata;
     input [DATA_WIDTH-1:0] slave_writedata;
     input [(DATA_WIDTH/8)-1:0] slave_byteenable;
 
-    // ========================================================================
-    // TPU side
-    // ========================================================================
+    output reg [DATA_WIDTH-1:0] slave_readdata;
 
-    // control signals
-    wire wr_en_weight = slave_write & (slave_address[9:8] == `WEIGHT_OFFSET);
-    wire wr_en_data = slave_write & (slave_address[9:8] == `INPUT_OFFSET);
-    reg mul_en;
-    reg wr_en_fifo;
-    //wire rd_en_weights = slave_read & (slave_address[9:8] == `WEIGHT_OFFSET;
-    //wire rd_en_input = slave_read & (slave_address[9:8] == `INPUT_OFFSET;
 
-    // address and data signals
-    reg [data_width-1:0] wr_addr_weight, wr_data_weight; 
+    /* TODO:
+     *
+     *      - inputMem_wr_en & weightMem_wr_en                  />
+     *      - outputMem_rd_en                                   />
+     *      - inputMem_wr_addr & weightMem_wr_addr              />
+     *      - outputMem_rd_addr                                 />
+     *      - inputMem_wr_data & weightMem_wr_data              />
+     *      - outputMem_rd_data                                 />
+     *      - Control Signals (Write)
+     *          + reset
+     *          + active
+     *              - inputMem_rd_addr_base
+     *              - outputMem_wr_addr_base
+     *          + fill_fifo
+     *              - weightMem_rd_addr_base
+     *          + fifo_to_arr
+     *      - Control Signals (Read)
+     *          + mem_to_fifo_done
+     *          + fifo_to_arr_done
+     *          + output_done
+     *      - slave_readdata
+     */
 
-    reg wr_addr_output[data_width];
-    reg load_en_weight;
 
-    
-    //wire rd_data_weights;
-    //wire rd_data_input;
+    // ========================================
+    // --------- wr/rd enables ----------------
+    // ========================================
 
-    top_TPU top(    //no reads???
-        .clk(clk),
-        .reset(reset),
-        .wr_en_weight(wr_en_weights),           //enable write weights to mem
-        .wr_en_data(wr_en_input),               //enable write data/input to mem
-        .wr_en_fifo(wr_en_fifo),                //enable write from mem to fifo
-        //.rd_en_weights(rd_en_weights),
-        //.rd_en_input(rd_en_input),
-        .wr_addr_weight(slave_address[7:0]),    //write weight addr to mem
-        //.wr_addr_input(slave_address[7:0]),
-        .wr_data_weight(slave_writedata),        //write weight data/input to mem
-        //.rd_addr_weights(slave_address[7:0]),
-        //.rd_addr_input(slave_address[7:0]),
-        .base_addr_weight(slave_address[7:0]),  //base addr for weights in mem
-        .base_addr_data(slave_address[7:0]),    //base addr for data/inputs in mem
-        //.load_fifo(ld_fifo),
-        .load_en_weight(load_en_weight),       //load weight from fifo & write to array before calculations - ie a prep matrix
-        .mult_en(mult_en),                      //enable the multiplication
-        //.rd_data_weights(rd_data_weights),
-        //.rd_data_input(rd_data_input),
-        .wr_addr_output(wr_addr_output)         //output addr to write to in mem?
-        //to-do: add outputs
+
+    wire [WIDTH_HEIGHT - 1:0] inputMem_wr_en;
+    wire [WIDTH_HEIGHT - 1:0] weightMem_wr_en;
+    wire [WIDTH_HEIGHT - 1:0] outputMem_rd_en;
+
+    assign inputMem_wr_en = {16{slave_write & (slave_address[9:8] == INPUT_OFFSET)}};
+    assign weightMem_wr_en = {16{slave_write & (slave_address[9:8] == WEIGHT_OFFSET)}};
+    assign outputMem_rd_en = {16{slave_read & (slave_address[9:8] == OUTPUT_OFFSET)}};
+
+
+    // ========================================
+    // ------------ wr/rd addresses -----------
+    // ========================================
+
+
+    wire [TPU_DATA_WIDTH - 1:0] inputMem_wr_addr;
+    wire [TPU_DATA_WIDTH - 1:0] weightMem_wr_addr;
+    wire [TPU_DATA_WIDTH - 1:0] outputMem_rd_addr;
+
+    assign inputMem_wr_addr = {16{slave_address[7:0]}};
+    assign weightMem_wr_addr = {16{slave_address[7:0]}};
+    assign outputMem_rd_addr = {16{slave_address[7:0]}};
+
+
+    // ========================================
+    // ------------ wr/rd data ----------------
+    // ========================================
+
+
+    wire [TPU_DATA_WIDTH - 1:0] inputMem_wr_data;
+    wire [TPU_DATA_WIDTH - 1:0] weightMem_wr_data;
+    wire [TPU_DATA_WIDTH - 1:0] outputMem_rd_data; // Driven by TPU output
+
+    assign inputMem_wr_data = {16{slave_writedata}};
+    assign weightMem_wr_data = {16{slave_writedata}};
+
+
+    // ========================================
+    // ------------ TPU Instantiation ---------
+    // ========================================
+
+
+    top TPU (
+        .clk                   (clk),
+        .reset                 (),
+        .active                (),
+        .inputMem_wr_en        (inputMem_wr_en),
+        .inputMem_wr_addr      (inputMem_wr_addr),
+        .inputMem_wr_data      (inputMem_wr_data),
+        .inputMem_rd_addr_base (),
+        .outputMem_rd_en       (outputMem_rd_en),
+        .outputMem_rd_addr     (outputMem_rd_addr),
+        .outputMem_rd_data     (outputMem_rd_data),
+        .outputMem_wr_addr_base(),
+        .weightMem_wr_en       (weightMem_wr_en),
+        .weightMem_wr_addr     (weightMem_wr_addr),
+        .weightMem_wr_data     (weightMem_wr_data),
+        .weightMem_rd_addr_base(),
+        .fill_fifo             (),
+        .fifo_to_arr           (),
+        .mem_to_fifo_done      (),
+        .fifo_to_arr_done      (),
+        .output_done           ()
     );
 
-    always @(*) begin
-        case(slave_address[9:8]) //wtf do I do here now
-            `CONTROL_OFFSET:
-                slave_readdata = 0;
-            `WEIGHT_OFFSET:
-                slave_readdata = 0;
-            `INPUT_OFFSET:
-                slave_readdata = 0;
-            default:
-                slave_readdata = 0;
-        endcase
-    end
-
-    always @ (posedge clk) begin
-        if (slave_write == 1 & slave_address[9:8] == `CONTROL_OFFSET) begin
-            wr_en_fifo <= slave_address[2];
-            load_en_weights <= slave_address[1];
-            mult_en <= slave_address[0];
-        end
-    end
-
-
-
-    // ========================================================================
-    // END TPU
-    // ========================================================================
 
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-
-
