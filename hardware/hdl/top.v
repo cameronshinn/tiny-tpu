@@ -18,8 +18,7 @@ module top (
     fifo_to_arr,
     mem_to_fifo_done,
     fifo_to_arr_done,
-    output_done,
-    weight_write
+    output_done
  );
 
 
@@ -64,9 +63,6 @@ module top (
     input fill_fifo;
     input fifo_to_arr;
 
-    // commit FIFO outputs to systolic array
-    input [WIDTH_HEIGHT - 1:0] weight_write;
-
 
 // ========================================
 // ------------ Outputs -------------------
@@ -100,6 +96,7 @@ module top (
 
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_offset;
     wire [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
+    wire weight_write;
 
     // set sys_arr_active 2 cycles after we start reading memory
     wire sys_arr_active;
@@ -124,7 +121,7 @@ module top (
         .datain   (inputMem_to_sysArr),         // from input memory
         .win      (weightFIFO_to_sysArr),        // from weight FIFO's
         .sumin    (256'd0),                           // Can be used for biases
-        .wwrite   (weight_write),               // from control
+        .wwrite   ({16{weight_write}}),               // from control
         .maccout  (outputMem_wr_data),          // to output memory
         .wout     (),                           // Not used
         .wwriteout(),                           // Not used
@@ -179,7 +176,8 @@ module top (
         .active      (mem_to_fifo),             // from interconnect
         .stagger_load(1'b0),
         .fifo_en     (mem_to_fifo_en),          // to weightFIFO's
-        .done        (mem_to_fifo_done)         // to interconect
+        .done        (mem_to_fifo_done),        // to interconect
+        .weight_write()                         // not used
     );
     defparam mem_fifo.fifo_width = WIDTH_HEIGHT;
 
@@ -199,7 +197,8 @@ module top (
         .active      (fifo_to_arr),             // from interconnect
         .stagger_load(1'b0),
         .fifo_en     (fifo_to_arr_en),          // to weightFIFO's
-        .done        (fifo_to_arr_done)         // to interconnect
+        .done        (fifo_to_arr_done),        // to interconnect
+        .weight_write(weight_write)             // to sysArr
     );
     defparam fifo_arr.fifo_width = WIDTH_HEIGHT;
 

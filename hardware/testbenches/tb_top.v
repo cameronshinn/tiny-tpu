@@ -19,7 +19,6 @@ module tb_top();
     reg [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_data;
     reg [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_base;
     reg load_weights_to_array;
-    reg [WIDTH_HEIGHT - 1:0] weight_write;
     reg fifo_to_arr;
     reg fill_fifo;
 
@@ -45,7 +44,6 @@ module tb_top();
         .weightMem_wr_addr     (weightMem_wr_addr),
         .weightMem_wr_data     (weightMem_wr_data),
         .weightMem_rd_addr_base(weightMem_rd_addr_base),
-        .weight_write          (weight_write),
         .fill_fifo             (fill_fifo),
         .fifo_to_arr           (fifo_to_arr),
         .mem_to_fifo_done      (mem_to_fifo_done),
@@ -79,7 +77,6 @@ module tb_top();
         weightMem_wr_data = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
         weightMem_rd_addr_base = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
         load_weights_to_array = 1'b0;
-        weight_write = 16'h0000;
 
         #20;
 
@@ -119,11 +116,9 @@ module tb_top();
         #160;
 
         fifo_to_arr = 1'b1;
-        weight_write = 16'hFFFF;
 
         #160;
 
-        weight_write = 16'h0000;
         fifo_to_arr = 1'b0;
 
         // At this point, weights are loaded. Begin multiplication.
@@ -166,11 +161,9 @@ module tb_top();
         #160;
 
         fifo_to_arr = 1'b1;
-        weight_write = 16'hFFFF;
 
         #160;
 
-        weight_write = 16'h0000;
         fifo_to_arr = 1'b0;
         inputMem_rd_addr_base = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
         outputMem_wr_addr_base = 128'h2020_2020_2020_2020_2020_2020_2020_2020;

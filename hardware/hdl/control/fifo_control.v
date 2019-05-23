@@ -8,7 +8,8 @@ module fifo_control(
   active, // active fifo control
   stagger_load, // en stagger load way
   fifo_en, // output fifo en
-  done // done loading fifo
+  done, // done loading fifo
+  weight_write
   );
 
   parameter fifo_width = 16;
@@ -17,6 +18,7 @@ module fifo_control(
   input clk, reset, active, stagger_load;
   output reg [fifo_width-1:0] fifo_en;
   output reg done;
+  output reg weight_write;
   reg [fifo_width-1:0] fifo_en_c;
   reg fifo_dec; // enable starts to decrease
   reg fifo_start;
@@ -31,9 +33,11 @@ module fifo_control(
     if(active) begin
       fifo_start = 1;
       done = 0;
+      weight_write = 1'b1;
     end
 
     if(fifo_start) begin
+      weight_write = 1'b1;
       if(stagger_load) begin
         count_c = count + 1;
         if(fifo_en == 16'hffff) begin
@@ -61,6 +65,7 @@ module fifo_control(
           fifo_start = 0;
           count_c = 0;
           fifo_en_c = 16'h0000;
+          weight_write = 1'b0;
         end
       end
     end
@@ -74,6 +79,7 @@ module fifo_control(
       fifo_start = 0;
       count_c = 0;
       done = 0;
+      weight_write = 1'b0;
     end
   end
 endmodule
