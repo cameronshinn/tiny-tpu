@@ -19,7 +19,7 @@ module tb_top();
     reg [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_data;
     reg [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_base;
     reg load_weights_to_array;
-    reg fifo_to_arr;
+    reg drain_fifo;
     reg fill_fifo;
 
     // outputs from DUT
@@ -45,7 +45,7 @@ module tb_top();
         .weightMem_wr_data     (weightMem_wr_data),
         .weightMem_rd_addr_base(weightMem_rd_addr_base),
         .fill_fifo             (fill_fifo),
-        .fifo_to_arr           (fifo_to_arr),
+        .drain_fifo            (drain_fifo),
         .mem_to_fifo_done      (mem_to_fifo_done),
         .fifo_to_arr_done      (fifo_to_arr_done),
         .output_done           (output_done),
@@ -115,11 +115,11 @@ module tb_top();
 
         #160;
 
-        fifo_to_arr = 1'b1;
+        drain_fifo = 1'b1;
 
         #160;
 
-        fifo_to_arr = 1'b0;
+        drain_fifo = 1'b0;
 
         // At this point, weights are loaded. Begin multiplication.
 
@@ -160,11 +160,11 @@ module tb_top();
 
         #160;
 
-        fifo_to_arr = 1'b1;
+        drain_fifo = 1'b1;
 
         #160;
 
-        fifo_to_arr = 1'b0;
+        drain_fifo = 1'b0;
         inputMem_rd_addr_base = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
         outputMem_wr_addr_base = 128'h2020_2020_2020_2020_2020_2020_2020_2020;
 

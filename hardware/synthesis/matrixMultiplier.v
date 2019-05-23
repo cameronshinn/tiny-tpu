@@ -126,7 +126,7 @@ module matrixMultiplier (
         .weightMem_wr_data     (weightMem_wr_data),
         .weightMem_rd_addr_base(),
         .fill_fifo             (),
-        .fifo_to_arr           (),
+        .drain_fifo            (),
         .mem_to_fifo_done      (),
         .fifo_to_arr_done      (),
         .output_done           ()

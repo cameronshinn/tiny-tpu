@@ -15,7 +15,7 @@ module top (
     weightMem_wr_data,
     weightMem_rd_addr_base,
     fill_fifo,
-    fifo_to_arr,
+    drain_fifo,
     mem_to_fifo_done,
     fifo_to_arr_done,
     output_done
@@ -61,7 +61,7 @@ module top (
 
     // FIFO stuff
     input fill_fifo;
-    input fifo_to_arr;
+    input drain_fifo;
 
 
 // ========================================
@@ -194,7 +194,7 @@ module top (
     fifo_control fifo_arr (
         .clk         (clk),
         .reset       (reset),
-        .active      (fifo_to_arr),             // from interconnect
+        .active      (drain_fifo),             // from interconnect
         .stagger_load(1'b0),
         .fifo_en     (fifo_to_arr_en),          // to weightFIFO's
         .done        (fifo_to_arr_done),        // to interconnect
