@@ -47,19 +47,19 @@ module matrixMultiplier (
      *      - outputMem_rd_addr                                 />
      *      - inputMem_wr_data & weightMem_wr_data              />
      *      - outputMem_rd_data                                 />
-     *      - Control Signals (Write)
+     *      - Control Signals (Write)                           />
      *          + reset                                         />
      *          + active                                        />
-     *              - inputMem_rd_addr_base
-     *              - outputMem_wr_addr_base
+     *              - inputMem_rd_addr_base                     />
+     *              - outputMem_wr_addr_base                    />
      *          + fill_fifo                                     />
-     *              - weightMem_rd_addr_base
-     *          + drain_fifo                                   />
-     *      - Control Signals (Read)
-     *          + mem_to_fifo_done
-     *          + fifo_to_arr_done
-     *          + output_done
-     *      - slave_readdata
+     *              - weightMem_rd_addr_base                    />
+     *          + drain_fifo                                    />
+     *      - Control Signals (Read)                            />
+     *          + mem_to_fifo_done                              />
+     *          + fifo_to_arr_done                              />
+     *          + output_done                                   />
+     *      - slave_readdata                                    />
      */
 
 
@@ -98,7 +98,8 @@ module matrixMultiplier (
 
     wire [TPU_DATA_WIDTH - 1:0] inputMem_wr_data;
     wire [TPU_DATA_WIDTH - 1:0] weightMem_wr_data;
-    wire [TPU_DATA_WIDTH - 1:0] outputMem_rd_data; // Driven by TPU output
+    // Driven below by TPU output, then assigned to slave_readdata
+    wire [TPU_DATA_WIDTH - 1:0] outputMem_rd_data;
 
     assign inputMem_wr_data = {16{slave_writedata}};
     assign weightMem_wr_data = {16{slave_writedata}};
@@ -163,6 +164,23 @@ module matrixMultiplier (
 
 
     // ========================================
+    // --------- Bus Read Side ----------------
+    // ========================================
+
+
+    wire mem_to_fifo_done;
+    wire fifo_to_arr_done;
+    wire output_done;
+
+    always @(*) begin
+
+        case(slave_address[9:8])
+            `CONTROL_OFFSET: slave_readdata = { 29'd0, output_done, fifo_to_arr_done, mem_to_fifo_done}
+            `OUTPUT_OFFSET: slave_readdata = outputMem_rd_data[31:0];
+    end // alwasy @(*)
+
+
+    // ========================================
     // ------------ TPU Instantiation ---------
     // ========================================
 
@@ -185,9 +203,9 @@ module matrixMultiplier (
         .weightMem_rd_addr_base(weightMem_rd_addr_base),
         .fill_fifo             (fill_fifo),
         .drain_fifo            (drain_fifo),
-        .mem_to_fifo_done      (),
-        .fifo_to_arr_done      (),
-        .output_done           ()
+        .mem_to_fifo_done      (mem_to_fifo_done),
+        .fifo_to_arr_done      (fifo_to_arr_done),
+        .output_done           (output_done)
     );
 
 
