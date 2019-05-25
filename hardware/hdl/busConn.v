@@ -6,10 +6,10 @@
 
 
 // Macros for control signals. Write these to get the mapped function
-`define RESET 4'b1111;
-`define FILL_FIFO 4'b0001;
-`define DRAIN_FIFO 4'b0010;
-`define MULTIPLY 4'b0011;
+`define RESET 4'b1111
+`define FILL_FIFO 4'b0001
+`define DRAIN_FIFO 4'b0010
+`define MULTIPLY 4'b0011
 
 module matrixMultiplier (
 	clk,
@@ -119,11 +119,10 @@ module matrixMultiplier (
     reg drain_fifo;
     reg multiply;
 
-    always (posedge clk) begin
+    always @(posedge clk) begin
 
         if ((slave_write == 1) && (slave_address[9:8] == `CONTROL_OFFSET)) begin
-            case (slave_writedata[3:0]);
-
+            case (slave_writedata[3:0])
                 `RESET: begin
                     reset_tpu <= 1'b1;
                     fill_fifo <= 1'b0;
@@ -157,7 +156,6 @@ module matrixMultiplier (
                     inputMem_rd_addr_base <= {16{slave_writedata[11:4]}};
                     outputMem_wr_addr_base <= {16{slave_writedata[19:12]}};
                 end
-
             endcase // slave_writedata[3:0]
         end // if ((slave_write == 1) && (slave_address[9:8] == `CONTROL_OFFSET))
     end // always @(posedge clk)
@@ -175,8 +173,9 @@ module matrixMultiplier (
     always @(*) begin
 
         case(slave_address[9:8])
-            `CONTROL_OFFSET: slave_readdata = { 29'd0, output_done, fifo_to_arr_done, mem_to_fifo_done}
+            `CONTROL_OFFSET: slave_readdata = { 29'd0, output_done, fifo_to_arr_done, mem_to_fifo_done};
             `OUTPUT_OFFSET: slave_readdata = outputMem_rd_data[31:0];
+        endcase
     end // alwasy @(*)
 
 

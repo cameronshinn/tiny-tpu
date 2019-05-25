@@ -43,8 +43,8 @@ module sysArr(
     wire [((width_height-1)*width_height)-1:0] activeout_inter;
 
     genvar i;
-    generate
-        for (i = 0; i < width_height; i = i + 1) begin
+    generate 
+        for (i = 0; i < width_height; i = i + 1) begin : gen_sysArr
             if (i == 0) begin
                 // The first row has different inputs
                 sysArrRow first_sysArrRow_inst(
@@ -52,7 +52,7 @@ module sysArr(
                     .active   (active),
                     .datain   (datain[((i+1)*8)-1:(i*8)]),
                     .win      (win),
-                    .sumin    ('0), // Simulation may throw a warning due to unmatched port sizes here
+                    .sumin    ({sum_width{1'b0}}), // Simulation may throw a warning due to unmatched port sizes here
                     .wwrite   (wwrite),
                     .maccout  (maccout_inter[((i+1)*width_height*16)-1:(i*width_height*16)]),
                     .wout     (wout_inter[((i+1)*width_height*8)-1:(i*width_height*8)]),

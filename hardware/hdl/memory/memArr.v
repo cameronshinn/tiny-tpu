@@ -20,8 +20,8 @@ module memArr(
     output wire [(width_height * 8)-1:0] rd_data;
 
     genvar i;
-    generate
-        for (i = 0; i < width_height; i = i + 1) begin
+    generate 
+        for (i = 0; i < width_height; i = i + 1) begin : gen_memArr
             input_mem input_mem(
                 .clock(clk),
                 .data(wr_data[((i*8) + 8)-1:(i*8)]),

@@ -19,7 +19,7 @@ output [data_width-1:0] rd_data;
 
 genvar i;
 generate
-  for(i = 0; i < width_height; i=i+1) begin
+  for(i = 0; i < width_height; i=i+1) begin : gen_wr_mem_control
     memArr DATA_MEM (
       .clk(clk),
       .rd_en(rd_en[i]),
