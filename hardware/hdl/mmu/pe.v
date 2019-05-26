@@ -42,7 +42,7 @@ module pe(
         .result(mult_result)
     );
 
-    always @(active or datain or sumin or mult_result) begin
+    always @(*) begin
 
         activeout_c = active;
         if (active == 1'b1) begin
