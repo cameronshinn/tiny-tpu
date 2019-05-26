@@ -56,7 +56,8 @@ module dsp_multiplier (
 				.aclr (1'b0),
 				.clken (1'b1),
 				.clock (1'b0),
-				.sclr (1'b0),
+//				.sclr (1'b0),       Removed due to Quartus Synthesis Error.
+//				May cause Issues.
 				.sum (1'b0));
 	defparam
 		lpm_mult_component.lpm_hint = "DEDICATED_MULTIPLIER_CIRCUITRY=YES,MAXIMIZE_SPEED=1",

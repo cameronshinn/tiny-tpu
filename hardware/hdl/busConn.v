@@ -101,8 +101,8 @@ module matrixMultiplier (
     // Driven below by TPU output, then assigned to slave_readdata
     wire [TPU_DATA_WIDTH - 1:0] outputMem_rd_data;
 
-    assign inputMem_wr_data = {16{slave_writedata}};
-    assign weightMem_wr_data = {16{slave_writedata}};
+    assign inputMem_wr_data = {2{slave_writedata}};
+    assign weightMem_wr_data = {2{slave_writedata}};
 
 
     // ========================================
@@ -171,10 +171,11 @@ module matrixMultiplier (
     wire output_done;
 
     always @(*) begin
+        slave_readdata = 64'h0000_0000_0000_0000_0000_0000_0000_0000;
 
         case(slave_address[9:8])
-            `CONTROL_OFFSET: slave_readdata = { 29'd0, output_done, fifo_to_arr_done, mem_to_fifo_done};
-            `OUTPUT_OFFSET: slave_readdata = outputMem_rd_data[31:0];
+            `CONTROL_OFFSET: slave_readdata = { 61'd0, output_done, fifo_to_arr_done, mem_to_fifo_done};
+            `OUTPUT_OFFSET: slave_readdata = outputMem_rd_data[63:0];
         endcase
     end // alwasy @(*)
 

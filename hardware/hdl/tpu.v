@@ -101,7 +101,7 @@ assign HEX5 = ~hex5_hex4[14:8];
 // Structural Coding
 //========================================================================================
 
-tpus_system (
+tpus_system  system(
     .clk_clk            (CLOCK_50),            //         clk.clk
     .reset_reset_n      (1'b1),      //       reset.reset_n
 
