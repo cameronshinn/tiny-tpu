@@ -176,6 +176,7 @@ module matrixMultiplier (
         case(slave_address[9:8])
             `CONTROL_OFFSET: slave_readdata = { 61'd0, output_done, fifo_to_arr_done, mem_to_fifo_done};
             `OUTPUT_OFFSET: slave_readdata = outputMem_rd_data[63:0];
+            default: slave_readdata = 64'h0000_0000_0000_0000_0000_0000_0000_0000;
         endcase
     end // alwasy @(*)
 

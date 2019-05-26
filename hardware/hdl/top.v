@@ -102,7 +102,6 @@ module top (
     wire sys_arr_active;
     reg sys_arr_active1;
     reg sys_arr_active2;
-    reg sys_arr_active3;
 
 // ========================================
 // -------------- Logic -------------------
@@ -249,7 +248,6 @@ module top (
         // set sys_arr_active 2 cycles after we read memory
         sys_arr_active1 <= sys_arr_active;
         sys_arr_active2 <= sys_arr_active1;
-        sys_arr_active3 <= sys_arr_active2;
     end // always
 
 endmodule // top
