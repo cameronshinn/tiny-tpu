@@ -47,7 +47,7 @@ module rd_control(
       end
 
       else begin
-        rd_en_c = (rd_en << 1) + 1;
+        rd_en_c = (rd_en << 1) + 1'b1;
       end
 
       rd_inc = {7'b0, rd_en[15], 7'b0, rd_en[14], 7'b0, rd_en[13], 7'b0, rd_en[12],
@@ -56,7 +56,7 @@ module rd_control(
           7'b0, rd_en[3], 7'b0, rd_en[2], 7'b0, rd_en[1], 7'b0, rd_en[0]};
       rd_addr_c = rd_inc + rd_addr;
 
-      count_c = count + 1;
+      count_c = count + 1'b1;
 
       if(count >= 17) begin
         wr_active = 1;
@@ -75,7 +75,7 @@ module rd_control(
       rd_en_c = 16'h0000;
     end
 
-    if(reset == 1) begin
+    if(reset == 1'b1) begin
       rd_addr_c = 0;
       rd_en_c  = 16'h0000;
       rd_dec = 0;
