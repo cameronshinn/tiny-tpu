@@ -49,7 +49,7 @@ module wr_control(
       end
 
       else begin
-        wr_en_c = (wr_en << 1) + 1;
+        wr_en_c = (wr_en << 1) + 1'b1;
       end
 
       wr_inc = {7'b0, wr_en[15], 7'b0, wr_en[14], 7'b0, wr_en[13], 7'b0, wr_en[12],

@@ -39,7 +39,7 @@ module fifo_control(
     if(fifo_start) begin
       weight_write = 1'b1;
       if(stagger_load) begin
-        count_c = count + 1;
+        count_c = count + 1'b1;
         if(fifo_en == 16'hffff) begin
           fifo_dec = 1;
         end
@@ -60,7 +60,7 @@ module fifo_control(
 
       else begin
         fifo_en_c = 16'hffff;
-        count_c = count + 1;
+        count_c = count + 1'b1;
         if(count >= fifo_width) begin
           fifo_start = 0;
           count_c = 0;
