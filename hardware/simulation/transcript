@@ -1,0 +1,219 @@
+# Reading C:/intelFPGA_lite/17.0/modelsim_ase/tcl/vsim/pref.tcl
+# OpenFile C:/Users/waton/Desktop/eec-181-tpu/hardware/simulation/tpu.mpf
+# Loading project tpu
+# Compile of top.v was successful.
+# Compile of tb_top.v was successful.
+vsim -gui work.tb_top -L altera_mf_ver -L lpm_ver
+# vsim -gui work.tb_top -L altera_mf_ver -L lpm_ver 
+# Start time: 14:41:54 on May 22,2019
+# Loading work.tb_top
+# Loading work.top
+# Loading work.sysArr
+# Loading work.memArr
+# Loading work.rd_control
+# Loading work.fifo_control
+# Loading work.weightFifo
+# Loading work.outputArr
+# Loading work.wr_control
+# Loading work.sysArrRow
+# Loading work.input_mem
+# Loading altera_mf_ver.altsyncram
+# Loading work.dff8
+# Loading work.output_mem
+# Loading work.pe
+# Loading work.dsp_multiplier
+# Loading lpm_ver.lpm_mult
+# Loading lpm_ver.LPM_HINT_EVALUATION
+# Loading altera_mf_ver.altsyncram_body
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# ** Warning: (vsim-3017) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(221): [TFMPC] - Too few port connections. Expected 7, found 6.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/outputMemControl File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/wr_control.v
+# ** Warning: (vsim-3722) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(221): [TFMPC] - Missing connection for port 'sys_arr_active'.
+# Compile of top.v was successful.
+restart
+# Loading work.top
+do C:/Users/waton/Desktop/eec-181-tpu/hardware/simulation/wave.do
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(194)
+#    Time: 2520 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 194
+add wave -position insertpoint  \
+sim:/tb_top/DUT/mem_to_fifo_done \
+sim:/tb_top/DUT/fifo_to_arr_done \
+sim:/tb_top/DUT/output_done
+restart
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(194)
+#    Time: 2520 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 194
+add wave -position insertpoint  \
+{sim:/tb_top/DUT/sysArr/genblk1[13]/genblk1/sysArrRow_inst/genblk1[7]/genblk1/pe_inst/weight}
+add wave -position insertpoint  \
+{sim:/tb_top/DUT/sysArr/genblk1[7]/genblk1/sysArrRow_inst/genblk1[13]/genblk1/pe_inst/weight}
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/waton/Desktop/eec-181-tpu/hardware/simulation/wave.do
+# Compile of fifo_control.v was successful.
+restart
+# Loading work.fifo_control
+# Compile of fifo_control.v was successful.
+restart
+# Loading work.fifo_control
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(194)
+#    Time: 2520 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 194
+add wave -position insertpoint  \
+sim:/tb_top/DUT/sysArr/active
+restart
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(194)
+#    Time: 2520 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 194
+# Compile of tb_top.v was successful.
+restart
+# Loading work.tb_top
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(199)
+#    Time: 2520 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 199
+add wave -position insertpoint  \
+sim:/tb_top/DUT/active
+restart
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(199)
+#    Time: 2520 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 199
+# Compile of tb_top.v was successful.
+restart
+# Loading work.tb_top
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(194)
+#    Time: 2560 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 194
+# Compile of tb_top.v failed with 1 errors.
+# Compile of tb_top.v failed with 1 errors.
+# Compile of tb_top.v was successful.
+# Compile of fifo_fill_control.v failed with 1 errors.
+# Compile of fifo_fill_control.v failed with 1 errors.
+# Compile of fifo_fill_control.v failed with 1 errors.
+# Compile of fifo_fill_control.v was successful.
+# Compile of top.v was successful.
+restart
+# Loading work.tb_top
+# Loading work.top
+# Loading work.fifo_fill_control
+# ** Warning: (vsim-3015) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(164): [PCDPC] - Port size (128) does not match connection size (1) for port 'rd_addr'. The port definition is at: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/memory/memArr.v(8).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/weightMem File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/memory/memArr.v
+# ** Warning: (vsim-3017) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(185): [TFMPC] - Too few port connections. Expected 7, found 6.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/fifo_fill_control File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v
+# ** Warning: (vsim-3015) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(185): [PCDPC] - Port size (128) does not match connection size (1) for port 'weightMem_rd_addr'. The port definition is at: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v(6).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/fifo_fill_control File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v
+# Compile of fifo_fill_control.v was successful.
+restart
+# Loading work.fifo_fill_control
+# ** Warning: (vsim-3015) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(164): [PCDPC] - Port size (128) does not match connection size (1) for port 'rd_addr'. The port definition is at: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/memory/memArr.v(8).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/weightMem File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/memory/memArr.v
+# ** Warning: (vsim-3015) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(185): [PCDPC] - Port size (128) does not match connection size (1) for port 'weightMem_rd_addr'. The port definition is at: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v(6).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/fifo_fill_control File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v
+# Compile of top.v failed with 1 errors.
+# Compile of top.v was successful.
+# Compile of tb_top.v failed with 1 errors.
+# Compile of tb_top.v failed with 1 errors.
+# Compile of tb_top.v failed with 1 errors.
+# Compile of tb_top.v was successful.
+restart
+# Loading work.tb_top
+# Loading work.top
+# ** Warning: (vsim-3015) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(164): [PCDPC] - Port size (16) does not match connection size (1) for port 'rd_en'. The port definition is at: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/memory/memArr.v(3).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/weightMem File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/memory/memArr.v
+# ** Warning: (vsim-3015) C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v(185): [PCDPC] - Port size (16) does not match connection size (1) for port 'weightMem_rd_en'. The port definition is at: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v(7).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT/fifo_fill_control File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/control/fifo_fill_control.v
+# Compile of top.v was successful.
+restart
+# Loading work.top
+run
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(209)
+#    Time: 2260 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 209
+add wave -position insertpoint  \
+sim:/tb_top/fill_fifo
+restart
+run
+run
+run
+# Compile of fifo_fill_control.v was successful.
+restart
+# Loading work.fifo_fill_control
+run
+run
+run
+run
+run
+run
+run
+run
+# WARNING: No extended dataflow license exists
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(209)
+#    Time: 2260 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 209
+# Compile of tb_top.v was successful.
+restart
+# Loading work.tb_top
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(186)
+#    Time: 2260 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 186
+add wave -position insertpoint  \
+sim:/tb_top/DUT/fifo_to_arr
+# Compile of fifo_control.v was successful.
+# Compile of top.v was successful.
+restart
+# Loading work.top
+# Loading work.fifo_control
+# ** Error: (vsim-3389) C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(33): Port 'weight_write' not found in the connected module (15th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v
+# ** Fatal: (vsim-3365) C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(33): Too many port connections. Expected 20, found 21.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_top/DUT File: C:/Users/waton/Desktop/eec-181-tpu/hardware/hdl/top.v
+# FATAL ERROR while loading design
+# Compile of tb_top.v was successful.
+restart
+# No Design Loaded!
+vsim -gui -L altera_mf_ver -L lpm_ver work.tb_top
+# vsim -gui -L altera_mf_ver -L lpm_ver work.tb_top 
+# Start time: 14:41:54 on May 22,2019
+# Loading work.tb_top
+# Loading work.top
+# Loading work.sysArr
+# Loading work.memArr
+# Loading work.rd_control
+# Loading work.fifo_control
+# Loading work.fifo_fill_control
+# Loading work.weightFifo
+# Loading work.outputArr
+# Loading work.wr_control
+# Loading work.sysArrRow
+# Loading work.input_mem
+# Loading altera_mf_ver.altsyncram
+# Loading work.dff8
+# Loading work.output_mem
+# Loading work.pe
+# Loading work.dsp_multiplier
+# Loading lpm_ver.lpm_mult
+# Loading lpm_ver.LPM_HINT_EVALUATION
+# Loading altera_mf_ver.altsyncram_body
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(179)
+#    Time: 2260 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 179
+# Compile of fifo_control.v was successful.
+restart
+# Loading work.fifo_control
+restart
+run -all
+# ** Note: $stop    : C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v(179)
+#    Time: 2260 ps  Iteration: 0  Instance: /tb_top
+# Break in Module tb_top at C:/Users/waton/Desktop/eec-181-tpu/hardware/testbenches/tb_top.v line 179
