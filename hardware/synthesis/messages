@@ -1,0 +1,439 @@
+Warning (12251): Tpus_system.arm_A9_hps: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning (12251): Tpus_system.arm_A9_hps: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Warning (12251): Tpus_system.arm_A9_hps: set_interface_assignment: Interface "hps_io" does not exist
+Warning (12251): Arm_A9_hps.f2h_irq0: Cannot connect clock for irq_mapper.sender
+Warning (12251): Arm_A9_hps.f2h_irq0: Cannot connect reset for irq_mapper.sender
+Warning (12251): Arm_A9_hps.f2h_irq1: Cannot connect clock for irq_mapper_001.sender
+Warning (12251): Arm_A9_hps.f2h_irq1: Cannot connect reset for irq_mapper_001.sender
+Warning (12251): Arm_A9_hps: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning (12251): Arm_A9_hps: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Warning (12251): Arm_A9_hps: set_interface_assignment: Interface "hps_io" does not exist
+Warning (10236): Verilog HDL Implicit Net warning at hps_sdram_pll.sv(168): created implicit net for "pll_dr_clk"
+Warning (10036): Verilog HDL or VHDL warning at hps_sdram_pll.sv(168): object "pll_dr_clk" assigned a value but never read
+Warning (10034): Output port "pll_locked" at hps_sdram_pll.sv(91) has no driver
+Warning (10858): Verilog HDL warning at hps_sdram_p0_acv_hard_memphy.v(420): object reset_n_seq_clk used but never assigned
+Warning (10230): Verilog HDL assignment warning at hps_sdram_p0_acv_hard_memphy.v(557): truncated value with size 4 to match size of target (1)
+Warning (10030): Net "reset_n_seq_clk" at hps_sdram_p0_acv_hard_memphy.v(420) has no driver or initial value, using a default initial value '0'
+Warning (10034): Output port "ctl_reset_export_n" at hps_sdram_p0_acv_hard_memphy.v(222) has no driver
+Warning (10036): Verilog HDL or VHDL warning at hps_sdram_p0_acv_ldc.v(45): object "phy_clk_dq" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at hps_sdram_p0_acv_ldc.v(47): object "phy_clk_dqs_2x" assigned a value but never read
+Warning (10034): Output port "ddio_phy_dqdin[179..32]" at hps_sdram_p0_acv_hard_io_pads.v(191) has no driver
+Warning (12158): Entity "altera_mem_if_hhp_qseq_synth_top" contains only dangling pins
+Warning (10230): Verilog HDL assignment warning at altera_mem_if_hard_memory_controller_top_cyclonev.sv(1166): truncated value with size 320 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at altera_mem_if_hard_memory_controller_top_cyclonev.sv(1167): truncated value with size 320 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at altera_mem_if_hard_memory_controller_top_cyclonev.sv(1168): truncated value with size 320 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at altera_mem_if_hard_memory_controller_top_cyclonev.sv(1169): truncated value with size 320 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at altera_mem_if_hard_memory_controller_top_cyclonev.sv(1170): truncated value with size 320 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at altera_mem_if_hard_memory_controller_top_cyclonev.sv(1171): truncated value with size 320 to match size of target (1)
+Warning (10240): Verilog HDL Always Construct warning at rd_control.v(36): inferring latch(es) for variable "rd_start", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at rd_control.v(36): inferring latch(es) for variable "rd_dec", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at rd_control.v(36): inferring latch(es) for variable "rd_inc", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at rd_control.v(36): inferring latch(es) for variable "rd_addr_c", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at rd_control.v(36): inferring latch(es) for variable "count_c", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at rd_control.v(36): inferring latch(es) for variable "wr_active", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_control.v(33): inferring latch(es) for variable "fifo_start", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_control.v(33): inferring latch(es) for variable "done", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_control.v(33): inferring latch(es) for variable "weight_write", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_control.v(33): inferring latch(es) for variable "count_c", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_control.v(33): inferring latch(es) for variable "fifo_dec", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_control.v(33): inferring latch(es) for variable "fifo_en_c", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_fill_control.v(25): inferring latch(es) for variable "count_c", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_fill_control.v(25): inferring latch(es) for variable "weightMem_rd_addr", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at fifo_fill_control.v(25): inferring latch(es) for variable "weightMem_rd_en", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at wr_control.v(36): inferring latch(es) for variable "wr_start", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at wr_control.v(36): inferring latch(es) for variable "done_c", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at wr_control.v(36): inferring latch(es) for variable "wr_dec", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at wr_control.v(36): inferring latch(es) for variable "wr_inc", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at wr_control.v(36): inferring latch(es) for variable "wr_addr_c", which holds its previous value in one or more paths through the always construct
+Warning (10036): Verilog HDL or VHDL warning at altera_merlin_width_adapter.sv(283): object "in_write" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at altera_merlin_width_adapter.sv(742): object "aligned_addr" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at altera_merlin_width_adapter.sv(743): object "aligned_byte_cnt" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at altera_merlin_width_adapter.sv(283): object "in_write" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at altera_merlin_width_adapter.sv(742): object "aligned_addr" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at altera_merlin_width_adapter.sv(743): object "aligned_byte_cnt" assigned a value but never read
+Warning (10240): Verilog HDL Always Construct warning at altera_merlin_width_adapter.sv(459): inferring latch(es) for variable "data_reg", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at altera_merlin_width_adapter.sv(459): inferring latch(es) for variable "byteen_reg", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at altera_merlin_width_adapter.sv(459): inferring latch(es) for variable "data_reg", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at altera_merlin_width_adapter.sv(459): inferring latch(es) for variable "byteen_reg", which holds its previous value in one or more paths through the always construct
+Warning (14284): Synthesized away the following node(s):
+	Warning (14285): Synthesized away the following RAM node(s):
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[15].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[14].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[13].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[12].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[11].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[10].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[9].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[8].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[7].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[6].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[5].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[8]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[9]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[10]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[11]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[12]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[13]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[14]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|outputArr:outputMem|output_mem:gen_outputArr[4].output_mem|altsyncram:altsyncram_component|altsyncram_mf22:auto_generated|q_b[15]"
+Warning (14284): Synthesized away the following node(s):
+	Warning (14285): Synthesized away the following RAM node(s):
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[15].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[14].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[13].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[12].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[11].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[10].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[9].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[8].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[7].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[6].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[5].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[0]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[1]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[2]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[3]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[4]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[5]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[6]"
+		Warning (14320): Synthesized away node "tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|memArr:weightMem|input_mem:gen_memArr[4].input_mem|altsyncram:altsyncram_component|altsyncram_oc22:auto_generated|q_b[7]"
+Warning (12241): 33 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (13039): The following bidirectional pins have no drivers
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[8]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[9]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[10]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[11]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[12]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[13]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[14]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[15]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[16]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[17]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[18]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[19]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[20]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[21]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[22]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[23]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[24]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[25]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[26]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[27]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[28]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[29]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[30]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQ[31]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQS_n[1]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQS_n[2]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQS_n[3]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQS_p[1]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQS_p[2]" has no driver
+	Warning (13040): bidirectional pin "HPS_DDR3_DQS_p[3]" has no driver
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|wr_control:outputMemControl|wr_dec has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|wr_control:outputMemControl|wr_en[2]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|rd_control:inputMemControl|wr_active has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|rd_control:inputMemControl|rd_en[13]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|wr_control:outputMemControl|wr_start has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|wr_control:outputMemControl|wr_en[2]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|rd_control:inputMemControl|rd_start has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|rd_control:inputMemControl|rd_en[13]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count_c[0] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count_c[1] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count_c[2] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[2]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count_c[3] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[3]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count_c[4] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[4]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_control:mem_fifo|fifo_start has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_control:mem_fifo|count[4]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_control:fifo_arr|fifo_start has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_control:fifo_arr|count[4]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|rd_control:inputMemControl|rd_dec has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|rd_control:inputMemControl|rd_en[13]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|weightMem_rd_addr[0] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|weightMem_rd_addr[1] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[1]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|weightMem_rd_addr[2] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[2]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13012): Latch tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|weightMem_rd_addr[3] has unsafe behavior
+	Warning (13013): Ports D and ENA on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[3]
+	Warning (13013): Ports ENA and CLR on the latch are fed by the same signal tpus_system:system|matrixMultiplier:tpu_slave_0|top:TPU|fifo_fill_control:fifo_fill_control|count[0]
+Warning (13009): TRI or OPNDRN buffers permanently enabled
+	Warning (13010): Node "HPS_DDR3_DQ[0]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[1]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[2]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[3]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[4]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[5]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[6]~synth"
+	Warning (13010): Node "HPS_DDR3_DQ[7]~synth"
+	Warning (13010): Node "HPS_DDR3_DQS_n[0]~synth"
+	Warning (13010): Node "HPS_DDR3_DQS_p[0]~synth"
+Warning (13024): Output pins are stuck at VCC or GND
+	Warning (13410): Pin "HPS_DDR3_A[13]" is stuck at GND
+	Warning (13410): Pin "HPS_DDR3_A[14]" is stuck at GND
+	Warning (13410): Pin "HPS_DDR3_DM[1]" is stuck at GND
+	Warning (13410): Pin "HPS_DDR3_DM[2]" is stuck at GND
+	Warning (13410): Pin "HPS_DDR3_DM[3]" is stuck at GND
