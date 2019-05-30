@@ -34,8 +34,8 @@ module wr_control(
     end
 
     always @(*) begin
-        wr_addr_c <= wr_addr;
-        done_c <= done;
+        wr_addr_c = wr_addr;
+        done_c = done;
         wr_dec = 0;
         wr_start_c = wr_start;
 

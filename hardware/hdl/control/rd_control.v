@@ -26,7 +26,7 @@ module rd_control(
     reg [width_height-1:0] rd_en_c;
     reg [data_width-1:0] rd_addr_c;
     reg [count_width-1:0] count, count_c;
-    reg rd_dec, rd_start, rd_start_c;
+    reg rd_start, rd_start_c;
 
     always @(posedge clk) begin
         rd_en <= rd_en_c;
@@ -47,7 +47,6 @@ module rd_control(
 
         if(rd_start) begin // start to get read address
             if(rd_en == 16'hffff) begin
-                rd_dec = 1;
                 rd_en_c = rd_en << 1;
             end
 
@@ -82,7 +81,6 @@ module rd_control(
                 rd_start_c = 0;
                 rd_addr_c = 16'h0000;
                 count_c = 0;
-                rd_dec = 0;
                 wr_active = 0;
             end
         end
@@ -94,7 +92,6 @@ module rd_control(
         if(reset == 1'b1) begin
             rd_addr_c = 0;
             rd_en_c  = 16'h0000;
-            rd_dec = 0;
             rd_start_c = 0;
             count_c = 0;
             wr_active = 0;
