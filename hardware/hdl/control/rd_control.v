@@ -45,8 +45,8 @@ module rd_control(
             rd_start_c = 1;
         end
 
-        if(rd_start) begin // start to get read address
-            if(rd_en == 16'hffff) begin
+        if (rd_start) begin // start to get read address
+            if (rd_en == 16'hffff) begin
                 rd_en_c = rd_en << 1;
             end
 
@@ -73,11 +73,11 @@ module rd_control(
 
             count_c = count + 1'b1;
 
-            if(count >= 17) begin
+            if (count >= 17) begin
                 wr_active = 1;
             end
 
-            if(rd_en == 16'h0000) begin
+            if (count == width_height*2-1) begin
                 rd_start_c = 0;
                 rd_addr_c = 16'h0000;
                 count_c = 0;
@@ -89,7 +89,7 @@ module rd_control(
             rd_en_c = 16'h0000;
         end
 
-        if(reset == 1'b1) begin
+        if (reset == 1'b1) begin
             rd_addr_c = 0;
             rd_en_c  = 16'h0000;
             rd_start_c = 0;
