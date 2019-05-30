@@ -40,8 +40,8 @@ module sysArrRow(
     assign activeout = activeout_inter;
 
     genvar i;
-    generate 
-        for (i = 0; i < row_width; i = i + 1) begin : gen_sysArrRow
+    generate
+        for (i = 0; i < row_width; i = i + 1) begin : genblk1
             if (i == 0) begin
                 // The first PE in the row has different inputs
                 pe first_pe_inst(
