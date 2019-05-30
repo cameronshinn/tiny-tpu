@@ -21,17 +21,18 @@ module fifo_control(
   output reg weight_write;
   reg [fifo_width-1:0] fifo_en_c;
   reg fifo_dec; // enable starts to decrease
-  reg fifo_start;
+  reg fifo_start, fifo_start_c;
   reg [count_width-1:0] count, count_c; // count the number of clock circle
 
   always@(posedge clk) begin
     fifo_en <= fifo_en_c;
     count <= count_c;
+    fifo_start <= fifo_start_c;
   end
 
   always@(*) begin
     if(active) begin
-      fifo_start = 1;
+      fifo_start_c = 1;
       done = 0;
       weight_write = 1'b1;
     end
@@ -62,7 +63,7 @@ module fifo_control(
         fifo_en_c = 16'hffff;
         count_c = count + 1'b1;
         if(count >= fifo_width) begin
-          fifo_start = 0;
+          fifo_start_c = 0;
           count_c = 0;
           fifo_en_c = 16'h0000;
           weight_write = 1'b0;
@@ -76,7 +77,7 @@ module fifo_control(
 
     if(reset) begin
       fifo_en_c = 16'h0000;
-      fifo_start = 0;
+      fifo_start_c = 0;
       count_c = 0;
       done = 0;
       weight_write = 1'b0;
