@@ -23,18 +23,19 @@ module wr_control(
 
   reg [width_height-1:0] wr_en_c;
   reg [data_width-1:0] wr_addr_c, wr_inc;
-  reg wr_dec, wr_start;
+  reg wr_dec, wr_start, wr_start_c;
   reg done_c;
 
   always@(posedge clk) begin
     wr_en <= wr_en_c;
     wr_addr <= wr_addr_c;
     done <= done_c;
+    wr_start <= wr_start_c;
   end
 
   always@(*) begin
     if(active) begin
-      wr_start = 1;
+      wr_start_c = 1;
       done_c = 1'b0;
       //done = 0;
     end
@@ -59,7 +60,7 @@ module wr_control(
       wr_addr_c = wr_inc + wr_addr;
 
       if(wr_en == 16'h0000) begin
-        wr_start = 0;
+        wr_start_c = 0;
         wr_addr_c = 16'h0000;
         wr_dec = 0;
         //done = 1;
@@ -82,7 +83,7 @@ module wr_control(
       wr_addr_c = 0;
       wr_en_c  = 16'h0000;
       wr_dec = 0;
-      wr_start = 0;
+      wr_start_c = 0;
       done_c = 0;
     end
   end
