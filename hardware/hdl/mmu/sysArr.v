@@ -43,8 +43,8 @@ module sysArr(
     wire [((width_height-1)*width_height)-1:0] activeout_inter;
 
     genvar i;
-    generate 
-        for (i = 0; i < width_height; i = i + 1) begin : gen_sysArr
+    generate
+        for (i = 0; i < width_height; i = i + 1) begin : genblk1
             if (i == 0) begin
                 // The first row has different inputs
                 sysArrRow first_sysArrRow_inst(

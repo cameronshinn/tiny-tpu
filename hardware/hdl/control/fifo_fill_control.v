@@ -23,6 +23,9 @@ module fifo_fill_control (
 
     always @(*) begin
         mem_to_fifo_c = 1'b0;
+        count_c = 5'h00;
+        weightMem_rd_addr = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
+        weightMem_rd_en = 16'h0000;
         if (reset) begin
             count_c = 5'h00;
             weightMem_rd_addr = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
