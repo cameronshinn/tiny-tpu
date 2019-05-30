@@ -1,86 +1,73 @@
-// This module controls the fifo signals
-// It set the enble of fifo to sequentially store fifo into mmu by col
-// Alan Qin
-// Apri 22 2019
+// fifo_control.v
+// Cameron Shinn
+
 module fifo_control(
-  clk,
-  reset,
-  active, // active fifo control
-  stagger_load, // en stagger load way
-  fifo_en, // output fifo en
-  done, // done loading fifo
-  weight_write
-  );
+    clk,
+    reset,
+    active, // active fifo control
+    stagger_load, // en stagger load way
+    fifo_en, // output fifo en
+    done, // done loading fifo
+    weight_write
+    );
 
-  parameter fifo_width = 16;
-  localparam  count_width = $clog2(fifo_width * 2);
+    parameter WIDTH_HEIGHT = 16;
+    localparam COUNT_WIDTH = $clog2(WIDTH_HEIGHT) + 1;
 
-  input clk, reset, active, stagger_load;
-  output reg [fifo_width-1:0] fifo_en;
-  output reg done;
-  output reg weight_write;
-  reg [fifo_width-1:0] fifo_en_c;
-  reg fifo_dec; // enable starts to decrease
-  reg fifo_start, fifo_start_c;
-  reg [count_width-1:0] count, count_c; // count the number of clock circle
+    input clk;
+    input reset;
+    input active;
+    input stagger_load;
+    output wire [WIDTH_HEIGHT-1:0] fifo_en;
+    output wire done;
+    output wire weight_write;
+    
+    reg started, started_c;
+    reg count, count_c;
+    reg stagger_latch, stagger_latch_c; // must latch to prevent changing midway
 
-  always@(posedge clk) begin
-    fifo_en <= fifo_en_c;
-    count <= count_c;
-    fifo_start <= fifo_start_c;
-  end
+    assign fifo_en = (stagger_latch) ? ({WIDTH_HEIGHT{1'b1}}) : {WIDTH_HEIGHT{1'b1}}; // FIXME: First case
+    assign done = ~started;
+    assign weight_write = started;
 
-  always@(*) begin
-    if(active) begin
-      fifo_start_c = 1;
-      done = 0;
-      weight_write = 1'b1;
-    end
+    always @(*) begin
+        started_c = started;
+        count_c = count;
+        stagger_latch_c = stagger_latch;
 
-    if(fifo_start) begin
-      weight_write = 1'b1;
-      if(stagger_load) begin
-        count_c = count + 1'b1;
-        if(fifo_en == 16'hffff) begin
-          fifo_dec = 1;
-        end
+        if (active && !started) begin // active signal and not started already
+            started_c = 1'b1;
+            stagger_latch_c = stagger_load;
+            count_c = {COUNT_WIDTH{1'b0}};
+        end // if (active && !started)
 
-        if(fifo_dec) begin
-          fifo_en_c = fifo_en >> 1;
-          if(fifo_en == 16'h0000) begin
-            done = 1;
-            fifo_start = 0;
-            count_c = 0;
-          end
-        end
+        if (started) begin
+            count_c = count + 1'b1;
 
-        else begin
-          fifo_en_c = (fifo_en >> 1) + 16'h8000;
-        end
-      end
+            if (stagger_latch) begin
+                if (count == WIDTH_HEIGHT*2-1) begin
+                    started_c = 1'b0;
+                end // if (count == WIDTH_HEIGHT*2-1)
+            end // if (stagger_latch)
 
-      else begin
-        fifo_en_c = 16'hffff;
-        count_c = count + 1'b1;
-        if(count >= fifo_width) begin
-          fifo_start_c = 0;
-          count_c = 0;
-          fifo_en_c = 16'h0000;
-          weight_write = 1'b0;
-        end
-      end
-    end
+            else begin // not staggered load
+                if (count == WIDTH_HEIGHT-1) begin
+                    started_c = 1'b0;
+                end // if (count == WIDTH_HEIGHT-1)
+            end // else
+        end // if (started)
 
-    if (fifo_en == 16'h0000) begin
-      done = 1;
-    end // if (fifo_en == 16'h0000)
+        if (reset) begin
+            started_c = 1'b0;
+            count_c = {COUNT_WIDTH{1'b0}};
+            stagger_latch_c = stagger_load
+        end // if (reset)
+    end // always @(*)
 
-    if(reset) begin
-      fifo_en_c = 16'h0000;
-      fifo_start_c = 0;
-      count_c = 0;
-      done = 0;
-      weight_write = 1'b0;
-    end
-  end
-endmodule
+    always @(posedge clk) begin
+        started <= started_c;
+        count <= count_c;
+        stagger_latch <= stagger_latch_c;
+    end // always @(posedge clk)
+
+endmodule // fifo_control
