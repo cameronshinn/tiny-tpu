@@ -21,33 +21,26 @@ module rd_control(
   output reg [data_width-1:0] rd_addr;
   output reg wr_active;
 
-  reg wr_active_c;
   reg [width_height-1:0] rd_en_c;
-  reg [data_width-1:0] rd_addr_c, rd_inc, rd_inc_c;
+  reg [data_width-1:0] rd_addr_c, rd_inc;
   reg [count_width-1:0] count, count_c;
-  reg rd_dec, rd_dec_c, rd_start, rd_start_c;
+  reg rd_dec, rd_start, rd_start_c;
 
   always@(posedge clk) begin
     rd_en <= rd_en_c;
     rd_addr <= rd_addr_c;
     count <= count_c;
     rd_start <= rd_start_c;
-    rd_dec <= rd_dec_c;
-    rd_inc <= rd_inc_c;
-    wr_active <= wr_active_c;
   end
 
   always@(*) begin
-    rd_addr_c = rd_addr;
-    count_c = count;
-
     if(active) begin
       rd_start_c = 1;
     end
 
-    if(rd_start || active) begin // start to get read address
+    if(rd_start) begin // start to get read address
       if(rd_en == 16'hffff) begin
-        rd_dec_c = 1;
+        rd_dec = 1;
       end
 
       if(rd_dec) begin
@@ -58,7 +51,7 @@ module rd_control(
         rd_en_c = (rd_en << 1) + 1'b1;
       end
 
-      rd_inc_c = {7'b0, rd_en[15], 7'b0, rd_en[14], 7'b0, rd_en[13], 7'b0, rd_en[12],
+      rd_inc = {7'b0, rd_en[15], 7'b0, rd_en[14], 7'b0, rd_en[13], 7'b0, rd_en[12],
           7'b0, rd_en[11], 7'b0, rd_en[10], 7'b0, rd_en[9], 7'b0, rd_en[8],
           7'b0, rd_en[7], 7'b0, rd_en[6], 7'b0, rd_en[5], 7'b0, rd_en[4],
           7'b0, rd_en[3], 7'b0, rd_en[2], 7'b0, rd_en[1], 7'b0, rd_en[0]};
@@ -67,15 +60,15 @@ module rd_control(
       count_c = count + 1'b1;
 
       if(count >= 17) begin
-        wr_active_c = 1;
+        wr_active = 1;
       end
 
       if(rd_en == 16'h0000) begin
         rd_start_c = 0;
         rd_addr_c = 16'h0000;
         count_c = 0;
-        rd_dec_c = 0;
-        wr_active_c = 0;
+        rd_dec = 0;
+        wr_active = 0;
       end
     end
 
@@ -86,10 +79,10 @@ module rd_control(
     if(reset == 1'b1) begin
       rd_addr_c = 0;
       rd_en_c  = 16'h0000;
-      rd_dec_c = 0;
+      rd_dec = 0;
       rd_start_c = 0;
       count_c = 0;
-      wr_active_c = 0;
+      wr_active = 0;
     end
   end
 endmodule
