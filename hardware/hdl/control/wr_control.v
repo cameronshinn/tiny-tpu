@@ -75,7 +75,7 @@ module wr_control(
                          7'b0, wr_en[1],
                          7'b0, wr_en[0]} + wr_addr;
 
-            if(wr_en == 16'h0000) begin
+            if(wr_en == 16'h0000 && wr_dec == 1'b1) begin
                 wr_start_c = 0;
                 wr_addr_c = 16'h0000;
                 wr_dec = 0;
