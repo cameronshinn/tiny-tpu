@@ -23,7 +23,8 @@ module wr_control(
 
     reg [width_height-1:0] wr_en_c;
     reg [data_width-1:0] wr_addr_c;
-    reg wr_dec, wr_start, wr_start_c;
+    reg wr_dec, wr_dec_c;
+    reg wr_start, wr_start_c;
     reg done_c;
 
     always @(posedge clk) begin
@@ -31,12 +32,13 @@ module wr_control(
         wr_addr <= wr_addr_c;
         done <= done_c;
         wr_start <= wr_start_c;
+        wr_dec <= wr_dec_c;
     end
 
     always @(*) begin
         wr_addr_c = wr_addr;
         done_c = done;
-        wr_dec = 0;
+        wr_dec_c = wr_dec;
         wr_start_c = wr_start;
 
         if (active) begin
@@ -47,7 +49,7 @@ module wr_control(
 
         if(wr_start) begin // start to get read address
             if(wr_en == 16'hffff) begin
-                wr_dec = 1;
+                wr_dec_c = 1'b1;
             end
 
             if(wr_dec) begin
@@ -75,10 +77,10 @@ module wr_control(
                          7'b0, wr_en[1],
                          7'b0, wr_en[0]} + wr_addr;
 
-            if(wr_en == 16'h0000 && wr_dec == 1'b1) begin
+            if (wr_en == 17'h0000 && wr_dec == 1'b1) begin
                 wr_start_c = 0;
                 wr_addr_c = 16'h0000;
-                wr_dec = 0;
+                wr_dec_c = 0;
                 //done = 1;
             end
         end
@@ -98,7 +100,7 @@ module wr_control(
         if(reset == 1) begin
             wr_addr_c = 0;
             wr_en_c  = 16'h0000;
-            wr_dec = 0;
+            wr_dec_c = 0;
             wr_start_c = 0;
             done_c = 0;
         end
