@@ -112,6 +112,7 @@ module top (
     // sys_arr_active 2 cycles after we start reading memory
     assign sys_arr_active = inputMem_rd_en[0];
 
+
 // ========================================
 // ------- Module Instantiations ----------
 // ========================================
@@ -203,7 +204,6 @@ module top (
     );
     defparam fifo_arr.fifo_width = WIDTH_HEIGHT;
 
-
     weightFifo weightFIFO (
         .clk      (clk),
         .reset    (reset),
@@ -260,6 +260,14 @@ module top (
     defparam accumTableWr_control.SYS_ARR_COLS = WIDTH_HEIGHT;
     defparam accumTableWr_control.MAX_OUT_ROWS = MAX_MAT_WH;
     defparam accumTableWr_control.MAX_OUT_COLS = MAX_MAT_WH;
+
+    reluArr reluArr (
+        .en(1'b1),
+        .in(),
+        .out()
+    );
+    defparam reluArr.DATA_WIDTH = DATA_WIDTH;
+    defparam reluArr.ARR_INPUTS = WIDTH_HEIGHT;
 
     outputArr outputMem (
         .clk    (clk),
