@@ -27,6 +27,8 @@ module top (
 // ========================================
 
     parameter WIDTH_HEIGHT = 16;
+    parameter DATA_WIDTH = 8;
+    parameter MAX_MAT_WH = 128;
 
 
 // ========================================
@@ -209,7 +211,7 @@ module top (
         .weightIn (weightMem_rd_data),          // from weightMem
         .weightOut(weightFIFO_to_sysArr)        // to sysArr
     );
-    defparam weightFIFO.DATA_WIDTH = 8;
+    defparam weightFIFO.DATA_WIDTH = DATA_WIDTH;
     defparam weightFIFO.FIFO_INPUTS = WIDTH_HEIGHT;
     defparam weightFIFO.FIFO_DEPTH = WIDTH_HEIGHT;
 
@@ -217,6 +219,48 @@ module top (
     // =========================================
     // --------- Output side of array ----------
     // =========================================
+    accumTable accumTable (
+        .clk    (clk),
+        .clear  (),
+        .rd_en  (),
+        .wr_en  (),
+        .rd_addr(),
+        .wr_addr(),
+        .rd_data(),
+        .wr_data()
+    );
+    defparam accumTable.SYS_ARR_ROWS = WIDTH_HEIGHT;
+    defparam accumTable.SYS_ARR_COLS = WIDTH_HEIGHT;
+    defparam accumTable.DATA_WIDTH = DATA_WIDTH;
+    defparam accumTable.MAX_OUT_ROWS = MAX_MAT_WH;
+    defparam accumTable.MAX_OUT_COLS = MAX_MAT_WH;
+
+    accumTableRd_control accumTableRd_control (
+        .sub_row    (),
+        .submat_m   (),
+        .submat_n   (),
+        .rd_addr_out()
+    );
+    defparam accumTableRd_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
+    defparam accumTableRd_control.SYS_ARR_COLS = WIDTH_HEIGHT;
+    defparam accumTableRd_control.MAX_OUT_ROWS = MAX_MAT_WH;
+    defparam accumTableRd_control.MAX_OUT_COLS = MAX_MAT_WH;
+
+    accumTableWr_control accumTableWr_control (
+        .clk        (clk),
+        .reset      (),
+        .wr_en_in   (),
+        .sub_row    (),
+        .submat_m   (),
+        .submat_n   (),
+        .wr_en_out  (),
+        .wr_addr_out()
+    );
+    defparam accumTableWr_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
+    defparam accumTableWr_control.SYS_ARR_COLS = WIDTH_HEIGHT;
+    defparam accumTableWr_control.MAX_OUT_ROWS = MAX_MAT_WH;
+    defparam accumTableWr_control.MAX_OUT_COLS = MAX_MAT_WH;
+
     outputArr outputMem (
         .clk    (clk),
         .rd_en  (outputMem_rd_en),              // from interconnect
