@@ -48,7 +48,7 @@ module wr_control(
         end
 
         if(wr_start) begin // start to get read address
-            if(wr_en == 16'hffff) begin
+            if(wr_en == 16'h7fff) begin
                 wr_dec_c = 1'b1;
             end
 
