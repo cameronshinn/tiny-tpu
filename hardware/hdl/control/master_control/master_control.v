@@ -203,69 +203,69 @@ module master_control(clk,
     wire [SYS_ARR_COLS-1:0] mem_control_en;
 
     master_mem_control master_mem_control (
-        .clk(clk),
-        .reset(reset),
-        .active(start_mem_control), // i.e. start
+        .clk      (clk),
+        .reset    (reset),
+        .active   (start_mem_control), // i.e. start
         .base_addr(addr_1),
-        .num_row(dim_1),
-        .num_col(dim_2),
-        .out_addr(bus_to_mem_addr),
-        .out_en(mem_control_en), // needs to be split up and separated for the 3 mem modules
-        .done(done_mem_contol)
+        .num_row  (dim_1),
+        .num_col  (dim_2),
+        .out_addr (bus_to_mem_addr),
+        .out_en   (mem_control_en), // needs to be split up and separated for the 3 mem modules
+        .done     (done_mem_contol)
     );
 
     master_fill_fifo_control master_fill_fifo_control (
-        .clk(clk),
-        .reset(reset),
-        .start(start_fill_fifo_control),
-        .done(done_fill_fifo_control),
-        .num_row(dim_1),
-        .num_col(dim_2),
-        .base_addr(addr_1),
-        .weightMem_rd_en(weight_mem_out_rd_en),
+        .clk              (clk),
+        .reset            (reset),
+        .start            (start_fill_fifo_control),
+        .done             (done_fill_fifo_control),
+        .num_row          (dim_1),
+        .num_col          (dim_2),
+        .base_addr        (addr_1),
+        .weightMem_rd_en  (weight_mem_out_rd_en),
         .weightMem_rd_addr(weight_mem_out_rd_addr),
-        .fifo_active(in_fifo_active) // also input to sysArr.wwrite in top.v (i'm pretty sure)
+        .fifo_active      (in_fifo_active) // also input to sysArr.wwrite in top.v (i'm pretty sure)
     );
 
     master_multip_control master_multip_control (
-        .clk(clk),
-        .reset(reset),
-        .active(start_multip_control), // i.e. start
-        .intermed_dim(dim_1),
-        .num_row_weight_mat(dim_2),
-        .num_col_in_mat(dim_3),
-        .base_data(addr_1), // input data base addr // not sure what this is for -Cameron
-        .accum_table_submat_row_in(accum_table_submat_row_in),
-        .accum_table_submat_col_in(accum_table_submat_col_in),
+        .clk                       (clk),
+        .reset                     (reset),
+        .active                    (start_multip_control), // i.e. start
+        .intermed_dim              (dim_1),
+        .num_row_weight_mat        (dim_2),
+        .num_col_in_mat            (dim_3),
+        .base_data                 (addr_1), // input data base addr // not sure what this is for -Cameron
+        .accum_table_submat_row_in (accum_table_submat_row_in),
+        .accum_table_submat_col_in (accum_table_submat_col_in),
         .accum_table_submat_row_out(wr_submat_row_out),
         .accum_table_submat_col_out(wr_submat_col_out),
-        .weight_fifo_arr_en(out_fifo_active),
-        .weight_fifo_arr_done(weight_fifo_arr_done),
-        .data_mem_calc_en(data_mem_calc_en),
-        .data_mem_calc_done(data_mem_calc_done),
-        .fifo_ready(fifo_ready),
-        .done(done_multip_control)
+        .weight_fifo_arr_en        (out_fifo_active),
+        .weight_fifo_arr_done      (weight_fifo_arr_done),
+        .data_mem_calc_en          (data_mem_calc_en),
+        .data_mem_calc_done        (data_mem_calc_done),
+        .fifo_ready                (fifo_ready),
+        .done                      (done_multip_control)
     );
 
     master_output_control store_output_control (
-        .clk(clk),
-        .reset(reset),
-        .start(start_output_control),
-        .done(done_output_control),
-        .submat_row_in(accum_table_submat_row_in),
-        .submat_col_in(accum_table_submat_col_in),
+        .clk           (clk),
+        .reset         (reset),
+        .start         (start_output_control),
+        .done          (done_output_control),
+        .submat_row_in (accum_table_submat_row_in),
+        .submat_col_in (accum_table_submat_col_in),
         .submat_row_out(rd_submat_row_out),
         .submat_col_out(rd_submat_col_out),
-        .num_rows_read(dim_1),
-        .num_cols_read(dim_2),
-        .row_num(rd_row_num),
-        .clear_after(dim_3[1]),
-        .activate(dim_3[0]),
-        .accum_clear(accum_clear), // also needs to be tied to reset signal
-        .relu_en(relu_en),
-        .wr_base_addr(addr_1),
-        .wr_en(out_mem_out_wr_en),
-        .wr_addr(out_mem_out_wr_addr)
+        .num_rows_read (dim_1),
+        .num_cols_read (dim_2),
+        .row_num       (rd_row_num),
+        .clear_after   (dim_3[1]),
+        .activate      (dim_3[0]),
+        .accum_clear   (accum_clear), // also needs to be tied to reset signal
+        .relu_en       (relu_en),
+        .wr_base_addr  (addr_1),
+        .wr_en         (out_mem_out_wr_en),
+        .wr_addr       (out_mem_out_wr_addr)
     );
 
     always @(*) begin
