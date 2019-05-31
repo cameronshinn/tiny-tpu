@@ -89,6 +89,11 @@ module top (
     wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
     //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
+    //accumTable_wr_data
+    //accumTable_wr_addr
+    //accumTable_wr_en_in
+    //accumTable_rd_addr
+    //accumTable_data_out_to_relu
     wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_offset;
     wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_wr_data;
     wire [WIDTH_HEIGHT - 1:0] mem_to_fifo_en;
@@ -119,12 +124,12 @@ module top (
 
     sysArr sysArr(
         .clk      (clk),
-        .active   (sys_arr_active2),                     // from control or software
+        .active   (sys_arr_active2),            // from control or software
         .datain   (inputMem_to_sysArr),         // from input memory
-        .win      (weightFIFO_to_sysArr),        // from weight FIFO's
-        .sumin    (256'd0),                           // Can be used for biases
-        .wwrite   ({16{weight_write}}),               // from control
-        .maccout  (outputMem_wr_data),          // to output memory
+        .win      (weightFIFO_to_sysArr),       // from weight FIFO's
+        .sumin    (256'd0),                     // Can be used for biases
+        .wwrite   ({16{weight_write}}),         // from control
+        .maccout  (),          // to accumulator table
         .wout     (),                           // Not used
         .wwriteout(),                           // Not used
         .activeout(),                           // Not used
@@ -133,9 +138,9 @@ module top (
     defparam sysArr.width_height = WIDTH_HEIGHT;
 
 
-    // =========================================
-    // --------- Input Side of Array -----------
-    // =========================================
+// =========================================
+// --------- Input Side of Array -----------
+// =========================================
     memArr inputMem(
         .clk    (clk),
         .rd_en  (inputMem_rd_en),               // from control
@@ -158,9 +163,9 @@ module top (
     defparam inputMemControl.width_height = WIDTH_HEIGHT;
 
 
-    // ========================================
-    // --------- Weight side of Array ---------
-    // ========================================
+// ========================================
+// --------- Weight side of Array ---------
+// ========================================
     memArr weightMem(
         .clk    (clk),
         .rd_en  (weightMem_rd_en),              // from interconnect
@@ -216,18 +221,18 @@ module top (
     defparam weightFIFO.FIFO_DEPTH = WIDTH_HEIGHT;
 
 
-    // =========================================
-    // --------- Output side of array ----------
-    // =========================================
+// =========================================
+// --------- Output side of array ----------
+// =========================================
     accumTable accumTable (
         .clk    (clk),
         .clear  (),
-        .rd_en  (),
-        .wr_en  (),
-        .rd_addr(),
-        .wr_addr(),
-        .rd_data(),
-        .wr_data()
+        .rd_en  ({WIDTH_HEIGHT{1'b1}}),
+        .wr_en  (accumTable_wr_en_in),
+        .rd_addr(accumTable_rd_addr),
+        .wr_addr(accumTable_wr_addr),
+        .rd_data(accumTable_data_out_to_relu), // to ReLU module
+        .wr_data(accumTable_wr_data)
     );
     defparam accumTable.SYS_ARR_ROWS = WIDTH_HEIGHT;
     defparam accumTable.SYS_ARR_COLS = WIDTH_HEIGHT;
@@ -239,7 +244,7 @@ module top (
         .sub_row    (),
         .submat_m   (),
         .submat_n   (),
-        .rd_addr_out()
+        .rd_addr_out(accumTable_rd_addr)
     );
     defparam accumTableRd_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
     defparam accumTableRd_control.SYS_ARR_COLS = WIDTH_HEIGHT;
@@ -248,13 +253,13 @@ module top (
 
     accumTableWr_control accumTableWr_control (
         .clk        (clk),
-        .reset      (),
-        .wr_en_in   (),
+        .reset      (reset),
+        .wr_en_in   (), // enable bit for the first column that is latched and passed along
         .sub_row    (),
         .submat_m   (),
         .submat_n   (),
-        .wr_en_out  (),
-        .wr_addr_out()
+        .wr_en_out  (accumTable_wr_en_in),
+        .wr_addr_out(accumTable_wr_addr)
     );
     defparam accumTableWr_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
     defparam accumTableWr_control.SYS_ARR_COLS = WIDTH_HEIGHT;
@@ -263,8 +268,8 @@ module top (
 
     reluArr reluArr (
         .en(1'b1),
-        .in(),
-        .out()
+        .in(accumTable_data_out_to_relu),
+        .out(outputMem_wr_data) // to output memory
     );
     defparam reluArr.DATA_WIDTH = DATA_WIDTH;
     defparam reluArr.ARR_INPUTS = WIDTH_HEIGHT;
