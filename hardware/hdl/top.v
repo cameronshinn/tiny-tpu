@@ -42,24 +42,24 @@ module top (
 
     // input memory signals
     input [WIDTH_HEIGHT - 1:0] inputMem_wr_en;
-    input [(WIDTH_HEIGHT * 8) - 1:0] inputMem_wr_addr;
-    input [(WIDTH_HEIGHT * 8) - 1:0] inputMem_wr_data;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_wr_addr;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_wr_data;
 
     // base read address (input) for matrix multiply
-    input [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr_base;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_rd_addr_base;
 
     // output memory signals
     input [WIDTH_HEIGHT - 1:0] outputMem_rd_en;
-    input [(WIDTH_HEIGHT * 8) - 1:0] outputMem_rd_addr;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] outputMem_rd_addr;
 
     // base write address (output) for matrix multiply
-    input [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_base;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] outputMem_wr_addr_base;
 
     // weight memory signals
     input [WIDTH_HEIGHT - 1:0] weightMem_wr_en;
-    input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_addr;
-    input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_wr_data;
-    input [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_base;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_wr_addr;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_wr_data;
+    input [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_rd_addr_base;
 
     // FIFO stuff
     input fill_fifo;
@@ -76,32 +76,33 @@ module top (
     output output_done;
 
     // output memory read port
-    output [(WIDTH_HEIGHT * 16) - 1:0] outputMem_rd_data;
+    output [(WIDTH_HEIGHT * DATA_WIDTH * 2) - 1:0] outputMem_rd_data;
 
 
 // ========================================
 // ------- Local Wires and Regs -----------
 // ========================================
-    wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_to_sysArr;
+    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] inputMem_rd_addr_offset;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_data;
-    wire [(WIDTH_HEIGHT * 8) - 1:0] weightFIFO_to_sysArr;
+    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_rd_addr_offset;
+    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_rd_data;
+    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightFIFO_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
     //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
-    //accumTable_wr_data
+    wire [WIDTH_HEIGHT - 1:0] accumTable_wr_control_en_in;
+    wire [2*DATA_WIDTH*WIDTH_HEIGHT-1:0] accumTable_wr_data;
     //accumTable_wr_addr
     //accumTable_wr_en_in
     //accumTable_rd_addr
     //accumTable_data_out_to_relu
-    wire [(WIDTH_HEIGHT * 8) - 1:0] outputMem_wr_addr_offset;
+    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] outputMem_wr_addr_offset;
     wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_wr_data;
     wire [WIDTH_HEIGHT - 1:0] mem_to_fifo_en;
     wire [WIDTH_HEIGHT - 1:0] fifo_to_arr_en;
     wire rd_to_wr_start;
     wire mem_to_fifo;
 
-    wire [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr_offset;
+    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_rd_addr_offset;
     wire [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
     wire weight_write;
 
@@ -109,6 +110,9 @@ module top (
     wire sys_arr_active;
     reg sys_arr_active1;
     reg sys_arr_active2;
+
+    // counter for the accumulator table write input (will later satisfied by master controller instead)
+    reg [$clog2(WIDTH_HEIGHT)-1:0] accumTable_row_count;
 
 // ========================================
 // -------------- Logic -------------------
@@ -129,10 +133,10 @@ module top (
         .win      (weightFIFO_to_sysArr),       // from weight FIFO's
         .sumin    (256'd0),                     // Can be used for biases
         .wwrite   ({16{weight_write}}),         // from control
-        .maccout  (),          // to accumulator table
+        .maccout  (accumTable_wr_data),         // to accumulator table
         .wout     (),                           // Not used
         .wwriteout(),                           // Not used
-        .activeout(),                           // Not used
+        .activeout(accumTable_wr_control_en_in),// Not used
         .dataout  ()                            // Not used
     );
     defparam sysArr.width_height = WIDTH_HEIGHT;
@@ -141,6 +145,7 @@ module top (
 // =========================================
 // --------- Input Side of Array -----------
 // =========================================
+    
     memArr inputMem(
         .clk    (clk),
         .rd_en  (inputMem_rd_en),               // from control
@@ -166,6 +171,7 @@ module top (
 // ========================================
 // --------- Weight side of Array ---------
 // ========================================
+    
     memArr weightMem(
         .clk    (clk),
         .rd_en  (weightMem_rd_en),              // from interconnect
@@ -224,9 +230,10 @@ module top (
 // =========================================
 // --------- Output side of array ----------
 // =========================================
+    
     accumTable accumTable (
         .clk    (clk),
-        .clear  (),
+        .clear  (reset), // TODO: OR with a clear signal (from master control)
         .rd_en  ({WIDTH_HEIGHT{1'b1}}),
         .wr_en  (accumTable_wr_en_in),
         .rd_addr(accumTable_rd_addr),
@@ -242,8 +249,8 @@ module top (
 
     accumTableRd_control accumTableRd_control (
         .sub_row    (),
-        .submat_m   (),
-        .submat_n   (),
+        .submat_m   (0),
+        .submat_n   (0),
         .rd_addr_out(accumTable_rd_addr)
     );
     defparam accumTableRd_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
@@ -254,10 +261,10 @@ module top (
     accumTableWr_control accumTableWr_control (
         .clk        (clk),
         .reset      (reset),
-        .wr_en_in   (), // enable bit for the first column that is latched and passed along
-        .sub_row    (),
-        .submat_m   (),
-        .submat_n   (),
+        .wr_en_in   (accumTable_wr_control_en_in[0]), // enable bit for the first column that is latched and passed along
+        .sub_row    (accumTable_row_count), // subrow for the first column that is latches like wr_en_in. Controlled by master controller.
+        .submat_m   (0),
+        .submat_n   (0),
         .wr_en_out  (accumTable_wr_en_in),
         .wr_addr_out(accumTable_wr_addr)
     );
@@ -300,11 +307,21 @@ module top (
 // ======================================
 // ----------- Flip flops ---------------
 // ======================================
+    
     always @(posedge clk) begin
 
         // set sys_arr_active 2 cycles after we read memory
         sys_arr_active1 <= sys_arr_active;
         sys_arr_active2 <= sys_arr_active1;
+
+        if (accumTable_wr_control_en_in[0]) begin
+            accumTable_row_count <= accumTable_row_count + 1; 
+        end
+
+        else begin
+            accumTable_row_count <= 0;
+        end
+
     end // always
 
 endmodule // top
