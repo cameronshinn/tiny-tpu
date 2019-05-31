@@ -15,7 +15,7 @@
 
 module accumTable(clk, clear, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
 
-    parameter DATA_WIDTH = 8; // number of bits for one piece of data
+    parameter DATA_WIDTH = 16; // number of bits for one piece of data
     parameter MAX_OUT_ROWS = 128; // output number of rows in 
     parameter MAX_OUT_COLS = 128;
     parameter SYS_ARR_ROWS = 16;

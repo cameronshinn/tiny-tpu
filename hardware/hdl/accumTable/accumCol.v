@@ -3,7 +3,7 @@
 
 module accumCol(clk, clear, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
 
-    parameter DATA_WIDTH = 8; // number of bits for one piece of data
+    parameter DATA_WIDTH = 16; // number of bits for one piece of data
     parameter MAX_OUT_ROWS = 128; // output height of largest matrix
     parameter MAX_OUT_COLS = 128; // output width of largest possible matrix
     parameter SYS_ARR_COLS = 16; // height of the systolic array

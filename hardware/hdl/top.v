@@ -91,10 +91,10 @@ module top (
     //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
     wire [WIDTH_HEIGHT - 1:0] accumTable_wr_control_en_in;
     wire [2*DATA_WIDTH*WIDTH_HEIGHT-1:0] accumTable_wr_data;
-    //accumTable_wr_addr
-    //accumTable_wr_en_in
-    //accumTable_rd_addr
-    //accumTable_data_out_to_relu
+    wire [$clog2(MAX_MAT_WH * (MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_wr_addr;
+    wire [WIDTH_HEIGHT-1:0] accumTable_wr_en_in;
+    wire [$clog2(MAX_MAT_WH * (MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_rd_addr;
+    wire [2*DATA_WIDTH*WIDTH_HEIGHT-1:0] accumTable_data_out_to_relu;
     wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] outputMem_wr_addr_offset;
     wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_wr_data;
     wire [WIDTH_HEIGHT - 1:0] mem_to_fifo_en;
@@ -113,6 +113,7 @@ module top (
 
     // counter for the accumulator table write input (will later satisfied by master controller instead)
     reg [$clog2(WIDTH_HEIGHT)-1:0] accumTable_row_count;
+    reg [$clog2(WIDTH_HEIGHT)-1:0] accumTable_row_count_c;
 
 // ========================================
 // -------------- Logic -------------------
@@ -136,7 +137,7 @@ module top (
         .maccout  (accumTable_wr_data),         // to accumulator table
         .wout     (),                           // Not used
         .wwriteout(),                           // Not used
-        .activeout(accumTable_wr_control_en_in),// Not used
+        .activeout(accumTable_wr_control_en_in),// Enable bit for accumTable_wr_control
         .dataout  ()                            // Not used
     );
     defparam sysArr.width_height = WIDTH_HEIGHT;
@@ -233,7 +234,7 @@ module top (
     
     accumTable accumTable (
         .clk    (clk),
-        .clear  (reset), // TODO: OR with a clear signal (from master control)
+        .clear  ({WIDTH_HEIGHT{reset}}), // TODO: OR with a clear signal (from master control)
         .rd_en  ({WIDTH_HEIGHT{1'b1}}),
         .wr_en  (accumTable_wr_en_in),
         .rd_addr(accumTable_rd_addr),
@@ -243,14 +244,14 @@ module top (
     );
     defparam accumTable.SYS_ARR_ROWS = WIDTH_HEIGHT;
     defparam accumTable.SYS_ARR_COLS = WIDTH_HEIGHT;
-    defparam accumTable.DATA_WIDTH = DATA_WIDTH;
+    defparam accumTable.DATA_WIDTH = 2*DATA_WIDTH;
     defparam accumTable.MAX_OUT_ROWS = MAX_MAT_WH;
     defparam accumTable.MAX_OUT_COLS = MAX_MAT_WH;
 
     accumTableRd_control accumTableRd_control (
-        .sub_row    (),
-        .submat_m   (0),
-        .submat_n   (0),
+        .sub_row    (4'b0000),
+        .submat_m   (3'b000),
+        .submat_n   (3'b000),
         .rd_addr_out(accumTable_rd_addr)
     );
     defparam accumTableRd_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
@@ -263,8 +264,8 @@ module top (
         .reset      (reset),
         .wr_en_in   (accumTable_wr_control_en_in[0]), // enable bit for the first column that is latched and passed along
         .sub_row    (accumTable_row_count), // subrow for the first column that is latches like wr_en_in. Controlled by master controller.
-        .submat_m   (0),
-        .submat_n   (0),
+        .submat_m   (3'b000),
+        .submat_n   (3'b000),
         .wr_en_out  (accumTable_wr_en_in),
         .wr_addr_out(accumTable_wr_addr)
     );
@@ -278,7 +279,7 @@ module top (
         .in(accumTable_data_out_to_relu),
         .out(outputMem_wr_data) // to output memory
     );
-    defparam reluArr.DATA_WIDTH = DATA_WIDTH;
+    defparam reluArr.DATA_WIDTH = 2*DATA_WIDTH;
     defparam reluArr.ARR_INPUTS = WIDTH_HEIGHT;
 
     outputArr outputMem (
@@ -307,20 +308,23 @@ module top (
 // ======================================
 // ----------- Flip flops ---------------
 // ======================================
-    
+
+    always @(*) begin
+        if (accumTable_wr_control_en_in[0]) begin
+            accumTable_row_count_c = accumTable_row_count + 1; 
+        end
+
+        else begin
+            accumTable_row_count_c = {$clog2(WIDTH_HEIGHT){0}};
+        end
+    end
+
     always @(posedge clk) begin
 
         // set sys_arr_active 2 cycles after we read memory
         sys_arr_active1 <= sys_arr_active;
         sys_arr_active2 <= sys_arr_active1;
-
-        if (accumTable_wr_control_en_in[0]) begin
-            accumTable_row_count <= accumTable_row_count + 1; 
-        end
-
-        else begin
-            accumTable_row_count <= 0;
-        end
+        accumTable_row_count <= accumTable_row_count_c;
 
     end // always
 

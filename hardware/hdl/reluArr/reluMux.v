@@ -11,7 +11,7 @@
 
 module reluMux(en, in, out);
 
-    parameter DATA_WIDTH = 8;
+    parameter DATA_WIDTH = 16;
 
     input en;
     input signed [DATA_WIDTH-1:0] in;
