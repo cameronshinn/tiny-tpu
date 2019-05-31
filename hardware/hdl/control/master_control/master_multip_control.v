@@ -1,21 +1,21 @@
 module master_multip_control(
-  clk,
-  reset,
-  active,
-  intermed_dim,
-  num_row_weight_mat,
-  num_col_in_mat,
-  base_data, // base addr of the data
-  accum_table_submat_row_in,
-  accum_table_submat_col_in,
-  accum_table_submat_row_out,
-  accum_table_submat_col_out,
-  weight_fifo_arr_en,
-  weight_fifo_arr_done,
-  data_mem_calc_en,
-  data_mem_calc_done,
-  fifo_ready,
-  done
+    clk,
+    reset,
+    active,
+    intermed_dim,
+    num_row_weight_mat,
+    num_col_in_mat,
+    base_data, // base addr of the data
+    accum_table_submat_row_in,
+    accum_table_submat_col_in,
+    accum_table_submat_row_out,
+    accum_table_submat_col_out,
+    weight_fifo_arr_en,
+    weight_fifo_arr_done,
+    data_mem_calc_en,
+    data_mem_calc_done,
+    fifo_ready,
+    done
 );
 
 parameter width_height = 16;
@@ -52,39 +52,39 @@ assign fifo_ready = (state != W_fifo_arr) ? 1'b1 : 1'b0;
 assign done = (state == Hold) ? 1'b1 : 1'b0;
 
 always@(posedge clk) begin
-  state <= state_c;
+    state <= state_c;
 end
 
 always@(*) begin
-  case(state)
-    Hold: begin
-      if(active) begin
-        state_c = W_fifo_arr;
-      end
-    end
+    case(state)
+        Hold: begin
+            if(active) begin
+                state_c = W_fifo_arr;
+            end
+        end
 
-    W_fifo_arr: begin
-      weight_fifo_arr_en = 1;
-      if(weight_fifo_arr_done) begin
-        state_c = D_mem_calc;
-        weight_fifo_arr_en = 0;
-      end
-    end
+        W_fifo_arr: begin
+            weight_fifo_arr_en = 1;
+            if(weight_fifo_arr_done) begin
+                state_c = D_mem_calc;
+                weight_fifo_arr_en = 0;
+            end
+        end
 
-    D_mem_calc: begin
-      data_mem_calc_en = 1;
-      if(data_mem_calc_done) begin
+        D_mem_calc: begin
+            data_mem_calc_en = 1;
+            if(data_mem_calc_done) begin
+                data_mem_calc_en = 0;
+                weight_fifo_arr_en = 0;
+                state_c = Hold;
+            end
+        end
+    endcase
+
+    if(reset) begin
+        state_c = Hold;
         data_mem_calc_en = 0;
         weight_fifo_arr_en = 0;
-        state_c = Hold;
-      end
     end
-  endcase
-
-  if(reset) begin
-    state_c = Hold;
-    data_mem_calc_en = 0;
-    weight_fifo_arr_en = 0;
-  end
 end
 endmodule
