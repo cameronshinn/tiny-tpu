@@ -46,7 +46,7 @@ module rd_control(
         end
 
         if (rd_start) begin // start to get read address
-            if (count > 16) begin
+            if (count >= 16) begin
                 rd_en_c = rd_en << 1;
             end
 
