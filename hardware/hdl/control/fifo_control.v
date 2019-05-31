@@ -21,14 +21,14 @@ module fifo_control(
     output wire [fifo_width-1:0] fifo_en;
     output wire done;
     output wire weight_write;
-    
+
     reg started, started_c;
     reg [COUNT_WIDTH - 1:0] count, count_c;
     reg stagger_latch, stagger_latch_c; // must latch to prevent changing midway
 
     assign fifo_en = (stagger_latch) ? ({fifo_width{1'b1}}) : {fifo_width{1'b1}}; // FIXME: First case
     assign done = ~started;
-    assign weight_write = started;
+    assign weight_write = (started && count < 15);
 
     always @(*) begin
         started_c = started;
