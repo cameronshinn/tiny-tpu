@@ -13,7 +13,6 @@ from the column to its left in the following clock cycle.
 
 module accumTableWr_control(clk, reset, wr_en_in, sub_row, submat_m, submat_n, wr_en_out, wr_addr_out);
 
-    parameter DATA_WIDTH = 8; // number of bits for one piece of data
     parameter MAX_OUT_ROWS = 128; // output number of rows in 
     parameter MAX_OUT_COLS = 128;
     parameter SYS_ARR_ROWS = 16;
