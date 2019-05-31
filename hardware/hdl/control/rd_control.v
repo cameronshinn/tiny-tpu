@@ -46,7 +46,7 @@ module rd_control(
         end
 
         if (rd_start) begin // start to get read address
-            if (rd_en == 16'hffff) begin
+            if (count > 16) begin
                 rd_en_c = rd_en << 1;
             end
 
@@ -73,7 +73,7 @@ module rd_control(
 
             count_c = count + 1'b1;
 
-            if (count >= 17) begin
+            if (count > 16) begin
                 wr_active = 1;
             end
 
