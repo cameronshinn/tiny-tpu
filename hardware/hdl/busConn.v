@@ -99,7 +99,7 @@ module matrixMultiplier (
     wire [TPU_DATA_WIDTH - 1:0] inputMem_wr_data;
     wire [TPU_DATA_WIDTH - 1:0] weightMem_wr_data;
     // Driven below by TPU output, then assigned to slave_readdata
-    wire [TPU_DATA_WIDTH - 1:0] outputMem_rd_data;
+    wire [(TPU_DATA_WIDTH * 2) - 1:0] outputMem_rd_data;
 
     assign inputMem_wr_data = {2{slave_writedata}};
     assign weightMem_wr_data = {2{slave_writedata}};
