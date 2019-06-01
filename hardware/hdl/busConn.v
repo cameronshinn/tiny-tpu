@@ -1,7 +1,7 @@
 // Macros for talking with different address spaces
 `define CONTROL_OFFSET 2'b00
 `define INPUT_OFFSET 2'b01
-`define WEIGHT_OFFSET 2'b01
+`define WEIGHT_OFFSET 2'b10
 `define OUTPUT_OFFSET 2'b11
 
 
