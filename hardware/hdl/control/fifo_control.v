@@ -26,7 +26,7 @@ module fifo_control(
     reg [COUNT_WIDTH - 1:0] count, count_c;
     reg stagger_latch, stagger_latch_c; // must latch to prevent changing midway
 
-    assign fifo_en = (stagger_latch) ? ({fifo_width{1'b1}}) : {fifo_width{1'b1}}; // FIXME: First case
+    assign fifo_en = {fifo_width{started}};
     assign done = ~started;
     assign weight_write = (started && count < 15);
 
