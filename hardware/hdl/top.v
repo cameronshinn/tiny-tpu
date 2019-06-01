@@ -1,3 +1,4 @@
+/*
 module top (
     clk,
     reset,
@@ -20,6 +21,24 @@ module top (
     fifo_to_arr_done,
     output_done
  );
+ */
+
+module top (
+    clk,
+    reset,
+    start,
+    done,
+    opcode,
+    dim_1,
+    dim_2,
+    dim_3,
+    addr_1,
+    accum_table_submat_row_in,
+    accum_table_submat_col_in,
+    inputMem_wr_data,
+    weightMem_wr_data,
+    outputMem_rd_data,
+);
 
 
 // ========================================
@@ -122,9 +141,47 @@ module top (
     // sys_arr_active 2 cycles after we start reading memory
     assign sys_arr_active = inputMem_rd_en[0];
 
+    master_control master_control(
+        .clk(clk), // input INTERFACE
+        .reset(reset), // input INTERFACE
+        .reset_out(), // output
+        .start(), // input INTERFACE
+        .done(), // output INTERFACE
+        .opcode(), // input INTERFACE
+        .dim_1(), // input INTERFACE
+        .dim_2(), // input INTERFACE
+        .dim_3(), // input INTERFACE
+        .addr_1(), // input INTERFACE
+        .accum_table_submat_row_in(), // input INTERFACE
+        .accum_table_submat_col_in(), // input INTERFACE
+        .weight_fifo_arr_done(), // input
+        .data_mem_calc_done(), // input
+        .fifo_ready(), // output
+        .bus_to_mem_addr(), // output
+        .in_mem_out_addr(), // output
+        .in_mem_out_en(), // output
+        .int_mem_wr_en(), // output
+        .weight_mem_out_rd_addr(), // output
+        .weight_mem_out_rd_en(), // output
+        .weight_mem_wr_en(), // output
+        .out_mem_out_wr_addr(), // output
+        .out_mem_out_wr_en(), // output
+        .out_mem_rd_en(), // output
+        .in_fifo_active(), // output
+        .out_fifo_active(), // output
+        .data_mem_calc_en(), // output
+        .wr_submat_row_out(), // output
+        .wr_submat_col_out(), // output
+        .wr_row_num(), // output
+        .rd_submat_row_out(), // output
+        .rd_submat_col_out(), // output
+        .rd_row_num(), // output
+        .relu_en() // output
+    );
+
 
 // ========================================
-// ------- Module Instantiations ----------
+// ------------ Systolic Array ------------
 // ========================================
 
     sysArr sysArr(
