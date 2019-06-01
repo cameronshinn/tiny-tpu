@@ -33,10 +33,10 @@ module accumTable(clk, clear, rd_en, wr_en, rd_addr, wr_addr, rd_data, wr_data);
     input [DATA_WIDTH*SYS_ARR_COLS-1:0] wr_data;
 
     accumCol colArray [0:SYS_ARR_COLS-1] (
-        .clk(clk),
-        .clear(clear),
-        .rd_en(rd_en),
-        .wr_en(wr_en),
+        .clk    (clk),
+        .clear  (clear),
+        .rd_en  (rd_en),
+        .wr_en  (wr_en),
         .rd_addr(rd_addr),
         .wr_addr(wr_addr),
         .rd_data(rd_data),

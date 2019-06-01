@@ -248,17 +248,6 @@ module top (
     defparam accumTable.MAX_OUT_ROWS = MAX_MAT_WH;
     defparam accumTable.MAX_OUT_COLS = MAX_MAT_WH;
 
-    accumTableRd_control accumTableRd_control (
-        .sub_row    (4'b0000),
-        .submat_m   (3'b000),
-        .submat_n   (3'b000),
-        .rd_addr_out(accumTable_rd_addr)
-    );
-    defparam accumTableRd_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
-    defparam accumTableRd_control.SYS_ARR_COLS = WIDTH_HEIGHT;
-    defparam accumTableRd_control.MAX_OUT_ROWS = MAX_MAT_WH;
-    defparam accumTableRd_control.MAX_OUT_COLS = MAX_MAT_WH;
-
     accumTableWr_control accumTableWr_control (
         .clk        (clk),
         .reset      (reset),
@@ -274,6 +263,17 @@ module top (
     defparam accumTableWr_control.MAX_OUT_ROWS = MAX_MAT_WH;
     defparam accumTableWr_control.MAX_OUT_COLS = MAX_MAT_WH;
 
+    accumTableRd_control accumTableRd_control (
+        .sub_row    (4'b0000),
+        .submat_m   (3'b000),
+        .submat_n   (3'b000),
+        .rd_addr_out(accumTable_rd_addr)
+    );
+    defparam accumTableRd_control.SYS_ARR_ROWS = WIDTH_HEIGHT;
+    defparam accumTableRd_control.SYS_ARR_COLS = WIDTH_HEIGHT;
+    defparam accumTableRd_control.MAX_OUT_ROWS = MAX_MAT_WH;
+    defparam accumTableRd_control.MAX_OUT_COLS = MAX_MAT_WH;
+
     reluArr reluArr (
         .en(1'b1),
         .in(accumTable_data_out_to_relu),
@@ -286,7 +286,7 @@ module top (
         .clk    (clk),
         .rd_en  (outputMem_rd_en),              // from interconnect
         .wr_en  (outputMem_wr_en),              // from outputMemControl
-        .wr_data(outputMem_wr_data),          // from sysArr
+        .wr_data(outputMem_wr_data),            // from reluArr
         .rd_addr(outputMem_rd_addr),            // from interconnect
         .wr_addr(outputMem_wr_addr_base + outputMem_wr_addr_offset), // outputMemControl + base from interconnect
         .rd_data(outputMem_rd_data)             // to interconect
