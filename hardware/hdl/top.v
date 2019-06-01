@@ -35,6 +35,7 @@ module top (
     addr_1,
     accum_table_submat_row_in,
     accum_table_submat_col_in,
+    fifo_ready,
     inputMem_wr_data,
     weightMem_wr_data,
     outputMem_rd_data,
@@ -53,6 +54,7 @@ module top (
 // ========================================
 // ------------ Inputs --------------------
 // ========================================
+    /*
     input clk;
     input reset;
 
@@ -83,11 +85,13 @@ module top (
     // FIFO stuff
     input fill_fifo;
     input drain_fifo;
+    */
 
 
 // ========================================
 // ------------ Outputs -------------------
 // ========================================
+    /*
     // tell host cpu when loading weights is done
     output mem_to_fifo_done;
     // tell host CPU when multiply is done
@@ -96,11 +100,13 @@ module top (
 
     // output memory read port
     output [(WIDTH_HEIGHT * DATA_WIDTH * 2) - 1:0] outputMem_rd_data;
+    */
 
 
 // ========================================
 // ------- Local Wires and Regs -----------
 // ========================================
+    /*
     wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
     wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_rd_addr_offset;
@@ -108,7 +114,7 @@ module top (
     wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightFIFO_to_sysArr;
     wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
     //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
-    wire [WIDTH_HEIGHT - 1:0] accumTable_wr_control_en_in;
+    wire [WIDTH_HEIGHT - 1:0] mmu_col_valid_out;
     wire [2*DATA_WIDTH*WIDTH_HEIGHT-1:0] accumTable_wr_data;
     wire [$clog2(MAX_MAT_WH * (MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_wr_addr;
     wire [WIDTH_HEIGHT-1:0] accumTable_wr_en_in;
@@ -133,31 +139,36 @@ module top (
     // counter for the accumulator table write input (will later satisfied by master controller instead)
     reg [$clog2(WIDTH_HEIGHT)-1:0] accumTable_row_count;
     reg [$clog2(WIDTH_HEIGHT)-1:0] accumTable_row_count_c;
+    */
+
+    reg data_mem_calc_done; // high if MMU is done multiplying
 
 // ========================================
 // -------------- Logic -------------------
 // ========================================
 
+    /*
     // sys_arr_active 2 cycles after we start reading memory
     assign sys_arr_active = inputMem_rd_en[0];
+    */
 
     master_control master_control(
         .clk(clk), // input INTERFACE
         .reset(reset), // input INTERFACE
-        .reset_out(), // output
-        .start(), // input INTERFACE
-        .done(), // output INTERFACE
-        .opcode(), // input INTERFACE
-        .dim_1(), // input INTERFACE
-        .dim_2(), // input INTERFACE
-        .dim_3(), // input INTERFACE
-        .addr_1(), // input INTERFACE
-        .accum_table_submat_row_in(), // input INTERFACE
-        .accum_table_submat_col_in(), // input INTERFACE
-        .weight_fifo_arr_done(), // input
-        .data_mem_calc_done(), // input
-        .fifo_ready(), // output
-        .bus_to_mem_addr(), // output
+        .reset_out(reset_global), // output
+        .start(start), // input INTERFACE
+        .done(done), // output INTERFACE
+        .opcode(opcode), // input INTERFACE
+        .dim_1(dim_1), // input INTERFACE
+        .dim_2(dim_2), // input INTERFACE
+        .dim_3(dim_3), // input INTERFACE
+        .addr_1(addr_1), // input INTERFACE
+        .accum_table_submat_row_in(accum_table_submat_row_in), // input INTERFACE
+        .accum_table_submat_col_in(accum_table_submat_col_in), // input INTERFACE
+        .weight_fifo_arr_done(fifo_to_arr_done), // input
+        .data_mem_calc_done(data_mem_calc_done), // input
+        .fifo_ready(fifo_ready), // output INTERFACE
+        .bus_to_mem_addr(mem_addr_bus_data), // output
         .in_mem_out_addr(), // output
         .in_mem_out_en(), // output
         .int_mem_wr_en(), // output
@@ -194,7 +205,7 @@ module top (
         .maccout  (accumTable_wr_data),         // to accumulator table
         .wout     (),                           // Not used
         .wwriteout(),                           // Not used
-        .activeout(accumTable_wr_control_en_in),// Enable bit for accumTable_wr_control
+        .activeout(mmu_col_valid_out),// Enable bit for accumTable_wr_control
         .dataout  ()                            // Not used
     );
     defparam sysArr.width_height = WIDTH_HEIGHT;
@@ -210,14 +221,14 @@ module top (
         .wr_en  (inputMem_wr_en),               // from interconnect (INPUT)
         .wr_data(inputMem_wr_data),             // from interconnect (INPUT)
         .rd_addr(inputMem_rd_addr_base + inputMem_rd_addr_offset),  // from control & interconnect
-        .wr_addr(inputMem_wr_addr),             // from interconnect (INPUT)
+        .wr_addr(mem_addr_bus_data),            // from master_mem_control in master_control
         .rd_data(inputMem_to_sysArr)            // to sysArr
     );
     defparam inputMem.width_height = WIDTH_HEIGHT;
 
     rd_control inputMemControl (
         .clk    (clk),
-        .reset  (reset),
+        .reset  (reset_global),
         .active (active),                       // tied to sysArr Active
         .rd_en  (inputMem_rd_en),               // to input memory
         .rd_addr(inputMem_rd_addr_offset),      // to input memory
@@ -236,14 +247,14 @@ module top (
         .wr_en  (weightMem_wr_en),              // from interconnect
         .wr_data(weightMem_wr_data),            // from interconnect
         .rd_addr(weightMem_rd_addr_base + weightMem_rd_addr_offset), // from interconnect
-        .wr_addr(weightMem_wr_addr),            // from interconnect
+        .wr_addr(mem_addr_bus_data),            // from master_mem_control in master_control
         .rd_data(weightMem_rd_data)             // to weightFIFO
     );
     defparam weightMem.width_height = WIDTH_HEIGHT;
 
     fifo_control mem_fifo (
         .clk         (clk),
-        .reset       (reset),
+        .reset       (reset_global),
         .active      (mem_to_fifo),             // from interconnect
         .stagger_load(1'b0),
         .fifo_en     (mem_to_fifo_en),          // to weightFIFO's
@@ -254,7 +265,7 @@ module top (
 
     fifo_fill_control fifo_fill_control (
         .clk              (clk),
-        .reset            (reset),
+        .reset            (reset_global),
         .active           (fill_fifo),
         .mem_to_fifo      (mem_to_fifo),
         .weightMem_rd_addr(weightMem_rd_addr_offset),
@@ -264,7 +275,7 @@ module top (
 
     fifo_control fifo_arr (
         .clk         (clk),
-        .reset       (reset),
+        .reset       (reset_global),
         .active      (drain_fifo),             // from interconnect
         .stagger_load(1'b0),
         .fifo_en     (fifo_to_arr_en),          // to weightFIFO's
@@ -275,7 +286,7 @@ module top (
 
     weightFifo weightFIFO (
         .clk      (clk),
-        .reset    (reset),
+        .reset    (reset_global),
         .en       (mem_to_fifo_en | fifo_to_arr_en), // from fifoControl
         .weightIn (weightMem_rd_data),          // from weightMem
         .weightOut(weightFIFO_to_sysArr)        // to sysArr
@@ -291,7 +302,7 @@ module top (
     
     accumTable accumTable (
         .clk    (clk),
-        .clear  ({WIDTH_HEIGHT{reset}}), // TODO: OR with a clear signal (from master control)
+        .clear  ({WIDTH_HEIGHT{reset_global}}), // TODO: OR with a clear signal (from master control)
         .rd_en  ({WIDTH_HEIGHT{1'b1}}),
         .wr_en  (accumTable_wr_en_in),
         .rd_addr(accumTable_rd_addr),
@@ -307,8 +318,8 @@ module top (
 
     accumTableWr_control accumTableWr_control (
         .clk        (clk),
-        .reset      (reset),
-        .wr_en_in   (accumTable_wr_control_en_in[0]), // enable bit for the first column that is latched and passed along
+        .reset      (reset_global),
+        .wr_en_in   (mmu_col_valid_out[0]), // enable bit for the first column that is latched and passed along
         .sub_row    (accumTable_row_count), // subrow for the first column that is latches like wr_en_in. Controlled by master controller.
         .submat_m   (3'b000),
         .submat_n   (3'b000),
@@ -344,7 +355,7 @@ module top (
         .rd_en  (outputMem_rd_en),              // from interconnect
         .wr_en  (outputMem_wr_en),              // from outputMemControl
         .wr_data(outputMem_wr_data),            // from reluArr
-        .rd_addr(outputMem_rd_addr),            // from interconnect
+        .rd_addr(mem_addr_bus_data),            // from master_mem_control in master_control
         .wr_addr(outputMem_wr_addr_base + outputMem_wr_addr_offset), // outputMemControl + base from interconnect
         .rd_data(outputMem_rd_data)             // to interconect
     );
@@ -352,7 +363,7 @@ module top (
 
     wr_control outputMemControl (
         .clk    (clk),
-        .reset  (reset),
+        .reset  (reset_global),
         .active (rd_to_wr_start),               // ???? don't know source yet (sysArr?)
         .wr_en  (outputMem_wr_en),              // to outputMem
         .wr_addr(outputMem_wr_addr_offset),      // to outputMem
@@ -367,9 +378,18 @@ module top (
 // ======================================
 
     always @(*) begin
-        if (accumTable_wr_control_en_in[0]) begin
+
+        data_mem_calc_done = 0;
+        generate
+            genvar i;
+            for (i = 0; i < WIDTH_HEIGHT; i++) begin : concatMmuDone
+                data_mem_calc_done |= mmu_col_valid_out[i]; // OR the MMU column's done signals so we know when the entirr MMU is done
+            end // for (i = 0; i < WIDTH_HEIGHT; i++)
+        endgenerate
+
+        if (mmu_col_valid_out[0]) begin
             accumTable_row_count_c = accumTable_row_count + 1; 
-        end
+        end // if (mmu_col_valid_out[0])
 
         else begin
             accumTable_row_count_c = {$clog2(WIDTH_HEIGHT){0}};

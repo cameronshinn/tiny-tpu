@@ -7,7 +7,7 @@ module fifo_control(
     active, // active fifo control
     stagger_load, // en stagger load way
     fifo_en, // output fifo en
-    done, // done loading fifo
+    done, // done flushing fifo
     weight_write
     );
 
