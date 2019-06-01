@@ -36,37 +36,41 @@ module accumTableWr_control (clk,
     input [$clog2(SYS_ARR_ROWS)-1:0] sub_row;
     input [$clog2(NUM_SUBMATS_M)-1:0] submat_m; // sub-matrix row number (sub-matrix position in the overall matrix)
     input [$clog2(NUM_SUBMATS_N)-1:0] submat_n; // sub-matrix col number (sub-matrix position in the overall matrix)
-    output reg [SYS_ARR_COLS-1:0] wr_en_out; // LSB is first column
-    output reg [ADDR_WIDTH*SYS_ARR_COLS-1:0] wr_addr_out; // LSBs are first column
+    output wire [SYS_ARR_COLS-1:0] wr_en_out; // LSB is first column
+    output wire [ADDR_WIDTH*SYS_ARR_COLS-1:0] wr_addr_out; // LSBs are first column
 
-    wire [ADDR_WIDTH-1:0] addr_1;
-    reg [SYS_ARR_COLS-1:0] wr_en_out_c;
-    reg [ADDR_WIDTH*SYS_ARR_COLS-1:0] wr_addr_out_c;
+    wire [ADDR_WIDTH-1:0] addr_0;
+    reg [SYS_ARR_COLS-2:0] wr_en_out_partial, wr_en_out_partial_c;
+    reg [ADDR_WIDTH*(SYS_ARR_COLS-1)-1:0] wr_addr_out_partial, wr_addr_out_partial_c;
 
     accumTableAddr_control accumTableAddr_control (
-        .sub_row(sub_row),
+        .sub_row (sub_row),
         .submat_m(submat_m),
         .submat_n(submat_n),
-        .addr(addr_1)
+        .addr    (addr_0)
     );
 
+    assign wr_en_out = {wr_en_out_partial, wr_en_in};
+    assign wr_addr_out = {wr_addr_out_partial, addr_0};
+
     always @(clk, reset, wr_en_in, sub_row, submat_m, submat_n) begin
+        
+
+        wr_en_out_partial_c[0] = wr_en_in;
+        wr_addr_out_partial_c[ADDR_WIDTH-1:0] = addr_0;
+        
+        wr_en_out_partial_c[SYS_ARR_COLS-1:1] = wr_en_out_partial[SYS_ARR_COLS-2:0];
+        wr_addr_out_partial_c[ADDR_WIDTH*(SYS_ARR_COLS-1)-1:ADDR_WIDTH] = wr_addr_out_partial[ADDR_WIDTH*(SYS_ARR_COLS-2)-1:0];
+        
+
         if (reset) begin
-            wr_en_out_c = 0; // need to specify literal width
+            wr_en_out_partial_c = {SYS_ARR_COLS-1{0}};
         end // if (reset)
-
-        else begin
-            wr_en_out_c[SYS_ARR_COLS-1:1] = wr_en_out[SYS_ARR_COLS-2:0];
-            wr_en_out_c[0] = wr_en_in; 
-        end // else
-
-        wr_addr_out_c[ADDR_WIDTH*SYS_ARR_COLS-1:ADDR_WIDTH] = wr_addr_out[ADDR_WIDTH*(SYS_ARR_COLS-1)-1:0];
-        wr_addr_out_c[ADDR_WIDTH-1:0] = addr_1;
     end // always @(clk, reset, wr_en_in, sub_row, submat_m, submat_n) 
 
     always @(posedge clk) begin
-        wr_en_out <= wr_en_out_c;
-        wr_addr_out <= wr_addr_out_c;
+        wr_en_out_partial <= wr_en_out_partial_c;
+        wr_addr_out_partial <= wr_addr_out_partial_c;
     end // always @(posedge clk)
 
 endmodule
