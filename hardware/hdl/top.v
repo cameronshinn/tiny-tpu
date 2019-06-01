@@ -169,8 +169,6 @@ module top (
         .data_mem_calc_done(data_mem_calc_done), // input
         .fifo_ready(fifo_ready), // output INTERFACE
         .bus_to_mem_addr(mem_addr_bus_data), // output
-        .in_mem_out_addr(), // output
-        .in_mem_out_en(), // output
         .int_mem_wr_en(), // output
         .weight_mem_out_rd_addr(), // output
         .weight_mem_out_rd_en(), // output

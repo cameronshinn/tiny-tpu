@@ -85,8 +85,6 @@ module master_control(clk,
                       data_mem_calc_done,
                       fifo_ready,
                       bus_to_mem_addr,
-                      in_mem_out_addr,
-                      in_mem_out_en,
                       int_mem_wr_en,
                       weight_mem_out_rd_addr,
                       weight_mem_out_rd_en,
@@ -151,8 +149,6 @@ module master_control(clk,
     output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] bus_to_mem_addr; // not sure about width yet
 
     // outputs to input memory ctrl
-    output wire [ADDR_WIDTH-1:0] in_mem_out_addr; // not sure if this is needed @Alan
-    output wire in_mem_out_en; // not sure if this is needed @Alan
     output reg [SYS_ARR_COLS-1:0] in_mem_wr_en;
 
     // outputs to weight memory ctrl
