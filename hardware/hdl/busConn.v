@@ -156,6 +156,15 @@ module matrixMultiplier (
                     inputMem_rd_addr_base <= {16{slave_writedata[11:4]}};
                     outputMem_wr_addr_base <= {16{slave_writedata[19:12]}};
                 end
+
+                default: begin
+                    reset_tpu <= 1'b0;
+                    fill_fifo <= 1'b0;
+                    drain_fifo <= 1'b0;
+                    multiply <= 1'b0;
+                    inputMem_rd_addr_base <= {16{slave_writedata[11:4]}};
+                    outputMem_wr_addr_base <= {16{slave_writedata[19:12]}};
+                end
             endcase // slave_writedata[3:0]
         end // if ((slave_write == 1) && (slave_address[9:8] == `CONTROL_OFFSET))
     end // always @(posedge clk)
