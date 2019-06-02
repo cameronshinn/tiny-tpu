@@ -20,8 +20,8 @@ module master_fill_fifo_control(clk,
     input reset;
     input start;
     output wire done;
-    input [$clog2(SYS_ARR_ROWS)-1:0] num_row; // 0-15 -> 0-16
-    input [$clog2(SYS_ARR_COLS)-1:0] num_col; // 0-15 -> 0-16
+    input [$clog2(SYS_ARR_ROWS)-1:0] num_row; // 0-15 -> 1-16
+    input [$clog2(SYS_ARR_COLS)-1:0] num_col; // 0-15 -> 1-16
     input [ADDR_WIDTH-1:0] base_addr;
     output reg [SYS_ARR_COLS-1:0] weightMem_rd_en;
     output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] weightMem_rd_addr;
