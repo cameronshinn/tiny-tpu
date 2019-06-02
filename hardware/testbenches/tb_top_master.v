@@ -28,6 +28,7 @@ module tb_top_master;
     wire [WIDTH_HEIGHT*DATA_WIDTH-1:0] outputMem_rd_data;
 
     integer i;
+    reg [7:0] data_in;
 
     top TPU (
         .clk                      (clk),
@@ -79,14 +80,63 @@ module tb_top_master;
             opcode = 3'b001;
             dim_1 = 4'hF;
             dim_2 = 4'hF;
-            addr_1 = 8'h00;
+            addr_1 = 8'h40;
         end // if (i == 4) begin
+
+        if (i > 8 && i <= 24) begin
+            data_in = i - 8;
+            inputMem_wr_data = {WIDTH_HEIGHT{data_in}};
+        end // if (i > 8 && i <= 24)
 
         if (i == 9) begin
             start = 1'b0;
         end
 
-        if (i == 50) begin
+        if (i == 26) begin
+            start = 1'b1;
+            opcode = 3'b010;
+            dim_1 = 4'hF;
+            dim_2 = 4'hF;
+            addr_1 = 8'h68;
+        end // if (i == 4) begin
+
+        if (i == 27) begin
+            start = 1'b0;
+        end // if (i == 27)
+
+        if (i > 26 && i <= 42) begin
+            data_in = i - 26;
+            weightMem_wr_data = {WIDTH_HEIGHT{data_in}};
+        end // if (i > 8 && i <= 24)
+
+        if (i == 44) begin
+            start = 1'b1;
+            opcode = 3'b011;
+            dim_1 = 4'hF;
+            dim_2 = 4'hF;
+            addr_1 = 8'h68;
+        end // if (i == 44)
+
+        if (i == 45) begin 
+            start = 1'b0;
+        end // if (i == 45)
+
+        if (i == 64) begin
+            start = 1'b1;
+            opcode = 3'b100;
+            dim_1 = 4'b1111;
+            dim_2 = 4'b1111;
+            dim_3 = 4'b1111;
+            addr_1 = 8'h40;
+            accum_table_submat_row_in = 3'b010;
+            accum_table_submat_col_in = 3'b010;
+        end // if (i = 63)
+
+        if (i == 65) begin
+            start = 1'b0;
+        end
+
+        if (i == 100) begin
             $stop;
         end // if (i == 10)
     end // always @(*)

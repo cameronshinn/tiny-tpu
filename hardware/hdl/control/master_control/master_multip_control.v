@@ -64,18 +64,18 @@ always@(*) begin
         end
 
         W_fifo_arr: begin
-            weight_fifo_arr_en = 1;
+            weight_fifo_arr_en = 1'b1;
             if(weight_fifo_arr_done) begin
                 state_c = D_mem_calc;
-                weight_fifo_arr_en = 0;
+                weight_fifo_arr_en = 1'b0;
             end
         end
 
         D_mem_calc: begin
-            data_mem_calc_en = 1;
+            data_mem_calc_en = 1'b1;
             if(data_mem_calc_done) begin
-                data_mem_calc_en = 0;
-                weight_fifo_arr_en = 0;
+                data_mem_calc_en = 1'b0;
+                weight_fifo_arr_en = 1'b0;
                 state_c = Hold;
             end
         end
@@ -83,8 +83,8 @@ always@(*) begin
 
     if(reset) begin
         state_c = Hold;
-        data_mem_calc_en = 0;
-        weight_fifo_arr_en = 0;
+        data_mem_calc_en = 1'b0;
+        weight_fifo_arr_en = 1'b0;
     end
 end
 endmodule

@@ -57,7 +57,7 @@ module master_fill_fifo_control(clk,
                 fifo_active = 1'b1;
             end // if (count >= 1)
 
-            if (count == SYS_ARR_ROWS) begin
+            if (count == SYS_ARR_ROWS + 1) begin
                 started_c = 1'b0;
                 count_c = {(SYS_ARR_ROWS + 1){1'b0}};
             end // TODO
@@ -65,7 +65,7 @@ module master_fill_fifo_control(clk,
 
         if (reset) begin
             started_c = 1'b0;
-            count_c = {(SYS_ARR_ROWS + 1){1'b0}};
+            count_c = {($clog2(SYS_ARR_ROWS) + 1){1'b0}};
         end // if (reset)
     end // always @(*)
 
