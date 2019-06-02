@@ -18,11 +18,11 @@ input clk, reset, active;
 input [addr_width-1:0] base_addr;
 input [$clog2(width_height)-1:0] num_row, num_col;
 
-output reg done, done_c;
+output reg done;
 output reg [width_height-1:0] out_en;
 output reg [out_addr_width-1:0] out_addr;
 
-reg start, start_c;
+reg start, start_c, done_c;
 reg [$clog2(width_height)-1:0] count, count_c;
 
 always@(posedge clk) begin
