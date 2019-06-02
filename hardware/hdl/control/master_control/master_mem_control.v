@@ -24,11 +24,13 @@ output reg [out_addr_width-1:0] out_addr;
 
 reg start, start_c, done_c;
 reg [$clog2(width_height)-1:0] count, count_c;
+reg [out_addr_width-1:0] out_addr_c;
 
 always@(posedge clk) begin
     count <= count_c;
     start <= start_c;
     done <= done_c;
+    out_addr <= out_addr_c;
 end
 
 always@(*) begin
@@ -41,12 +43,12 @@ always@(*) begin
 
     if(start) begin
         out_en = {width_height{1'b1}} >> (width_height - num_col - 1);
-        out_addr = {width_height{base_addr+count}};
+        out_addr_c = {width_height{base_addr+count}};
         count_c = count + 1;
 
         if(count >= num_row) begin
             count_c = 0;
-            out_addr = 0;
+            out_addr_c = 0;
             out_en = 0;
             done_c = 1;
             start_c = 0;
@@ -57,6 +59,7 @@ always@(*) begin
         start_c = 0;
         done_c = 0;
         count_c = 0;
+        out_addr_c = 0;
     end
 end
 
