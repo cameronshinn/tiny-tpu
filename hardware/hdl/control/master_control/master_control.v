@@ -181,7 +181,7 @@ module master_control(clk,
     output wire [$clog2(SYS_ARR_ROWS)-1:0] rd_row_num;
 
     // clear the accumulators
-    output reg accum_clear;
+    output wire accum_clear;
 
     // output to ReLU
     output wire relu_en;
@@ -204,7 +204,7 @@ module master_control(clk,
 
     master_mem_control master_mem_control (
         .clk      (clk),
-        .reset    (reset),
+        .reset    (reset | reset_out),
         .active   (start_mem_control), // i.e. start
         .base_addr(addr_1),
         .num_row  (dim_1),
@@ -216,7 +216,7 @@ module master_control(clk,
 
     master_fill_fifo_control master_fill_fifo_control (
         .clk              (clk),
-        .reset            (reset),
+        .reset            (reset | reset_out),
         .start            (start_fill_fifo_control),
         .done             (done_fill_fifo_control),
         .num_row          (dim_1),
@@ -229,7 +229,7 @@ module master_control(clk,
 
     master_multip_control master_multip_control (
         .clk                       (clk),
-        .reset                     (reset),
+        .reset                     (reset | reset_out),
         .active                    (start_multip_control), // i.e. start
         .intermed_dim              (dim_1),
         .num_row_weight_mat        (dim_2),
@@ -249,7 +249,7 @@ module master_control(clk,
 
     master_output_control store_output_control (
         .clk           (clk),
-        .reset         (reset),
+        .reset         (reset | reset_out),
         .start         (start_output_control),
         .done          (done_output_control),
         .submat_row_in (accum_table_submat_row_in),

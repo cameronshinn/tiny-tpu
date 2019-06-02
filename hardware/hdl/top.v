@@ -16,7 +16,7 @@ module top (
     fifo_ready,
     inputMem_wr_data,
     weightMem_wr_data,
-    outputMem_rd_data,
+    outputMem_rd_data
 );
 
 
@@ -53,35 +53,31 @@ module top (
     
     output done;
     output fifo_ready;
-    output [WIDTH_HEIGHT*DATA_WIDTH-1:0] outputMem_rd_data;
+    output [WIDTH_HEIGHT*DATA_WIDTH*2-1:0] outputMem_rd_data;
 
 
 // ========================================
 // ------- Local Wires and Regs -----------
 // ========================================
     
-    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_to_sysArr;
-    wire [WIDTH_HEIGHT - 1:0] inputMem_rd_en;
-    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] inputMem_rd_addr_offset;
-    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_rd_data;
-    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightFifo_to_sysArr;
-    wire [WIDTH_HEIGHT - 1:0] outputMem_wr_en;
-    //wire [(WIDTH_HEIGHT * 16) - 1:0] sysArr_to_outputMem;
-    wire [WIDTH_HEIGHT - 1:0] mmu_col_valid_out;
+    wire [(WIDTH_HEIGHT*DATA_WIDTH)-1:0] inputMem_to_sysArr;
+    wire [WIDTH_HEIGHT-1:0] inputMem_rd_en;
+    wire [(WIDTH_HEIGHT*DATA_WIDTH)-1:0] inputMem_rd_addr;
+    wire [(WIDTH_HEIGHT*DATA_WIDTH)-1:0] weightMem_rd_data;
+    wire [(WIDTH_HEIGHT*DATA_WIDTH)-1:0] weightFifo_to_sysArr;
+    wire [WIDTH_HEIGHT-1:0] outputMem_wr_en;
+    wire [WIDTH_HEIGHT-1:0] mmu_col_valid_out;
     wire [2*DATA_WIDTH*WIDTH_HEIGHT-1:0] accumTable_wr_data;
-    wire [$clog2(MAX_MAT_WH * (MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_wr_addr;
+    wire [$clog2(MAX_MAT_WH*(MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_wr_addr;
     wire [WIDTH_HEIGHT-1:0] accumTable_wr_en_in;
-    wire [$clog2(MAX_MAT_WH * (MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_rd_addr;
+    wire [$clog2(MAX_MAT_WH*(MAX_MAT_WH/WIDTH_HEIGHT))*WIDTH_HEIGHT-1:0] accumTable_rd_addr;
     wire [2*DATA_WIDTH*WIDTH_HEIGHT-1:0] accumTable_data_out_to_relu;
-    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] outputMem_wr_addr_offset;
-    wire [(WIDTH_HEIGHT * 16) - 1:0] outputMem_wr_data;
-    wire [WIDTH_HEIGHT - 1:0] mem_to_fifo_en;
-    wire [WIDTH_HEIGHT - 1:0] fifo_to_arr_en;
-    wire rd_to_wr_start;
-    wire mem_to_fifo;
+    wire [(WIDTH_HEIGHT*16)-1:0] outputMem_wr_data;
+    wire [WIDTH_HEIGHT-1:0] mem_to_fifo_en;
+    wire [WIDTH_HEIGHT-1:0] fifo_to_arr_en;
 
-    wire [(WIDTH_HEIGHT * DATA_WIDTH) - 1:0] weightMem_rd_addr_offset;
-    wire [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
+    wire [(WIDTH_HEIGHT*DATA_WIDTH)-1:0] weightMem_rd_addr;
+    wire [WIDTH_HEIGHT-1:0] weightMem_rd_en;
     wire weight_write;
 
     // set sys_arr_active 2 cycles after we start reading memory
@@ -92,6 +88,18 @@ module top (
     reg data_mem_calc_done; // high if MMU is done multiplying
 
     wire accum_clear;
+
+    wire [DATA_WIDTH-1:0] mem_addr_bus_data;
+    
+    wire [$clog2(WIDTH_HEIGHT)-1:0] wr_accumTable_mat_row;
+    wire [$clog2(MAX_MAT_WH/WIDTH_HEIGHT)-1:0] wr_accumTable_submat_row;
+    wire [$clog2(MAX_MAT_WH/WIDTH_HEIGHT)-1:0] wr_accumTable_submat_col;
+
+    wire [$clog2(WIDTH_HEIGHT)-1:0] rd_accumTable_mat_row;
+    wire [$clog2(MAX_MAT_WH/WIDTH_HEIGHT)-1:0] rd_accumTable_submat_row;
+    wire [$clog2(MAX_MAT_WH/WIDTH_HEIGHT)-1:0] rd_accumTable_submat_col;
+
+    wire [7:0] outputMem_wr_addr;
 
 // ========================================
 // ---------------- Logic -----------------
@@ -175,10 +183,10 @@ module top (
     memArr inputMem(
         .clk    (clk),
         .rd_en  (inputMem_rd_en),               // from inputMemControl
-        .wr_en  (inputMem_wr_en),               // from master_control
+        .wr_en  ({WIDTH_HEIGHT{inputMem_wr_en}}), // from master_control
         .wr_data(inputMem_wr_data),             // from interconnect (INPUT)
-        .rd_addr(inputMem_rd_addr_offset),      // from inputMemControl
-        .wr_addr(mem_addr_bus_data),            // from master_control
+        .rd_addr(inputMem_rd_addr),             // from inputMemControl
+        .wr_addr({WIDTH_HEIGHT{mem_addr_bus_data}}),            // from master_control
         .rd_data(inputMem_to_sysArr)            // to sysArr
     );
     defparam inputMem.width_height = WIDTH_HEIGHT;
@@ -188,8 +196,8 @@ module top (
         .reset    (reset_global),               // from master_control
         .active   (data_mem_calc_en),           // from master_control
         .rd_en    (inputMem_rd_en),             // to inputMem
-        .rd_addr  (inputMem_rd_addr_offset),    // to inputMem
-        .wr_active(rd_to_wr_start)              // to outputMemControl
+        .rd_addr  (inputMem_rd_addr),           // to inputMem
+        .wr_active()                            // NOTE: not sure if needed
     );
     defparam inputMemControl.width_height = WIDTH_HEIGHT;
 
@@ -201,10 +209,10 @@ module top (
     memArr weightMem(
         .clk    (clk),
         .rd_en  (weightMem_rd_en),              // from master_control
-        .wr_en  (weightMem_wr_en),              // from master_control
+        .wr_en  ({WIDTH_HEIGHT{weightMem_wr_en}}), // from master_control
         .wr_data(weightMem_wr_data),            // from interconnect (INPUT)
         .rd_addr(weightMem_rd_addr),            // from master_control
-        .wr_addr(mem_addr_bus_data),            // from master_control
+        .wr_addr({WIDTH_HEIGHT{mem_addr_bus_data}}), // from master_control
         .rd_data(weightMem_rd_data)             // to weightFifo
     );
     defparam weightMem.width_height = WIDTH_HEIGHT;
@@ -299,11 +307,11 @@ module top (
 
     outputArr outputMem (
         .clk    (clk),
-        .rd_en  (outputMem_rd_en),              // from master_control
+        .rd_en  ({WIDTH_HEIGHT{outputMem_rd_en}}), // from master_control
         .wr_en  (outputMem_wr_en),              // from master_control
         .wr_data(outputMem_wr_data),            // from reluArr
-        .rd_addr(mem_addr_bus_data),            // from master_control
-        .wr_addr(outputMem_wr_addr),            // from master_control
+        .rd_addr({WIDTH_HEIGHT{mem_addr_bus_data}}), // from master_control
+        .wr_addr({WIDTH_HEIGHT{outputMem_wr_addr}}), // from master_control
         .rd_data(outputMem_rd_data)             // to interconect (OUTPUT)
     );
     defparam outputMem.width_height = WIDTH_HEIGHT;
