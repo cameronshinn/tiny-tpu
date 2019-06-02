@@ -27,8 +27,8 @@ module fifo_control(
     reg stagger_latch, stagger_latch_c; // must latch to prevent changing midway
 
     assign fifo_en = {fifo_width{started}};
-    assign done = ~started;
-    assign weight_write = (started && count < 15);
+    assign done = ~(started || active);
+    assign weight_write = (started && count < 16);
 
     always @(*) begin
         started_c = started;

@@ -136,7 +136,7 @@ module tb_top_master;
             start = 1'b0;
         end
 
-        if (i == 100) begin
+        if (i == 200) begin
             $stop;
         end // if (i == 10)
     end // always @(*)
