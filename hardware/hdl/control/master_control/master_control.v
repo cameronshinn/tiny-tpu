@@ -85,7 +85,7 @@ module master_control(clk,
                       data_mem_calc_done,
                       fifo_ready,
                       bus_to_mem_addr,
-                      int_mem_wr_en,
+                      in_mem_wr_en,
                       weight_mem_out_rd_addr,
                       weight_mem_out_rd_en,
                       weight_mem_wr_en,
@@ -101,6 +101,7 @@ module master_control(clk,
                       rd_submat_row_out,
                       rd_submat_col_out,
                       rd_row_num,
+                      accum_clear,
                       relu_en);
 
     parameter SYS_ARR_COLS = 16;
@@ -119,7 +120,7 @@ module master_control(clk,
     parameter INIT_TPU = 3'b111;
 
     input clk;
-    input reset; // TODO: not quite sure what this is for yet (something though)
+    input reset;
     output reg reset_out; // connect to all resets in TPU
 
     input start; // starts instruction execution on a pulse
@@ -178,6 +179,9 @@ module master_control(clk,
     output wire [$clog2(MAX_OUT_ROWS/SYS_ARR_ROWS)-1:0] rd_submat_row_out;
     output wire [$clog2(MAX_OUT_COLS/SYS_ARR_COLS)-1:0] rd_submat_col_out;
     output wire [$clog2(SYS_ARR_ROWS)-1:0] rd_row_num;
+
+    // clear the accumulators
+    output reg accum_clear;
 
     // output to ReLU
     output wire relu_en;
