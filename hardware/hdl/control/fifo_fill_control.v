@@ -13,8 +13,8 @@ module fifo_fill_control (
     input reset;
     input active;
     output mem_to_fifo;
-    output reg [(WIDTH_HEIGHT * 8) - 1:0] weightMem_rd_addr;
-    output reg [WIDTH_HEIGHT - 1:0] weightMem_rd_en;
+    output reg [(WIDTH_HEIGHT*8)-1:0] weightMem_rd_addr;
+    output reg [WIDTH_HEIGHT-1:0] weightMem_rd_en;
     reg mem_to_fifo;
     reg mem_to_fifo_c;
     reg [4:0] count;
