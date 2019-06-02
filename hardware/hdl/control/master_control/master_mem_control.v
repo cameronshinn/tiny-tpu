@@ -28,6 +28,7 @@ reg [$clog2(width_height)-1:0] count, count_c;
 always@(posedge clk) begin
     count <= count_c;
     start <= start_c;
+    done <= done_c;
 end
 
 always@(*) begin
