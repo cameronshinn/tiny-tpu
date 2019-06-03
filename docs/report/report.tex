@@ -169,10 +169,27 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
         element to its right neighbor every cycle. The multiply accumulate result is
         passed downward to the neighbor below every cycle. Each PE then multiplies its
         input element with the weight element stored in it, then adds that value to the
-        sum being supplied from its above neighbor.
+        sum being supplied from its above neighbor. Note that memory interfaces only exist
+        at the edges of the systolic array.
+
+        Multiplication results appear at the bottom of the systolic array 16 cycles after
+        a multiplication is started, and continue flowing out for 16 cycles. The flow of
+        data is illustrated below, showing a scaled down version of our systolic array.
 
     \subsection{Software}
+        % Original Goal
+        % Drawbacks of hardware
+        % Final benchmark
+        The original goal of our application was to implement a Convolutional Neural
+        Network whose input was a chest X-Ray of a human patient, and whose output was a
+        set of medical diagnoses ranging from pneumonia to hernia. The neural network
+        was designed using a header only library known as TinyDNN, which boasts small
+        code size for limited performance processors such as our ARM A9.
 
+        % Cameron Can you expand on the network architecture here
+
+        Out TPU would be used alongside TinyDNN, allowing the A9 processor to offload and
+        optimize matrix operations, including Multiplication and Convolution.
 \section{Results}
     % Discuss Quality of implementation
     % Observed Speedup
