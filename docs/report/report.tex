@@ -101,11 +101,48 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
 
 \subsection{Neural Networks}
     % General description of neural networks here.
+    With the advent of big data applications becoming increasingly common, machine learning
+    has proved to be the future of complex algorithms. Deep neural networks, a subspace of
+    machine learning, are an attempt to reverse engineer the human brain and make computers
+    learn and behave like humans. Deep neural networks need to first undergo “training”
+    repeatedly with vast amounts of sample data, and self adjusted “synapses”
+    (i.e. learning) based on expected results. If given a complete dataset, it is typical
+    to use 20\% of the data to train the network, and 80\% to test it. Once a neural
+    network has been fully trained, it can then be applied and performs  “inference” on
+    whatever it is given.
+
 
 \subsection{Tensor Processing Units}
     % Present the need for Tensor Processing Units
     % Talk about Google's implementation
     % Talk about need for portable, low power TPUs
+    Performing inference on a deep neural network is very computationally expensive, and
+    now we must face the fact that processors cannot keep up. It is well known in the
+    computing industry that Moore’s law is coming to an end; The number of transistors
+    that can fit on a chip is approaching physical limits. Thus, alternative methods to
+    general purpose processors must be explored in to improve the cost-energy-performance
+    of computing in machine learning.
+ 
+    Google recognized this in 2013 when they projected they would need to double their
+    number of data centers if every “googler” would use their voice search commands for
+    three minutes a day. They needed a new type of processor that could handle the
+    computational requirements of their AI-driven applications. In response, they
+    architected and produced an accelerator over a span of fifteen months, dubbed the
+    Tensor Processing Unit (TPU).
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=9cm]{../figures/googleArchitecture.jpg}
+        \caption{High level view of system Architecture}
+    \end{figure}
+ 
+    Outlined in their paper “In-Datacenter Performance Analysis of a Tensor Processing
+    Unit”[1], Google’s original TPU is far more efficient than CPUs and GPUs with 30X to
+    80X the energy efficiency (TOPS/Watt), not to mention it’s currently in its third
+    generation. The performance of the TPU in a datacenter environment is unparalleled
+    and offers an excellent solution to deep neural network inference in the cloud computing
+    space.
+
 
 \section{Design and Implementation}
 

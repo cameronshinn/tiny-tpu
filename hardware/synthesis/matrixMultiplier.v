@@ -11,7 +11,7 @@
 `define DRAIN_FIFO 4'b0010;
 `define MULTIPLY 4'b0011;
 
-module matrixMultiplier (
+module matrixMultiplier (slave_address[
 	clk,
 	reset,
 	slave_address,
@@ -20,6 +20,9 @@ module matrixMultiplier (
 	slave_readdata,
 	slave_writedata,
 	slave_byteenable
+	slave_burstcount,
+	slave_beginbursttransfer
+//	waitrequest?
 );
 
 
@@ -35,6 +38,9 @@ module matrixMultiplier (
     input slave_write;
     input [DATA_WIDTH-1:0] slave_writedata;
     input [(DATA_WIDTH/8)-1:0] slave_byteenable;
+    input [31:0] slave_burstcount;
+    input slave_beginbursttransfer;
+//  input waitrequest?
 
     output reg [DATA_WIDTH-1:0] slave_readdata;
 
