@@ -28,7 +28,7 @@ module fifo_control(
 
     assign fifo_en = {fifo_width{started}};
     assign done = ~(started || active);
-    assign weight_write = (started && count < 16);
+    assign weight_write = (started && count < 15);
 
     always @(*) begin
         started_c = started;
