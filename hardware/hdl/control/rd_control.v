@@ -7,6 +7,7 @@ module rd_control(
     clk, // clock signal
     reset, // reset the inputs and reg signals
     active, // this module only works when the active is high
+    base_addr,
     rd_en, // enable accessing to the memeory
     rd_addr, // read address the full address should be base addr + wr_addr
     wr_active // enable write output control
@@ -19,25 +20,28 @@ module rd_control(
     input clk;
     input reset;
     input active;
+    input [7:0] base_addr;
     output reg [width_height-1:0] rd_en;
-    output reg [data_width-1:0] rd_addr;
+    output wire [data_width-1:0] rd_addr;
     output reg wr_active;
 
     reg [width_height-1:0] rd_en_c;
-    reg [data_width-1:0] rd_addr_c;
+    reg [data_width-1:0] rd_offset, rd_offset_c;
     reg [count_width-1:0] count, count_c;
     reg rd_start, rd_start_c;
 
+    assign rd_addr = {width_height{base_addr}} + rd_offset;
+
     always @(posedge clk) begin
         rd_en <= rd_en_c;
-        rd_addr <= rd_addr_c;
+        rd_offset <= rd_offset_c;
         count <= count_c;
         rd_start <= rd_start_c;
     end
 
     always @(*) begin
         rd_start_c = rd_start;
-        rd_addr_c = rd_addr;
+        rd_offset_c = rd_offset;
         count_c = count;
         wr_active = 0;
 
@@ -54,7 +58,7 @@ module rd_control(
                 rd_en_c = (rd_en << 1) + 1'b1;
             end
 
-            rd_addr_c = {7'b0, rd_en[15],
+            rd_offset_c = {7'b0, rd_en[15],
                          7'b0, rd_en[14],
                          7'b0, rd_en[13],
                          7'b0, rd_en[12],
@@ -69,7 +73,7 @@ module rd_control(
                          7'b0, rd_en[3],
                          7'b0, rd_en[2],
                          7'b0, rd_en[1],
-                         7'b0, rd_en[0]} + rd_addr;
+                         7'b0, rd_en[0]} + rd_offset;
 
             count_c = count + 1'b1;
 
@@ -79,7 +83,7 @@ module rd_control(
 
             if (count == width_height*2-1) begin
                 rd_start_c = 0;
-                rd_addr_c = 16'h0000;
+                rd_offset_c = 16'h0000;
                 count_c = 0;
                 wr_active = 0;
             end
@@ -90,7 +94,7 @@ module rd_control(
         end
 
         if (reset == 1'b1) begin
-            rd_addr_c = 0;
+            rd_offset_c = 0;
             rd_en_c  = 16'h0000;
             rd_start_c = 0;
             count_c = 0;
