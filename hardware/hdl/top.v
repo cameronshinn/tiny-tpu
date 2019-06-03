@@ -99,12 +99,7 @@ module top (
     wire [$clog2(MAX_MAT_WH/WIDTH_HEIGHT)-1:0] rd_accumTable_submat_row;
     wire [$clog2(MAX_MAT_WH/WIDTH_HEIGHT)-1:0] rd_accumTable_submat_col;
 
-    wire inputMem_wr_en;
-    wire weightMem_wr_en;
-
     wire [7:0] outputMem_wr_addr;
-
-    wire [7:0] inputMem_rd_base_addr;
 
 // ========================================
 // ---------------- Logic -----------------
@@ -145,7 +140,6 @@ module top (
         .in_fifo_active           (in_fifo_active),
         .out_fifo_active          (out_fifo_active),
         .data_mem_calc_en         (data_mem_calc_en),
-        .input_mem_rd_base_addr   (inputMem_rd_base_addr),
         .wr_submat_row_out        (wr_accumTable_submat_row),
         .wr_submat_col_out        (wr_accumTable_submat_col),
         .wr_row_num               (wr_accumTable_mat_row),
@@ -192,7 +186,7 @@ module top (
         .wr_en  ({WIDTH_HEIGHT{inputMem_wr_en}}), // from master_control
         .wr_data(inputMem_wr_data),             // from interconnect (INPUT)
         .rd_addr(inputMem_rd_addr),             // from inputMemControl
-        .wr_addr({WIDTH_HEIGHT{mem_addr_bus_data}}), // from master_control
+        .wr_addr({WIDTH_HEIGHT{mem_addr_bus_data}}),            // from master_control
         .rd_data(inputMem_to_sysArr)            // to sysArr
     );
     defparam inputMem.width_height = WIDTH_HEIGHT;
@@ -201,7 +195,6 @@ module top (
         .clk      (clk),
         .reset    (reset_global),               // from master_control
         .active   (data_mem_calc_en),           // from master_control
-        .base_addr(inputMem_rd_base_addr),
         .rd_en    (inputMem_rd_en),             // to inputMem
         .rd_addr  (inputMem_rd_addr),           // to inputMem
         .wr_active()                            // NOTE: not sure if needed

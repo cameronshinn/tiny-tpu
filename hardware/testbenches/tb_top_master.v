@@ -25,7 +25,7 @@ module tb_top_master;
 
     wire done;
     wire fifo_ready;
-    wire [2*WIDTH_HEIGHT*DATA_WIDTH-1:0] outputMem_rd_data;
+    wire [WIDTH_HEIGHT*DATA_WIDTH-1:0] outputMem_rd_data;
 
     integer i;
     reg [7:0] data_in;

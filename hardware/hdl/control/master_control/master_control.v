@@ -95,7 +95,6 @@ module master_control(clk,
                       in_fifo_active,
                       out_fifo_active,
                       data_mem_calc_en,
-                      input_mem_rd_base_addr,
                       wr_submat_row_out,
                       wr_submat_col_out,
                       wr_row_num,
@@ -148,7 +147,7 @@ module master_control(clk,
     // output memory rd addr
     // input memory wr addr
     // weight memory wr addr
-    output wire [ADDR_WIDTH-1:0] bus_to_mem_addr; // not sure about width yet
+    output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] bus_to_mem_addr; // not sure about width yet
 
     // outputs to input memory ctrl
     output reg [SYS_ARR_COLS-1:0] in_mem_wr_en;
@@ -158,7 +157,7 @@ module master_control(clk,
     output wire [SYS_ARR_COLS-1:0] weight_mem_out_rd_en;
     output reg [SYS_ARR_COLS-1:0] weight_mem_wr_en;
     // outputs to output memory ctrl
-    output wire [ADDR_WIDTH-1:0] out_mem_out_wr_addr;
+    output wire [SYS_ARR_COLS*ADDR_WIDTH-1:0] out_mem_out_wr_addr;
     output wire [SYS_ARR_COLS-1:0] out_mem_out_wr_en;
     output reg [SYS_ARR_COLS-1:0] out_mem_rd_en;
 
@@ -186,8 +185,6 @@ module master_control(clk,
 
     // output to ReLU
     output wire relu_en;
-
-    output wire [7:0] input_mem_rd_base_addr;
 
     // possible signal paths for start
     reg start_mem_control;
@@ -237,7 +234,7 @@ module master_control(clk,
         .intermed_dim              (dim_1),
         .num_row_weight_mat        (dim_2),
         .num_col_in_mat            (dim_3),
-        .base_addr_in              (addr_1), // input data base addr // not sure what this is for -Cameron
+        .base_data                 (addr_1), // input data base addr // not sure what this is for -Cameron
         .accum_table_submat_row_in (accum_table_submat_row_in),
         .accum_table_submat_col_in (accum_table_submat_col_in),
         .accum_table_submat_row_out(wr_submat_row_out),
@@ -247,7 +244,6 @@ module master_control(clk,
         .data_mem_calc_en          (data_mem_calc_en),
         .data_mem_calc_done        (data_mem_calc_done),
         .fifo_ready                (fifo_ready),
-        .base_addr_out             (input_mem_rd_base_addr),
         .done                      (done_multip_control)
     );
 
