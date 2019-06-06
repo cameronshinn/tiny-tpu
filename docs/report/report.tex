@@ -7,6 +7,8 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -76,6 +78,11 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     heavy load on today's general purpose processors, creating the need for a Tensor
     Processing Unit (TPU), first commercialized by Google for data center use.
 
+    Note that Neural Networks has two phases: training and predicting. Both phases are
+    computationally expensive, and the topic of cutting edge research. Here, we focus
+    on predicting, as much of the neural networks life will be spent making predications,
+    rather than training.
+
     Current TPU's aim to implement the aforementioned matrix multiplication and
     convolution, along with common activation functions used in todays Neural Networks.
     This is typically done via a highly pipelined data path known as a systolic array,
@@ -85,18 +92,24 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     bandwidth, as the systolic array requires large input and output bandwidth for sustained
     computation.
 
+    The TPU was first introduced by Google in 2013, who was presented with a massive
+    amount of compute as their customers began using speech-to-text more often. Over the
+    course of 15 months, Google designed and fabricated their fist generation TPU, and
+    was able to realize fantastic performance improvements in neural network inference,
+    and now uses their TPU as an add in card in their own data centers.
+
     We present a scaled down, low-power TPU implementation providing performance gains for
     embedded and mobile neural network applications. We aim to increase performance of
     fully connected layers in an application running on an ARM A9 processor. The TPU is
     memory mapped, and communication between the two devices is done via an Avalon bus on
-    an Altera DE-1 development kit. The TPU implements a 16 x 16 systolic array which runs
-    at a max clock speed of 115 MHz, yielding a noticeable speedup in fully connected
-    neural network layers, when compared to a CPU only.
+    an Altera DE-1 development kit. The TPU implements a fully pipelined 16 x 16 systolic
+    array at a max clock speed of 115 MHz, yielding a noticeable speedup in
+    fully connected neural network layers, when compared to the ARM A9 only.
 
     This implementation allows useful Neural Network applications such as image processing,
     object detection, speech-to-text, and more to be run in power and performance limited
     devices such as smart phones and embedded systems. The design is also scalable,
-    allowing for a range of options per application.
+    allowing for a range of hardware configurations per application.
 \section{Background}
 
 \subsection{Neural Networks}
@@ -109,37 +122,61 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     (i.e. learning) based on expected results. If given a complete dataset, it is typical
     to use 20\% of the data to train the network, and 80\% to test it. Once a neural
     network has been fully trained, it can then be applied and performs  “inference” on
-    whatever it is given.
+    whatever it is given. This implies that a domain specific architecture should take
+    advantage that weights will always remain the same, as will be shown later.
 
+    Neural networks are essentially just a series of simple functions applied independently
+    to each part of an input. This allows matrices to be used, as matrix operations apply
+    the same operation to each piece of the inputs. The downside is that common matrix
+    operations such as multiplication and convolution are exceedingly complex, meaning
+    general purpose processors (and even GPUs) have low roofline performance for
+    neural network inference.
 
 \subsection{Tensor Processing Units}
     % Present the need for Tensor Processing Units
     % Talk about Google's implementation
     % Talk about need for portable, low power TPUs
-    Performing inference on a deep neural network is very computationally expensive, and
-    now we must face the fact that processors cannot keep up. It is well known in the
-    computing industry that Moore’s law is coming to an end; The number of transistors
-    that can fit on a chip is approaching physical limits. Thus, alternative methods to
-    general purpose processors must be explored in to improve the cost-energy-performance
-    of computing in machine learning.
- 
-    Google recognized this in 2013 when they projected they would need to double their
-    number of data centers if every “googler” would use their voice search commands for
-    three minutes a day. They needed a new type of processor that could handle the
-    computational requirements of their AI-driven applications. In response, they
-    architected and produced an accelerator over a span of fifteen months, dubbed the
-    Tensor Processing Unit (TPU).
+    Since Moore's law and Denard scaling are coming to an end, industry is adopting
+    domain specific architectures which promise extremely high price-performance-power for
+    a given set of problems. Google's own TPU is a great example, yielding much greater
+    throughput and performance per watt than top GPU's and CPU's in Neural Network
+    Inference. The success of Google's first generation TPU led to faster and more power
+    efficient generations which are now used throughout Google's data centers.
+
+    Google's TPU first came about when researchers at Google proposed a problem - what
+    would happen if every Google user used speech-to-text services for just three minutes
+    a day? They found that the amount of compute needed would far exceed the capabilities
+    of their CPU and GPU driven data centers, and 15 months later produced a fully
+    functional TPU.
+
+    Google's TPU consists of a large $256 x 256$ Systolic array which performs fast matrix
+    multiplication. THe systolic array is a 2-dimensional array of processing elements
+    (PE's) which are relatively simple execution units. At minimum, they contain a
+    registers, a multiply accumulate module, and some control logic. Each PE receives a
+    sum, weight, and input matrix element as inputs, and multiplies the input matrix
+    element by the weight, then adds that to the sum. The sum is then passed downwards
+    to the next PE, while the input matrix element is passed right to another PE. After
+    a short transient, Google's Systolic array performs $256^2$ multiply-accumulates per
+    clock cycle, allowing massive throughput.
+
+    While the large systolic array is capable of massive amounts of compute, it may only
+    do so if memories can feed it. Because a set of weights for a given network is usually
+    too large to store in on-chip caches, Google uses a DDR3 interface to hold weights,
+    put hides memory latency by using Weight FIFO's to prep a set of weights while a
+    multiply is taking place. A similar technique is used for the input matrix, which must
+    through the 'data set-up' block, as shown below.
+
+    \newpage
 
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=9cm]{../figures/googleArchitecture.jpg}
         \caption{High level view of system Architecture}
     \end{figure}
- 
-    Outlined in their paper “In-Datacenter Performance Analysis of a Tensor Processing
-    Unit”[1], Google’s original TPU is far more efficient than CPUs and GPUs with 30X to
+
+    Google’s original TPU is far more efficient than CPUs and GPUs with 30X to
     80X the energy efficiency (TOPS/Watt), not to mention it’s currently in its third
-    generation. The performance of the TPU in a datacenter environment is unparalleled
+    generation. The performance of the TPU in a data center environment is unparalleled
     and offers an excellent solution to deep neural network inference in the cloud computing
     space.
 
