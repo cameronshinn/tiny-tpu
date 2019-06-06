@@ -274,6 +274,30 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
         see noticeable performance gains when compared to the typical $O(n^3)$ matrix
         multiply algorithm, even with compiler optimizations!
 
+    \subsection{Benchmarking}
+        The benchmarking suite designed for the TPU ran $2^{16}$ 16 x 16 matrix multiplies,
+        once using only the ARM A9 processor, and once using the ARM A9 in tandem with
+        our TPU. We run three cases for TPU usage; one worst case scenario, in which every
+        multiplication must have inputs, outputs, and weights written/read over the bus,
+        one average case scenario, in which we re-use weights, and one throughput only
+        scenario, in which we do no bus transfers in order to test throughput of our
+        systolic array. The final scenario also allows us to benchmark the performance of
+        bus. Note that all three benchmarks are run with full compiler optimizations.
+
+        In the worst-case bus usage scenario, our TPU is able to outperform the ARM A9
+        with a 1.6 times speedup. This is great, as even in a worst case scenario, our
+        simple TPU is able to outperform a relatively strong mobile processor.
+
+        In the more extreme no bus usage scenario, we can see the extremely high throughput
+        achieved by the Systolic Array. In this test, our TPU achieves a throughput of
+        $1.39$ Gops/s, nearly ten times that of the ARM A9! We infer that this
+        immense throughput is what makes up for the long latency of bus transactions
+        present in the other two benchmarks.
+
+        The average case bus usage scenario, in which only some multiplies must do a
+        full input, weight, and output write/read, we see higher performance gains over
+        the ARM A9, up to about a doubling in performance.
+
 \section{Future Work}
     % There is plenty of room for improvement of the TPU we have implemented...
     There remains a plethora of future work to be done. Our resulting implementation is
