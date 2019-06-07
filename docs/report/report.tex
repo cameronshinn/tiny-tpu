@@ -225,6 +225,8 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
         \end{itemize}
         \end{center}
 
+        \newpage
+
         \begin{figure}[htbp]
             \centering
             \includegraphics[width=9cm]{../figures/sysArchitecture.png}
@@ -283,16 +285,61 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
         % Original Goal
         % Drawbacks of hardware
         % Final benchmark
-        The original goal of our application was to implement a Convolutional Neural
-        Network whose input was a chest X-Ray of a human patient, and whose output was a
-        set of medical diagnoses ranging from pneumonia to hernia. The neural network
-        was designed using a header only library known as TinyDNN, which boasts small
-        code size for limited performance processors such as our ARM A9.
+    To demonstrate the capabilities of our TPU, the plan was to train a convolutional
+    neural network to benchmark on the TPU. Due to time constraints and technical
+    difficulties, this did not happen, but throughout the process we developed a strong
+    idea of how we can train a neural network and perform inference on the TPU. The
+    convolutional neural network we developed is designed to perform classification of
+    diagnoses on chest x-rays. The network takes a grayscale chest x-ray image as an
+    input, and outputs any number of 15 classifications, including no diagnosis at all. To
+    implement the CNN, we used TinyDNN[1], a simple deep neural network library. The
+    choice behind selecting TinyDNN was to have a simple and easy to use library that
+    wouldn’t be overwhelming and could be quickly learned under the time constraints for
+    this project.
 
-        % Cameron Can you expand on the network architecture here
+    The network architecture is based on the classic LeNet-5[2] CNN architecture. Our
+    input images are 128 x 128 as opposed to 32 x 32 to preserve the graphical fidelity of
+    the chest x-rays, because there is much more detail compared to the 32 x 32 MNIST
+    dataset (handwritten digits) that is typically demonstrated on the LeNet architecture.
+    Since the input image sizes are larger than LeNet’s input, there are a few adaptations
+    that have been made to accommodate this input size: larger convolution kernels
+    (5 x 5 up to 9 x 9 on some layers) to break down the size of the layers more; larger
+    average pooling grid sizes to cut the results of each layer farther down
+    (3 x 3 instead of 2 x 2); removing the feature map in the third layer since it was not
+    adaptable to our network architecture. These changes allow us to (presumably) preserve
+    the functionality of the LeNet-5 architecture while adapting it to larger inputs.
 
-        Out TPU would be used alongside TinyDNN, allowing the A9 processor to offload and
-        optimize matrix operations, including Multiplication and Convolution.
+    To train the neural network, we used the National Institutes of Health Chest X-ray
+    Dataset[3] containing over 112,000 chest x-rays from more than 30,000 unique patients.
+    Each image had one or more of the 15 classifications discussed earlier (note that if
+    the classification is no diagnosis there cannot be any other classification). To groom
+    the images for processing we wrote a Python script to resize all of the images to
+    128 x 128 and store the 8-bit grayscale pixel values in hexadecimal format in a CSV
+    file. Managing and parsing this CSV file became somewhat tedious due to its size, so
+    we later moved to using the OpenCV library to do this processing within the training
+    code to be stored in a vector at runtime. When performing training, 90\% of the data
+    is used for training and 10\% is saved for accuracy analysis at the end.
+
+    The training results are indeterminate. We encountered an issue with the training
+    where the network would converge to an approximation that provided the same output for
+    any given input image (all output nodes would have the same value). Lightly examining
+    some example inputs revealed that the result of each convolutional kernel was
+    stripping away the features of the image and the layer values would converge to the
+    same value. By the third layer, nearly all of the node values would be the same for a
+    given convolution, and by the fourth layer they were all the same. Some things we
+    intended to look into were the validity of our architecture and verifying that our
+    training data was being interpreted correctly (perhaps some issues with image
+    conversion, or some mix-ups between signed and unsigned values). Unfortunately we
+    couldn’t afford to allocate much time to this issue as it was too late in the project
+    timeline. To compromise, we just decided we would benchmark a set of random weight
+    values instead.
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/nn.png}
+        \caption{Our planned network architecture.}
+    \end{figure}
+
 
 \section{Results}
     % Discuss Quality of implementation
@@ -356,6 +403,8 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
             \caption{Average runtime of a series of matrix multiplications under several
                      use cases}
         \end{figure}
+
+        \newpage
 
         \begin{figure}[htbp]
             \centering
@@ -460,5 +509,9 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
 \bibitem{b1} Patterson, D., Jouppi, N. and Young, C. (2017). In Datacenter Performance of A Tensor Processing Unit. 44th International Symposium on Computer Architecture.
 \bibitem{b2} Patterson, D., Hennesy, J. (2019). Computer Architecture, A Quantitative Approach. Sixth Edition. Morgan Kaufmann Publishers
 \bibitem{b3} Telesens.co (2018) Understanding Matrix Multiplication on a Weight-Stationary Systolic Architecture Web
+\bibitem{b4} K. Kiningham, M. Graczyk and A. Ramkumar, "Design and Analysis of a Hardware CNN Accelerator", 2017.
+\bibitem{b5} Shaaban, "Systolic Architectures", Portland State University, 2003.
+\bibitem{b6} [4]"Random Sample of NIH Chest X-ray Dataset", kaggle.com, 2017. [Online]. Available: https://www.kaggle.com/nih-chest-xrays/sample.
+\bibitem{b7} nyanp et. al. "tiny-dnn", (2012 - 2019), GitHub Repository, https://github.com/tiny-dnn/tiny-dnn.
 \end{thebibliography}
 \end{document}
