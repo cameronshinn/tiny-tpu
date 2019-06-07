@@ -151,7 +151,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     Inference. The success of Google's first generation TPU led to faster and more power
     efficient generations which are now used throughout Google's data centers.
 
-    Google's TPU first came about when researchers at Google proposed a problem - what
+    Google's TPU first came about when their researchers proposed a problem - what
     would happen if every Google user used speech-to-text services for just three minutes
     a day? They found that the amount of compute needed would far exceed the capabilities
     of their CPU and GPU driven data centers, and 15 months later produced a fully
@@ -164,8 +164,8 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     sum, weight, and input matrix element as inputs, and multiplies the input matrix
     element by the weight, then adds that to the sum. The sum is then passed downwards
     to the next PE, while the input matrix element is passed right to another PE. After
-    a short transient, Google's Systolic array performs $256^2$ multiply-accumulates per
-    clock cycle, allowing massive throughput.
+    a short transient, Google's Systolic array performs up to $256^2$ multiply-accumulates
+    per clock cycle, allowing massive throughput.
 
     While the large systolic array is capable of massive amounts of compute, it may only
     do so if memories can feed it. Because a set of weights for a given network is usually
