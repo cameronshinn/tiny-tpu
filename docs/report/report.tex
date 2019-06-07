@@ -9,12 +9,19 @@
 \usepackage{xcolor}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan
+}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{A Portable Tensor Processing Unit\\
+\title{Design Space Exploration of A Portable Tensor Processing Unit\\
 }
 
 \author{\IEEEauthorblockN{Wesly Tonks}
@@ -157,7 +164,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     of their CPU and GPU driven data centers, and 15 months later produced a fully
     functional TPU.
 
-    Google's TPU consists of a large $256 x 256$ Systolic array which performs fast matrix
+    Google's TPU consists of a large 256 x 256 Systolic array which performs fast matrix
     multiplication. The systolic array is a 2-dimensional array of processing elements
     (PE's) which are relatively simple execution units. At minimum, they contain
     registers, a multiply accumulate module, and some control logic. Each PE receives a
@@ -182,8 +189,8 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
         \caption{High level view of Google's TPU architecture \cite{b1}}
     \end{figure}
 
-    Google’s original TPU is far more efficient than CPUs and GPUs with 30X to
-    80X the energy efficiency (Tops/Watt), not to mention it’s currently in its third
+    Google’s original TPU is far more efficient than CPUs and GPUs with 30x to
+    80x the energy efficiency (Tops/Watt), not to mention it’s currently in its third
     generation. The performance of the TPU in a data center environment is unparalleled
     and offers an excellent solution to deep neural network inference in the cloud computing
     space.
@@ -504,6 +511,13 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     automate the instruction ordering. This could be in the form of a library that can
     process a batch of information at a time, whether it be matrix multiplication or
     tensor processing on a set of inputs.
+
+\section{Index}
+    All of our work is tracked by git, and our repository is stored at the following link:
+    \href{https://github.com/cameronshinn/tiny-tpu}{tiny-tpu}. As of the date of delivery
+    of this report, our finalized project resides on the
+    \href{https://github.com/cameronshinn/tiny-tpu/tree/synthesis}{synthesis branch}
+
 
 \begin{thebibliography}{00}
 \bibitem{b1} Patterson, D., Jouppi, N. and Young, C. (2017). In Datacenter Performance of A Tensor Processing Unit. 44th International Symposium on Computer Architecture.
