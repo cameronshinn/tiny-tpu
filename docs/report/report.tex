@@ -292,12 +292,12 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     convolutional neural network we developed is designed to perform classification of
     diagnoses on chest x-rays. The network takes a grayscale chest x-ray image as an
     input, and outputs any number of 15 classifications, including no diagnosis at all. To
-    implement the CNN, we used TinyDNN[1], a simple deep neural network library. The
+    implement the CNN, we used TinyDNN[7], a simple deep neural network library. The
     choice behind selecting TinyDNN was to have a simple and easy to use library that
     wouldn’t be overwhelming and could be quickly learned under the time constraints for
     this project.
 
-    The network architecture is based on the classic LeNet-5[2] CNN architecture. Our
+    The network architecture is based on the classic LeNet-5 CNN architecture. Our
     input images are 128 x 128 as opposed to 32 x 32 to preserve the graphical fidelity of
     the chest x-rays, because there is much more detail compared to the 32 x 32 MNIST
     dataset (handwritten digits) that is typically demonstrated on the LeNet architecture.
@@ -310,7 +310,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     the functionality of the LeNet-5 architecture while adapting it to larger inputs.
 
     To train the neural network, we used the National Institutes of Health Chest X-ray
-    Dataset[3] containing over 112,000 chest x-rays from more than 30,000 unique patients.
+    Dataset[6] containing over 112,000 chest x-rays from more than 30,000 unique patients.
     Each image had one or more of the 15 classifications discussed earlier (note that if
     the classification is no diagnosis there cannot be any other classification). To groom
     the images for processing we wrote a Python script to resize all of the images to
@@ -337,7 +337,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.8\linewidth]{../figures/nn.png}
-        \caption{Our planned network architecture.}
+        \caption{Our network architecture. Based off of the LeNet-5 architecture.}
     \end{figure}
 
 
