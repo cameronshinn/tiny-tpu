@@ -158,11 +158,11 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     functional TPU.
 
     Google's TPU consists of a large $256 x 256$ Systolic array which performs fast matrix
-    multiplication. THe systolic array is a 2-dimensional array of processing elements
-    (PE's) which are relatively simple execution units. At minimum, they contain a
+    multiplication. The systolic array is a 2-dimensional array of processing elements
+    (PE's) which are relatively simple execution units. At minimum, they contain
     registers, a multiply accumulate module, and some control logic. Each PE receives a
-    sum, weight, and input matrix element as inputs, and multiplies the input matrix
-    element by the weight, then adds that to the sum. The sum is then passed downwards
+    sum, weight, and input matrix element as input, and multiplies the input matrix
+    element by the weight, and adds that to the sum. The sum is then passed downwards
     to the next PE, while the input matrix element is passed right to another PE. After
     a short transient, Google's Systolic array performs up to $256^2$ multiply-accumulates
     per clock cycle, allowing massive throughput.
@@ -183,7 +183,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     \end{figure}
 
     Google’s original TPU is far more efficient than CPUs and GPUs with 30X to
-    80X the energy efficiency (TOPS/Watt), not to mention it’s currently in its third
+    80X the energy efficiency (Tops/Watt), not to mention it’s currently in its third
     generation. The performance of the TPU in a data center environment is unparalleled
     and offers an excellent solution to deep neural network inference in the cloud computing
     space.
@@ -292,7 +292,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     convolutional neural network we developed is designed to perform classification of
     diagnoses on chest x-rays. The network takes a grayscale chest x-ray image as an
     input, and outputs any number of 15 classifications, including no diagnosis at all. To
-    implement the CNN, we used TinyDNN[7], a simple deep neural network library. The
+    implement the CNN, we used TinyDNN \cite{b7}, a simple deep neural network library. The
     choice behind selecting TinyDNN was to have a simple and easy to use library that
     wouldn’t be overwhelming and could be quickly learned under the time constraints for
     this project.
@@ -310,7 +310,7 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     the functionality of the LeNet-5 architecture while adapting it to larger inputs.
 
     To train the neural network, we used the National Institutes of Health Chest X-ray
-    Dataset[6] containing over 112,000 chest x-rays from more than 30,000 unique patients.
+    Dataset \cite{b6} containing over 112,000 chest x-rays from more than 30,000 unique patients.
     Each image had one or more of the 15 classifications discussed earlier (note that if
     the classification is no diagnosis there cannot be any other classification). To groom
     the images for processing we wrote a Python script to resize all of the images to
