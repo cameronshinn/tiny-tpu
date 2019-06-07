@@ -46,7 +46,7 @@ sdevelasco@ucdavis.edu}
     Trends in computing have led to a proliferation of neural Network applications.
     Unfortunately, todays general purpose processors are not well suited for the class of
     computations these applications require, creating demand for a new class of processors
-    - Tensor Processing Units (TPU). These hardware accelerators are designed with neural
+    : Tensor Processing Units (TPU). These hardware accelerators are designed with neural
     networks in mind, and allow host CPUs to offload computationally expensive
     tensor operations to them. We implement our own, low-power, scalable TPU intended for
     embedded and mobile applications, and evaluate its performance using a simulated
@@ -83,12 +83,12 @@ Neural Networks, Machine Learning, TPU, Hardware Acceleration
     on predicting, as much of the neural networks life will be spent making predications,
     rather than training.
 
-    Current TPU's aim to implement the aforementioned matrix multiplication and
+    Current TPUs aim to implement the aforementioned matrix multiplication and
     convolution, along with common activation functions used in todays neural networks.
     This is typically done via a highly pipelined data path known as a systolic array,
     which can complete an $N x N$ matrix multiplication in just $2N$ cycles. As with most
-    hardware accelerators, TPU's must communicate large amounts of data between itself and
-    the host, introducing undesired overhead. TPU's also have large on chip memory
+    hardware accelerators, TPUs must communicate large amounts of data between itself and
+    the host, introducing undesired overhead. TPUs also have large on chip memory
     bandwidth, as the systolic array requires large input and output bandwidth for sustained
     computation.
 
