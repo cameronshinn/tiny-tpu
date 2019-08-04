@@ -8,7 +8,7 @@ A more detailed report is located in `/docs/report/report.pdf`.
 
 ### Current Status
 
-The TPU currently doesn't have all of the hardware validated, but is close to having a complete instruction decoder for an instruction set, as well as functional accumulator tables for large matrix multiplication. Right now it can only do up to 16x16 matrix multiplication.
+The TPU currently doesn't have all of the hardware validated, but is close to having a complete instruction decoder for an instruction set, as well as functional accumulator tables for large matrix multiplication. Right now it can only do up to 16x16 matrix multiplication on the `synthesis` branch.
 
 ### Synthesizing and Programming onto an FPGA
 
